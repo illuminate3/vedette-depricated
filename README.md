@@ -12,6 +12,7 @@ User Management Skeleton based on several Laravel packages provided by the commu
 * "illuminate/support": "4.0.x"
 * "cartalyst/sentry": "2.0.*"
 * "anahkiasen/former": "dev-master"
+* "illuminate3/lingos": "dev-master" // used for lang files. Lingos is an attempt to centralize commonly used words and phrases.
 
 
 # Version
@@ -21,7 +22,6 @@ User Management Skeleton based on several Laravel packages provided by the commu
 * Redo views to allow a more generic approach to using in main app
 
 ## Projects used to create Vedette
--------------------------------
 [Stevemo's Cpanel](https://github.com/stevemo/cpanel "Stevemo's Cpanel")
 
 
