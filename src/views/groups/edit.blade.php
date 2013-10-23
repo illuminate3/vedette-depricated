@@ -3,17 +3,17 @@
 @section('header')
     <h3>
         <i class="icon-group"></i>
-        Groups
+        {{ Lang::get('lingos::sentry.groups') }}
     </h3>
 @stop
 @section('help')
-    <p class="lead">Groups</p>
+    <p class="lead">{{ Lang::get('lingos::sentry.groups') }}</p>
     <p>
-        Users can be placed into groups to manage permissions.
+        {{ Lang::get('vedette::vedette.help_user_groups_edit') }}
     </p>
     <br>
      <p class="text-info">
-        For more info visit <a href="http://docs.cartalyst.com/sentry-2/permissions" target="_blank">Sentry website</a>
+        {{ Lang::get('vedette::vedette.visit_sentry_site') }}
     </p>
 @stop
 @section('content')
@@ -21,15 +21,12 @@
         <div class="span12">
             {{ Former::horizontal_open(route('admin.groups.update', array($group->id)))->method('PUT') }}
             <div class="block">
-                <p class="block-heading">Edit "{{ $group->name }}" Group</p>
+                <p class="block-heading">{{ Lang::get('lingos::general.edit') }} "{{ $group->name }}" {{ Lang::get('lingos::sentry.group') }}</p>
                 <div class="block-body">
-
-
                     {{ Former::xlarge_text('name','Name')->value($group->name)->required() }}
-
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                        <a href="{{route('admin.groups.index')}}" class="btn">Cancel</a>
+                        <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
+                        <a href="{{route('admin.groups.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
                     </div>
                 </div>
             </div>

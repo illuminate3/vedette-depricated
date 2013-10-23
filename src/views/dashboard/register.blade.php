@@ -3,7 +3,7 @@
 @section('header')
     <h3>
         <i class="icon-edit"></i>
-        Register
+        {{ Lang::get('lingos::auth.register') }}
     </h3>
 @stop
 
@@ -12,25 +12,25 @@
         <div class="span12">
 
             <div class="block">
-                <p class="block-heading">Registration</p>
+                <p class="block-heading">{{ Lang::get('vedette::vedette.registration') }}</p>
                 <div class="block-body">
                     {{ Former::horizontal_open(route('admin.register')) }}
                         <fieldset>
-                            <legend>Personal Information</legend>
-                            {{ Former::xlarge_text('first_name', 'First Name') }}
-                            {{ Former::xlarge_text('last_name', 'Last Name') }}
+                            <legend>{{ Lang::get('vedette::vedette.personal_information') }}</legend>
+                            {{ Former::xlarge_text('first_name', Lang::get('lingos::general.first_name') ) }}
+                            {{ Former::xlarge_text('last_name', Lang::get('lingos::general.last_name') ) }}
                         </fieldset>
                         <fieldset>
-                            <legend>Email</legend>
-                            {{ Former::xlarge_text('email','Email') }}
+                            <legend>{{ Lang::get('lingos::general.email') }}</legend>
+                            {{ Former::xlarge_text('email', Lang::get('lingos::general.email') ) }}
                         </fieldset>
                         <fieldset>
-                            <legend>Password</legend>
-                            {{ Former::xlarge_password('password', 'Password') }}
-                            {{ Former::xlarge_password('password_confirmation', 'Confirm Password') }}
+                            <legend>{{ Lang::get('lingos::auth.password') }}</legend>
+                            {{ Former::xlarge_password('password', Lang::get('lingos::auth.password') ) }}
+                            {{ Former::xlarge_password('password_confirmation', Lang::get('lingos::auth.confirm_password') ) }}
                         </fieldset>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::auth.register') }}</button>
                         </div>
                     {{ Former::close() }}
                 </div>

@@ -3,22 +3,21 @@
 @section('header')
     <h3>
         <i class="icon-user"></i>
-        Users Permissions
+        {{ Lang::get('lingos::general.users_permissions') }}
     </h3>
 @stop
 
 @section('help')
-    <p class="lead">Permission Inheritance</p>
+    <p class="lead">{{ Lang::get('vedette::vedette.permission_inheritance') }}</p>
     <p>
-        Just as permissions are defined for groups and individual users, the permission inheritance model depends on a user's group.
-        An Administrator can assign different permissions to a user that is assigned to a group, and if that group has different access permissions, the user's access is always determined by the group access.
+        {{ Lang::get('vedette::vedette.help_user_permissions') }}
     </p>
     <br>
     <p class="text-warning">
-        Permission Inheritance only works for users permissions.
+        {{ Lang::get('vedette::vedette.permission_inheritance_only_users_permissions') }}
     </p>
      <p class="text-info">
-        For more info visit <a href="http://docs.cartalyst.com/sentry-2/permissions" target="_blank">Sentry website</a>
+        {{ Lang::get('lingos::general.visit_sentry_site') }}
     </p>
 @stop
 
@@ -27,26 +26,26 @@
     <div class="row">
         <div class="span12">
             <div class="block">
-                <p class="block-heading">{{ $user->first_name }} Permissions | Permissions set here will override groups permissions</p>
+                <p class="block-heading">{{ $user->first_name }} {{ Lang::get('lingos::sentry.permissions') }} | {{ Lang::get('vedette::vedette.permissions_override_group_permissions') }}</p>
                 <div class="block-body">
                     <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a href="#generic" data-toggle="tab">Generic Permissions</a></li>
-                        <li><a href="#module" data-toggle="tab">Modules Permissions</a></li>
+                        <li class="active"><a href="#generic" data-toggle="tab">{{ Lang::get('lingos::general.generic_permissions') }}</a></li>
+                        <li><a href="#module" data-toggle="tab">{{ Lang::get('lingos::general.modules_permissions') }}</a></li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="generic">
-                            <legend>Super User <small>Access Everything</small></legend>
-                            {{ Former::select('rules[superuser]','Super User')
-                                ->options(array('0' => 'No','1' => 'Yes'))
+                            <legend>{{ Lang::get('lingos::general.super_user') }} <small>{{ Lang::get('vedette::vedette.access_everything') }}</small></legend>
+                            {{ Former::select('rules[superuser]', Lang::get('lingos::general.super_user') )
+                                ->options(array('0' => Lang::get('lingos::general.no'),'1' => Lang::get('lingos::general.yes') ))
                                 ->value($user->isSuperUser() ? 1 : 0)
                                 ->class('select2')
                             }}
                             @foreach( $genericPerm as $perm)
-                                <legend>Generic Permissions</legend>
+                                <legend>{{ Lang::get('lingos::general.generic_permissions') }}</legend>
                                 @foreach( $perm['permissions'] as $input )
                                     {{ Former::select($input['name'],$input['text'])
-                                        ->options(array('0' => 'Inherit','1' => 'Allow','-1' => 'Deny'))
+                                        ->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
                                         ->value($input['value'])
                                         ->class('select2')->id($input['id'])
                                     }}
@@ -56,14 +55,14 @@
                         <div class="tab-pane" id="module">
                            @if (count($modulePerm) < 1)
                                 <div class="alert alert-info">
-                                    {{ Lang::get('vedette::permissions.no_found') }}
+                                    {{ Lang::get('lingos::sentry.no_found') }}
                                 </div>
                             @else
                                 @foreach( $modulePerm as $perm)
-                                    <legend>{{ $perm['name'] }} Module</legend>
+                                    <legend>{{ $perm['name'] }} {{ Lang::get('lingos::general.module') }}</legend>
                                     @foreach( $perm['permissions'] as $input )
                                         {{ Former::select($input['name'],$input['text'])
-                                            ->options(array('0' => 'Inherit','1' => 'Allow','-1' => 'Deny'))
+                                            ->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
                                             ->value($input['value'])
                                             ->class('select2')->id($input['id'])
                                         }}
@@ -73,8 +72,8 @@
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                        <a href="{{route('admin.users.index')}}" class="btn">Cancel</a>
+                        <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
+                        <a href="{{route('admin.users.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
                     </div>
                 </div>
             </div>
@@ -82,4 +81,3 @@
     </div>
     {{ Former::close() }}
 @stop
-

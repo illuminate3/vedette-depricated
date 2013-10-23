@@ -3,17 +3,17 @@
 @section('header')
     <h3>
         <i class="icon-group"></i>
-        Groups
+        {{ Lang::get('lingos::sentry.groups') }}
     </h3>
 @stop
 @section('help')
-    <p class="lead">Groups</p>
+    <p class="lead">{{ Lang::get('lingos::sentry.groups') }}</p>
     <p>
         Users can be placed into groups to manage permissions.
     </p>
     <br>
      <p class="text-info">
-        For more info visit <a href="http://docs.cartalyst.com/sentry-2/permissions" target="_blank">Sentry website</a>
+        {{ Lang::get('vedette::vedette.visit_sentry_site') }}
     </p>
 @stop
 @section('content')
@@ -27,8 +27,8 @@
                     {{ Former::xlarge_text('name','Name')->required() }}
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                        <a href="{{route('admin.groups.index')}}" class="btn">Cancel</a>
+                        <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
+                        <a href="{{route('admin.groups.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
                     </div>
                 </div>
             </div>

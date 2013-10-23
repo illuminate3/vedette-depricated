@@ -3,7 +3,7 @@
 @section('header')
     <h3>
         <i class="icon-signin"></i>
-        Sign In
+        {{ Lang::get('lingos::auth.sign_in') }}
     </h3>
 @stop
 
@@ -20,28 +20,28 @@
             </div>
 
             <form action="{{ URL::route('admin.login') }}" class="form-signin" method="POST">
-                <h2 class="form-signin-heading">Sign In</h2>
+                <h2 class="form-signin-heading">{{ Lang::get('lingos::auth.sign_in') }}</h2>
                 <label for="{{ $login_attribute }}">{{ ucfirst($login_attribute) }}</label>
                 <input class="input-block-level" type="text"
                     name="login_attribute" id="login_attribute" value="{{ Input::old('login_attribute') }}">
-                <label for="password">Password</label>
+                <label for="password">{{ Lang::get('lingos::auth.password') }}</label>
                 <input class="input-block-level" type="password" name="password" id="password" >
 
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox" for="remember_me">
-                            <input type="checkbox" name="remember_me" value="true">  Remember me on this computer
+                            <input type="checkbox" name="remember_me" value="true">{{ Lang::get('lingos::auth.remember_me') }}
                         </label>
 
                     </div>
                 </div>
 
                 <hr>
-                <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+                <button class="btn btn-large btn-primary" type="submit">{{ Lang::get('lingos::auth.sign_in') }}</button>
             </form>
 
             <div class="login-extra">
-                Don't have an account?
+                {{ Lang::get('lingos::auth.ask_account') }}
                 {{ HTML::linkRoute('admin.register', 'Register') }}
                 <!--
                     TODO: make link to forget password

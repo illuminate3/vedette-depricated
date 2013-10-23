@@ -3,14 +3,14 @@
 @section('header')
 <h3>
     <i class="icon-key"></i>
-    Users Throttling
+    {{ Lang::get('lingos::sentry.user_throttling') }}
 </h3>
 @stop
 
 @section('help')
-<p class="lead">Users Throttling</p>
+<p class="lead">{{ Lang::get('lingos::sentry.user_throttling') }}</p>
 <p>
-    From here you can Ban, unban, suspend or unsuspend a single user.
+    {{ Lang::get('vedette::vedette.help_user_throttle') }}
 </p>
 @stop
 
@@ -20,12 +20,9 @@
     <div class="span12">
 
         <div class="block">
-            <p class="block-heading">{{ $user->first_name }}&nbsp; {{ $user->last_name }} Throttling Status</p>
+            <p class="block-heading">{{ $user->first_name }}&nbsp; {{ $user->last_name }} {{ Lang::get('lingos::sentry.throttling_status') }}</p>
 
             <div class="block-body">
-
-
-
 
                 @if ($throttle->isBanned())
                     <div class="media">
@@ -33,13 +30,13 @@
                             <img class="media-object" src="{{ asset('packages/stevemo/vedette/img/not-ok-icon.png') }}" alt=""/>
                         </a>
                         <div class="media-body">
-                            <h4 class="media-heading">Banned</h4>
+                            <h4 class="media-heading">{{ Lang::get('lingos::sentry.banned') }}</h4>
                             <p>
                                 <a href="{{ route('admin.users.throttling.update',array($user->id,'unban')) }}"
-                                   class="btn btn-primary" rel="tooltip" title="UnBan User"
-                                   data-method="put" data-modal-text="Unban this user?">
+                                   class="btn btn-primary" rel="tooltip" title="{{ Lang::get('lingos::sentry.unban_user') }}"
+                                   data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.unban_user_confirm') }}">
                                     <i class="icon-check"></i>
-                                    Unban User
+                                    {{ Lang::get('lingos::sentry.unban') }}
                                 </a>
                             </p>
                         </div>
@@ -50,13 +47,13 @@
                             <img class="media-object" src="{{ asset('packages/stevemo/vedette/img/ok-icon.png') }}" alt=""/>
                         </a>
                         <div class="media-body">
-                            <h4 class="media-heading">Not Banned</h4>
+                            <h4 class="media-heading">{{ Lang::get('lingos::sentry.not_banned') }}</h4>
                             <p>
                                 <a href="{{ route('admin.users.throttling.update',array($user->id,'ban')) }}"
-                                   class="btn btn-danger" rel="tooltip" title="Ban User"
-                                   data-method="put" data-modal-text="Ban this user?">
+                                   class="btn btn-danger" rel="tooltip" title="{{ Lang::get('lingos::sentry.ban_user') }}"
+                                   data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.ban_user_confirm') }}">
                                     <i class="icon-ban-circle"></i>
-                                    Ban User
+                                    {{ Lang::get('lingos::sentry.ban') }}
                                 </a>
                             </p>
                         </div>
@@ -69,13 +66,13 @@
                         <img class="media-object" src="{{ asset('packages/stevemo/vedette/img/not-ok-icon.png') }}" alt=""/>
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Suspended</h4>
+                        <h4 class="media-heading">{{ Lang::get('lingos::sentry.suspended') }}</h4>
                         <p>
                             <a href="{{ route('admin.users.throttling.update',array($user->id,'unsuspend')) }}"
-                               class="btn btn-primary" rel="tooltip" title="UnBan User"
-                               data-method="put" data-modal-text="Unsuspend this user?">
+                               class="btn btn-primary" rel="tooltip" title="{{ Lang::get('lingos::sentry.unban_ser') }}"
+                               data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.unsuspend_user_confirm') }}">
                                 <i class="icon-check"></i>
-                                Unsuspend User
+                                {{ Lang::get('lingos::sentry.unsuspend_user') }}
                             </a>
                         </p>
                     </div>
@@ -86,13 +83,13 @@
                         <img class="media-object" src="{{ asset('packages/stevemo/vedette/img/ok-icon.png') }}" alt=""/>
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">Not Suspended</h4>
+                        <h4 class="media-heading">{{ Lang::get('lingos::sentry.not_suspended') }}</h4>
                         <p>
                             <a href="{{ route('admin.users.throttling.update',array($user->id,'suspend')) }}"
-                               class="btn btn-danger" rel="tooltip" title="Ban User"
-                               data-method="put" data-modal-text="Suspend this user?">
+                               class="btn btn-danger" rel="tooltip" title="{{ Lang::get('lingos::sentry.ban_user') }}"
+                               data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.suspend_user_confirm') }}">
                                 <i class="icon-ban-circle"></i>
-                                Suspend User
+                                {{ Lang::get('lingos::sentry.suspend_user') }}
                             </a>
                         </p>
                     </div>
