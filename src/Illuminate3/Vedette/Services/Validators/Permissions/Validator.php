@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Services\Validators\Permissions;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Illuminate3\Vedette\Services\Validators\ValidatorService;
 
 class Validator extends ValidatorService {
@@ -14,14 +19,12 @@ class Validator extends ValidatorService {
         'permissions' => 'required'
     );
 
-
     public function passes()
     {
         if (isset($this->data['id']))
         {
             static::$rules['name'] = "required|unique:permissions,name,{$this->data['id']}";
         }
-
         return parent::passes();
     }
 

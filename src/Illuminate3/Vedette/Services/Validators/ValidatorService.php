@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Services\Validators;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
  use Validator;
  use Input;
 

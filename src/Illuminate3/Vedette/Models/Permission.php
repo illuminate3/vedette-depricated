@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Models;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Eloquent;
 
 class Permission extends Eloquent {

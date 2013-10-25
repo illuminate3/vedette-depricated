@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate3\Vedette\Console\InstallCommand;
 use Illuminate3\Vedette\Console\UserSeedCommand;

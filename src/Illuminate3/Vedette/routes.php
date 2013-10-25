@@ -1,11 +1,16 @@
 <?php
+
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 /*
 |--------------------------------------------------------------------------
 | Vedette Routes
 |--------------------------------------------------------------------------
-|
-|
 */
+
 Route::get('admin', array(
     'as'     => 'admin.home',
     'uses'   => 'Illuminate3\Vedette\Controllers\VedetteController@index',
@@ -23,9 +28,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.vedette'), function()
 |--------------------------------------------------------------------------
 | Vedette Extra Users Routes
 |--------------------------------------------------------------------------
-|
-|
 */
+
 Route::put('admin/users/{users}/activate', array(
     'as'     => 'admin.users.activate',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersController@putStatus',
@@ -42,9 +46,8 @@ Route::put('admin/users/{users}/deactivate', array(
 |--------------------------------------------------------------------------
 | Vedette Users Permissions Routes
 |--------------------------------------------------------------------------
-|
-|
 */
+
 Route::get('admin/users/{users}/permissions', array(
     'as'     => 'admin.users.permissions',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersPermissionsController@index',
@@ -56,14 +59,12 @@ Route::put('admin/users/{users}/permissions', array(
     'before' => 'auth.vedette:users.update'
 ));
 
-
 /*
 |--------------------------------------------------------------------------
 | Vedette Users Throttling Routes
 |--------------------------------------------------------------------------
-|
-|
 */
+
 Route::get('admin/users/{user}/throttling', array(
     'as'     => 'admin.users.throttling',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersThrottlingController@getStatus',
@@ -80,9 +81,8 @@ Route::put('admin/users/{user}/throttling/{action}', array(
 |--------------------------------------------------------------------------
 | Vedette Groups Permissions Routes
 |--------------------------------------------------------------------------
-|
-|
 */
+
 Route::get('admin/groups/{groups}/permissions', array(
     'as'     => 'admin.groups.permissions',
     'uses'   => 'Illuminate3\Vedette\Controllers\GroupsPermissionsController@index',
@@ -94,14 +94,12 @@ Route::put('admin/groups/{groups}/permissions', array(
     'before' => 'auth.vedette:groups.update'
 ));
 
-
 /*
 |--------------------------------------------------------------------------
 | Vedette Login/Logout/Register Routes
 |--------------------------------------------------------------------------
-|
-|
 */
+
 Route::get('admin/login', array(
     'as'   => 'admin.login',
     'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
@@ -121,7 +119,6 @@ Route::get('admin/register', array(
 
 Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@postRegister');
 
-
 /*
 |--------------------------------------------------------------------------
 | Admin auth filter
@@ -132,6 +129,7 @@ Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@
 | You can provide your own rule by passing a argument to the filter
 |
 */
+
 Route::filter('auth.vedette', function($route, $request, $userRule = null)
 {
     if (! Sentry::check())

@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Controller;
 use View;
 use Config;

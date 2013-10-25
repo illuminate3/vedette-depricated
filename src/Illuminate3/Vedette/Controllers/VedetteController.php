@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use View;
 use Config;
 use Input;
@@ -43,6 +48,13 @@ class VedetteController extends BaseController {
      */
     public function getLogin()
     {
+
+		// Is the user logged in?
+		if (Sentry::check())
+		{
+			return Redirect::route('/');
+		}
+
         $login_attribute = Config::get('cartalyst/sentry::users.login_attribute');
         return View::make(Config::get('vedette::views.login'), compact('login_attribute'));
     }

@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Console;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;

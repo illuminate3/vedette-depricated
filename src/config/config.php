@@ -20,7 +20,8 @@ return array(
 
     'views' => array(
 
-        'layout' => 'vedette::layouts',
+//        'layout' => 'vedette::layouts',
+        'layout' => 'frontend/layouts/default',
 
         'dashboard' => 'vedette::dashboard.index',
         'login'     => 'vedette::dashboard.login',

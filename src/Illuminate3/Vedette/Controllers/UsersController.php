@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Cartalyst\Sentry\Users\UserAlreadyActivatedException;
 use View;
 use Config;

@@ -1,5 +1,10 @@
 <?php namespace Illuminate3\Vedette\Provider;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Illuminate3\Vedette\Models\Permission;
 
 class PermissionProvider {

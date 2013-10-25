@@ -1,10 +1,15 @@
 <?php namespace Illuminate3\Vedette\Services\Validators\Users;
 
+//
+// @author Steve Montambeault
+// @link   http://stevemo.ca
+//
+
 use Illuminate3\Vedette\Services\Validators\ValidatorService;
 
 class Validator extends ValidatorService {
 
-        /**
+     /**
      * User validation rules
      * @var array
      */
@@ -25,8 +30,7 @@ class Validator extends ValidatorService {
      */
     public function passes()
     {
-
-        if ( isset($this->data['id']) )
+       if ( isset($this->data['id']) )
         {
             /**
              *  if password and conf_pass are empty
