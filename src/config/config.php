@@ -22,6 +22,7 @@ return array(
 
 //        'layout' => 'vedette::layouts',
         'layout' => 'frontend/layouts/default',
+//        'layout' => 'layouts/default',
 
         'dashboard' => 'vedette::dashboard.index',
         'login'     => 'vedette::dashboard.login',
