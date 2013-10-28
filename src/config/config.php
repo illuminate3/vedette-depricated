@@ -24,9 +24,12 @@ return array(
         'layout' => 'frontend/layouts/default',
 //        'layout' => 'layouts/default',
 
-        'dashboard' => 'vedette::dashboard.index',
-        'login'     => 'vedette::dashboard.login',
-        'register'  => 'vedette::dashboard.register',
+        // Auth views
+        'auth'            => 'vedette::auth.index',
+        'login'           => 'vedette::auth.login',
+        'register'        => 'vedette::auth.register',
+        'forgot'          => 'vedette::auth.forgot-password',
+        'forgot_confirm'  => 'vedette::auth.forgot-password-confirm',
 
         // Users views
         'users_index'      => 'vedette::users.index',
