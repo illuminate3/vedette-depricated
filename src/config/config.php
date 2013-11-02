@@ -5,6 +5,7 @@ return array(
     'site_config' => array(
         'site_name'   => 'Vedette',
         'title'       => 'My Admin Panel',
+        'site_team'   => 'Vedette Team',
         'description' => 'Laravel 4 Admin Panel'
     ),
 
@@ -23,6 +24,8 @@ return array(
 //        'layout' => 'vedette::layouts',
         'layout' => 'frontend/layouts/default',
 //        'layout' => 'layouts/default',
+
+'dashboard' => 'vedette::auth.index',
 
         // Auth views
         'auth'            => 'vedette::auth.index',
@@ -50,7 +53,13 @@ return array(
         'permissions_create' => 'vedette::permissions.create',
 
         //Throttling Views
-        'throttle_status' => 'vedette::throttle.index',
+        'throttle_status'    => 'vedette::throttle.index',
+
+        //Email Views
+        'forgot_password'   => 'vedette::emails.forgot-password',
+        'register_activate' => 'vedette::emails.register-activate',
+        'reminder'          => 'vedette::emails.reminder',
+        'email_layout'      => 'vedette::emails.layouts.default',
     ),
 
     'validation' => array(

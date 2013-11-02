@@ -1,5 +1,84 @@
 <?php
 
+Route::filter('auth', function()
+{
+  if (Auth::guest())
+	{
+		// Save the attempted URL
+		Session::put('loginRedirect', URL::current());
+
+		// Redirect to login
+		return Redirect::to('login');
+	}
+		// Save the attempted URL
+		Session::put('loginRedirect', URL::current());
+
+		// Redirect to login
+		return Redirect::to('login');
+});
+
+Route::post('signin', function()
+{
+  // Get the POST data
+	$data = array(
+		'username'      => Input::get('username'),
+		'password'      => Input::get('password')
+	);
+
+	// Attempt Authentication
+	if ( Auth::attempt($data) )
+	{
+		// If user attempted to access specific URL before logging in
+		if ( Session::has('loginRedirect') )
+		{
+			$url = Session::get('loginRedirect');
+			Session::forget('loginRedirect');
+			return Redirect::to($url);
+		}
+		else
+			return Redirect::to('admin');
+	}
+	else
+	{
+		return Redirect::to('login')->with('login_errors', true);
+	}
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Authentication and Authorization Routes
+|--------------------------------------------------------------------------
+|
+|
+|
+*/
+
+Route::group(array('prefix' => 'auth'), function()
+{
+
+# Login
+//Route::get('signin', array('as' => 'signin', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'));
+//Route::post('signin', 'Illuminate3\Vedette\Controllers\VedetteController@postLogin');
+Route::get('signin', array('as' => 'signin', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignin'));
+Route::post('signin', 'Illuminate3\Vedette\Controllers\VedetteController@postSignin');
+
+# Register
+//Route::get('signup', array('as' => 'signup', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'));
+//Route::post('signup', 'Illuminate3\Vedette\Controllers\VedetteController@postRegister');
+Route::get('signup', array('as' => 'signup', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignup'));
+Route::post('signup', 'Illuminate3\Vedette\Controllers\VedetteController@postSignup');
+
+# Forgot Password
+Route::get('forgot-password', array('as' => 'forgot-password', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPassword'));
+Route::post('forgot-password', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword');
+
+# Forgot Password Confirmation
+Route::get('forgot-password/{passwordResetCode}', array('as' => 'forgot-password-confirm', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPasswordConfirm'));
+Route::post('forgot-password/{passwordResetCode}', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPasswordConfirm');
+
+});
+
 //
 // @author Steve Montambeault
 // @link   http://stevemo.ca
@@ -102,10 +181,12 @@ Route::put('admin/groups/{groups}/permissions', array(
 
 Route::get('admin/login', array(
     'as'   => 'admin.login',
-    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
+//    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
+    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignin'
 ));
 
-Route::post('admin/login','Illuminate3\Vedette\Controllers\VedetteController@postLogin');
+//Route::post('admin/login','Illuminate3\Vedette\Controllers\VedetteController@postLogin');
+Route::post('admin/login','Illuminate3\Vedette\Controllers\VedetteController@postSignin');
 
 Route::get('admin/logout', array(
     'as'   => 'admin.logout',
@@ -114,10 +195,12 @@ Route::get('admin/logout', array(
 
 Route::get('admin/register', array(
     'as'   => 'admin.register',
-    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
+//    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
+    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignup'
 ));
 
-Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@postRegister');
+//Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@postRegister');
+Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@postSignup');
 
 /*
 |--------------------------------------------------------------------------

@@ -15,49 +15,46 @@
 @stop
 
 @section('content')
-	<div class="margin-top-20">
-		@if ( Session::has('login_error') )
-			<div class="alert alert-danger">
-				<strong>{{ Session::get('login_error') }}</strong>
-			</div>
-		@endif
-	</div>
 
-	<div class="row">
-		<form action="{{ URL::route('admin.login') }}" class="form-signin" method="POST">
-			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+			{{ Former::horizontal_open()
+			->id('form-forgot')
+			->secure()
+			->rules(['email' => 'required'])
+			}}
 
-			<div class="input-group margin-bottom-sm">
-			  <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-			  <input class="form-control" type="text" placeholder="{{ Lang::get('lingos::general.email') }}" name="login_attribute" id="login_attribute" value="{{ Input::old('login_attribute') }}" autofocus>
-			</div>
+				<fieldset>
+				{{ Former::text('email', '')
+					->prepend('<i class="fa fa-envelope-o"></i>')
+					->class('form-control has-error')
+					->id('email')
+					->placeholder(Lang::get('lingos::general.email'))
+					->value(Input::old('email'))
+					->autofocus()
+				}}
+				{{ Former::password('password', '')
+					->prepend('<i class="fa fa-unlock-o"></i>')
+					->class('form-control has-error')
+					->id('password')
+					->value(Input::old('password'))
+					->placeholder(Lang::get('lingos::auth.password'))
+				}}
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"name="remember-me" value="true">{{ Lang::get('lingos::auth.remember_me') }}
+					</label>
+				</div>
 
-			<div class="input-group">
-			  <span class="input-group-addon"><i class="fa fa-key"></i></span>
-				<input class="form-control" type="password" name="password" id="password" placeholder="{{ Lang::get('lingos::auth.password') }}">
-			</div>
+				<div class="margin-top">
+					<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ Lang::get('lingos::button.sign_in') }}">
+				</div>
+				</fieldset>
 
-			<label class="checkbox">
-				<input type="checkbox"name="remember_me" value="true">{{ Lang::get('lingos::auth.remember_me') }}
-			</label>
+				<div class="margin-top">
+					<a class="btn btn-danger" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+					<a class="btn btn-info" href="{{ URL::route('signup') }}"><i class="fa fa-plus-circle"></i>{{ Lang::get('lingos::button.register') }}</a>
+					<a class="btn btn-warning" href="{{ URL::route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ Lang::get('lingos::button.forgot_password') }}</a>
+				</div>
 
-			<button type="submit" class="btn btn-success"><i class="fa fa-check-circle-o"></i>{{ Lang::get('lingos::button.sign_in') }}</button>
+			{{ Former::close() }}
 
-			<hr>
-
-			<div class="margin-top">
-				<a class="btn btn-danger" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
-				<a class="btn btn-info" href="{{ URL::route('signup') }}"><i class="fa fa-plus-circle"></i>{{ Lang::get('lingos::button.register') }}</a>
-					<!--
-						TODO: make link to forget password
-					-->
-				<a class="btn btn-warning" href="{{ URL::route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ Lang::get('lingos::button.forgot_password') }}</a>
-			</div>
-
-			<div class="margin-top">
-			</div>
-
-		</form>
-
-	</div>
 @stop

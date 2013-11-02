@@ -1,45 +1,56 @@
-@extends('frontend/layouts/default')
+@extends(Config::get('vedette::views.layout'))
 
-{{-- Page title --}}
-@section('title')
-Forgot Password ::
-@parent
+@section('css')
 @stop
 
-{{-- Page content --}}
+@section('page_title')
+	- {{ Lang::get('lingos::auth.forgot_password') }}
+@stop
+
+@section('title')
+	<h1>
+		<i class="fa fa-external-link fa-lg"></i>
+		{{ Lang::get('lingos::auth.forgot_password') }}
+	</h1>
+@stop
+
 @section('content')
-<div class="page-header">
-	<h3>Forgot Password</h3>
-</div>
-<form method="post" action="" class="form-horizontal">
-	<!-- CSRF Token -->
-	<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-	<!-- New Password -->
-	<div class="control-group{{ $errors->first('password', ' error') }}">
-		<label class="control-label" for="password">New Password</label>
-		<div class="controls">
-			<input type="password" name="password" id="password" value="{{ Input::old('password') }}" />
-			{{ $errors->first('password', '<span class="help-block">:message</span>') }}
+	{{ Former::horizontal_open()
+		->rules(['confirm_password' => 'required'])
+		->secure()
+	}}
+
+		<fieldset>
+			<legend><i class="fa fa-key"></i>{{ Lang::get('lingos::auth.new_password') }}</legend>
+			{{ Former::password('password', '')
+				->prepend('<i class="fa fa-unlock-o"></i>')
+				->class('form-control has-error')
+				->id('password')
+				->value(Input::old('password'))
+				->placeholder(Lang::get('lingos::auth.password'))
+			}}
+			{{ Former::password('confirm_password', '')
+				->prepend('<i class="fa fa-unlock"></i>')
+				->class('form-control has-error')
+				->id('password_confirmation')
+				->value(Input::old('confirm_password'))
+				->placeholder(Lang::get('lingos::auth.confirm_password'))
+			}}
+		</fieldset>
+
+		<div class="margin-top">
+			{{ Former::actions()
+				->success_submit(Lang::get('lingos::button.submit'))
+			}}
 		</div>
-	</div>
 
-	<!-- Password Confirm -->
-	<div class="control-group{{ $errors->first('password_confirm', ' error') }}">
-		<label class="control-label" for="password_confirm">Password Confirmation</label>
-		<div class="controls">
-			<input type="password" name="password_confirm" id="password_confirm" value="{{ Input::old('password_confirm') }}" />
-			{{ $errors->first('password_confirm', '<span class="help-block">:message</span>') }}
+		<hr>
+
+		<div class="margin-top">
+			<a class="btn btn-danger" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 		</div>
-	</div>
 
-	<!-- Form actions -->
-	<div class="control-group">
-		<div class="controls">
-			<a class="btn" href="{{ route('home') }}">Cancel</a>
+	{{ Former::close() }}
 
-			<button type="submit" class="btn btn-info">Submit</button>
-		</div>
-	</div>
-</form>
 @stop

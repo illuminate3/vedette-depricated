@@ -21,175 +21,213 @@ use Cartalyst\Sentry\Users\WrongPasswordException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
 use Cartalyst\Sentry\Throttling\UserBannedException;
+//use Cartalyst\Sentry\Users\UserInterface;
 use URL;
 use Mail;
+use Session;
 
 class VedetteController extends BaseController {
 
+public function index()
+{
+	return View::make(Config::get('vedette::views.dashboard'));
+}
 
-    /**
-     * Show the dashboard
-     *
-     * @author Steve Montambeault
-     * @link   http://stevemo.ca
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        return View::make(Config::get('vedette::views.dashboard'));
-    }
-
-    /**
-     * Show the login form
-     *
-     * @author Steve Montambeault
-     * @link   http://stevemo.ca
-     *
-     * @return Response
-     */
-    public function getLogin()
-    {
-
+	/**
+	 * Account sign in.
+	 *
+	 * @return View
+	 */
+	public function getSignin()
+	{
 		// Is the user logged in?
 		if (Sentry::check())
 		{
 			return Redirect::route('/');
 		}
 
-        $login_attribute = Config::get('cartalyst/sentry::users.login_attribute');
-        return View::make(Config::get('vedette::views.login'), compact('login_attribute'));
-    }
-
-    /**
-     * Display the registration form
-     *
-     * @author Steve Montambeault
-     * @link   http://stevemo.ca
-     *
-     * @return Response
-     */
-    public function getRegister()
-    {
-        $login_attribute = Config::get('cartalyst/sentry::users.login_attribute');
-        return View::make(Config::get('vedette::views.register'), compact('login_attribute'));
-    }
-
-    /**
-     * Logs out the current user
-     *
-     * @author Steve Montambeault
-     * @link   http://stevemo.ca
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function getLogout()
-    {
-        if (Sentry::check())
-        {
-            $user = Sentry::getUser();
-            Sentry::logout();
-            Event::fire('users.logout', array($user));
-            return Redirect::route('admin.login')->with('success', Lang::get('vedette::users.logout'));
-        }
-        return Redirect::route('admin.login');
-    }
-
-    /**
-     * Authenticate the user
-     *
-     * @author Steve Montambeault
-     * @link   http://stevemo.ca
-     *
-     *
-     * @return Response
-     */
-    public function postLogin()
-    {
-        try
-        {
-            $remember = Input::get('remember_me', false);
-            $userdata = array(
-                Config::get('cartalyst/sentry::users.login_attribute') => Input::get('login_attribute'),
-                'password' => Input::get('password')
-            );
-
-            $user = Sentry::authenticate($userdata, $remember);
-            Event::fire('users.login', array($user));
-            return Redirect::intended('admin')->with('success', Lang::get('vedette::users.login_success'));
-        }
-        catch (LoginRequiredException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-        catch (PasswordRequiredException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-        catch (WrongPasswordException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-        catch (UserNotActivatedException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-        catch (UserNotFoundException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-        catch (UserSuspendedException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-        catch (UserBannedException $e)
-        {
-            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
-        }
-    }
-
-    /**
-     * Register user
-     *
-     * @author Steve Montambeault
-     * @link   http://stevemo.ca
-     *
-     * @return Response
-     */
-    public function postRegister()
-    {
-        try
-        {
-            $validation = $this->getValidationService('user');
-
-            if( $validation->passes() )
-            {
-                //TODO : Do something with the activation code later on
-                //TODO : Setting to activate or not, email also
-                $user = Sentry::register($validation->getData(), true);
-                Event::fire('users.register', array($user));
-
-                return Redirect::route('admin.login')->with('success', Lang::get('vedette::users.register_success'));
-            }
-
-            return Redirect::back()->withInput()->withErrors($validation->getErrors());
-        }
-        catch (LoginRequiredException $e)
-        {
-            return Redirect::back()->withInput()->with('error',$e->getMessage());
-        }
-        catch (PasswordRequiredException $e)
-        {
-            return Redirect::back()->withInput()->with('error',$e->getMessage());
-        }
-        catch (UserExistsException $e)
-        {
-            return Redirect::back()->withInput()->with('error',$e->getMessage());
-        }
-    }
+		// Show the page
+//		return View::make('frontend.auth.signin');
+		return View::make(Config::get('vedette::views.login'));
+	}
 
 	/**
-	 * taken from brunogaspar/laravel4-starter-kit
+	 * Account sign in form processing.
+	 *
+	 * @return Redirect
+	 */
+	public function postSignin()
+	{
+		// Declare the rules for the form validation
+		$rules = array(
+			'email'    => 'required|email',
+			'password' => 'required|between:4,255',
+		);
+
+		// Create a new validator instance from our validation rules
+		$validator = Validator::make(Input::all(), $rules);
+
+		// If validation fails, we'll exit the operation now.
+		if ($validator->fails())
+		{
+			// Ooops.. something went wrong
+			return Redirect::back()->withInput()->withErrors($validator);
+		}
+
+		try
+		{
+			// Try to log the user in
+			Sentry::authenticate(Input::only('email', 'password'), Input::get('remember-me', 0));
+			// Get the page we were before
+//			$redirect = Session::get('loginRedirect', 'account');
+			$redirect = Session::get('loginRedirect', '/');
+//$redirect = '/';
+			// Unset the page we were before from the session
+			Session::forget('loginRedirect');
+
+			// Redirect to the users page
+			return Redirect::to($redirect)->with('success', Lang::get('auth/message.signin.success'));
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+			$this->messageBag->add('email', Lang::get('auth/message.account_not_found'));
+		}
+		catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+		{
+			$this->messageBag->add('email', Lang::get('auth/message.account_not_activated'));
+		}
+		catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+		{
+			$this->messageBag->add('email', Lang::get('auth/message.account_suspended'));
+		}
+		catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
+		{
+			$this->messageBag->add('email', Lang::get('auth/message.account_banned'));
+		}
+
+		// Ooops.. something went wrong
+		return Redirect::back()->withInput()->withErrors($this->messageBag);
+	}
+
+	/**
+	 * Account sign up.
+	 *
+	 * @return View
+	 */
+	public function getSignup()
+	{
+		// Is the user logged in?
+		if (Sentry::check())
+		{
+			return Redirect::route('account');
+		}
+
+		// Show the page
+//		return View::make('frontend.auth.signup');
+		return View::make(Config::get('vedette::views.register'));
+	}
+
+	/**
+	 * Account sign up form processing.
+	 *
+	 * @return Redirect
+	 */
+	public function postSignup()
+	{
+		// Declare the rules for the form validation
+		$rules = array(
+			'first_name'       => 'required|min:3',
+			'last_name'        => 'required|min:3',
+			'email'            => 'required|email|unique:users',
+			'email_confirm'    => 'required|email|same:email',
+			'password'         => 'required|between:4,255',
+			'confirm_password' => 'required|same:password',
+		);
+
+		// Create a new validator instance from our validation rules
+		$validator = Validator::make(Input::all(), $rules);
+
+		// If validation fails, we'll exit the operation now.
+		if ($validator->fails())
+		{
+			// Ooops.. something went wrong
+			return Redirect::back()->withInput()->withErrors($validator);
+		}
+
+		try
+		{
+			// Register the user
+			$user = Sentry::register(array(
+				'first_name' => Input::get('first_name'),
+				'last_name'  => Input::get('last_name'),
+				'email'      => Input::get('email'),
+				'password'   => Input::get('password'),
+			));
+
+			// Data to be used on the email view
+			$data = array(
+				'user'          => $user,
+				'activationUrl' => URL::route('activate', $user->getActivationCode()),
+			);
+
+			// Send the activation code through email
+			Mail::send('emails.register-activate', $data, function($m) use ($user)
+			{
+				$m->to($user->email, $user->first_name . ' ' . $user->last_name);
+				$m->subject('Welcome ' . $user->first_name);
+			});
+
+			// Redirect to the register page
+			return Redirect::back()->with('success', Lang::get('auth/message.signup.success'));
+		}
+		catch (Cartalyst\Sentry\Users\UserExistsException $e)
+		{
+			$this->messageBag->add('email', Lang::get('auth/message.account_already_exists'));
+		}
+
+		// Ooops.. something went wrong
+		return Redirect::back()->withInput()->withErrors($this->messageBag);
+	}
+
+	/**
+	 * User account activation page.
+	 *
+	 * @param  string  $actvationCode
+	 * @return
+	 */
+	public function getActivate($activationCode = null)
+	{
+		// Is the user logged in?
+		if (Sentry::check())
+		{
+			return Redirect::route('account');
+		}
+
+		try
+		{
+			// Get the user we are trying to activate
+			$user = Sentry::getUserProvider()->findByActivationCode($activationCode);
+
+			// Try to activate this user account
+			if ($user->attemptActivation($activationCode))
+			{
+				// Redirect to the login page
+				return Redirect::route('signin')->with('success', Lang::get('auth/message.activate.success'));
+			}
+
+			// The activation failed.
+			$error = Lang::get('auth/message.activate.error');
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+			$error = Lang::get('auth/message.activate.error');
+		}
+
+		// Ooops.. something went wrong
+		return Redirect::route('signin')->with('error', $error);
+	}
+
+	/**
 	 * Forgot password page.
 	 *
 	 * @return View
@@ -197,11 +235,11 @@ class VedetteController extends BaseController {
 	public function getForgotPassword()
 	{
 		// Show the page
-		return View::make('vedette::auth.forgot-password');
+//		return View::make('frontend.auth.forgot-password');
+		return View::make(Config::get('vedette::views.forgot'));
 	}
 
 	/**
-	 * taken from brunogaspar/laravel4-starter-kit
 	 * Forgot password form processing page.
 	 *
 	 * @return Redirect
@@ -233,11 +271,12 @@ class VedetteController extends BaseController {
 				'user'              => $user,
 				'forgotPasswordUrl' => URL::route('forgot-password-confirm', $user->getResetPasswordCode()),
 			);
-
 			// Send the activation code through email
-			Mail::send('vedette::emails.forgot-password', $data, function($m) use ($user)
+//			Mail::send('emails.forgot-password', $data, function($m) use ($user)
+			Mail::send(Config::get('vedette::views.forgot_password'), $data, function($m) use ($user)
 			{
 				$m->to($user->email, $user->first_name . ' ' . $user->last_name);
+//				$m->subject('Account Password Recovery');
 				$m->subject( Lang::get('lingos::auth.account_password_recovery') );
 			});
 		}
@@ -253,7 +292,6 @@ class VedetteController extends BaseController {
 	}
 
 	/**
-	 * taken from brunogaspar/laravel4-starter-kit
 	 * Forgot Password Confirmation page.
 	 *
 	 * @param  string  $passwordResetCode
@@ -273,11 +311,11 @@ class VedetteController extends BaseController {
 		}
 
 		// Show the page
-		return View::make('vedette::auth.forgot-password-confirm');
+//		return View::make('frontend.auth.forgot-password-confirm');
+		return View::make(Config::get('vedette::views.forgot_confirm'));
 	}
 
 	/**
-	 * taken from brunogaspar/laravel4-starter-kit
 	 * Forgot Password Confirmation form processing page.
 	 *
 	 * @param  string  $passwordResetCode
@@ -288,7 +326,7 @@ class VedetteController extends BaseController {
 		// Declare the rules for the form validation
 		$rules = array(
 			'password'         => 'required',
-			'password_confirm' => 'required|same:password'
+			'confirm_password' => 'required|same:password'
 		);
 
 		// Create a new validator instance from our dynamic rules
@@ -323,6 +361,20 @@ class VedetteController extends BaseController {
 			// Redirect to the forgot password page
 			return Redirect::route('forgot-password')->with('error', Lang::get('auth/message.account_not_found'));
 		}
+	}
+
+	/**
+	 * Logout page.
+	 *
+	 * @return Redirect
+	 */
+	public function getLogout()
+	{
+		// Log the user out
+		Sentry::logout();
+
+		// Redirect to the users page
+		return Redirect::route('home')->with('success', 'You have successfully logged out!');
 	}
 
 }

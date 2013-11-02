@@ -1,13 +1,13 @@
-@extends('emails/layouts/default')
+@extends(Config::get('vedette::views.email_layout'))
 
 @section('content')
-<p>Hello {{ $user->first_name }},</p>
+<p>{{ Lang::get('lingos::email.hello') }} {{ $user->first_name }},</p>
 
-<p>Please click on the following link to updated your password:</p>
+<p>{{ Lang::get('lingos::email.click_update_password') }}</p>
 
 <p><a href="{{ $forgotPasswordUrl }}">{{ $forgotPasswordUrl }}</a></p>
 
-<p>Best regards,</p>
+<p>{{ Lang::get('lingos::email.regards') }},</p>
 
-<p>SiteNameHere Team</p>
+<p>{{ Config::get('vedette::site_config.site_team') }}</p>
 @stop

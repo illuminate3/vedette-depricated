@@ -17,7 +17,44 @@ Route::get('/', function()
 });
 */
 
+Route::filter('auth', function()
+{
+  if (Auth::guest())
+	{
+		// Save the attempted URL
+		Session::put('pre_login_url', URL::current());
 
+		// Redirect to login
+		return Redirect::to('login');
+	}
+});
+
+Route::post('login', function()
+{
+  // Get the POST data
+	$data = array(
+		'username'      => Input::get('username'),
+		'password'      => Input::get('password')
+	);
+
+	// Attempt Authentication
+	if ( Auth::attempt($data) )
+	{
+		// If user attempted to access specific URL before logging in
+		if ( Session::has('pre_login_url') )
+		{
+			$url = Session::get('pre_login_url');
+			Session::forget('pre_login_url');
+			return Redirect::to($url);
+		}
+		else
+			return Redirect::to('admin');
+	}
+	else
+	{
+		return Redirect::to('login')->with('login_errors', true);
+	}
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -80,27 +117,25 @@ Route::group(array('prefix' => 'vedette'), function()
 Route::group(array('prefix' => 'auth'), function()
 {
 
-	# Login
-	Route::get('signin', array('as' => 'signin', 'uses' => 'AuthController@getSignin'));
-	Route::post('signin', 'AuthController@postSignin');
+# Login
+//Route::get('signin', array('as' => 'signin', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'));
+//Route::post('signin', 'Illuminate3\Vedette\Controllers\VedetteController@postLogin');
+Route::get('signin', array('as' => 'signin', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignin'));
+Route::post('signin', 'Illuminate3\Vedette\Controllers\VedetteController@postSignin');
 
-	# Register
-	Route::get('signup', array('as' => 'signup', 'uses' => 'AuthController@getSignup'));
-	Route::post('signup', 'AuthController@postSignup');
+# Register
+//Route::get('signup', array('as' => 'signup', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'));
+//Route::post('signup', 'Illuminate3\Vedette\Controllers\VedetteController@postRegister');
+Route::get('signup', array('as' => 'signup', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignup'));
+Route::post('signup', 'Illuminate3\Vedette\Controllers\VedetteController@postSignup');
 
-	# Account Activation
-	Route::get('activate/{activationCode}', array('as' => 'activate', 'uses' => 'AuthController@getActivate'));
+# Forgot Password
+Route::get('forgot-password', array('as' => 'forgot-password', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPassword'));
+Route::post('forgot-password', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword');
 
-	# Forgot Password
-	Route::get('forgot-password', array('as' => 'forgot-password', 'uses' => 'AuthController@getForgotPassword'));
-	Route::post('forgot-password', 'AuthController@postForgotPassword');
-
-	# Forgot Password Confirmation
-	Route::get('forgot-password/{passwordResetCode}', array('as' => 'forgot-password-confirm', 'uses' => 'AuthController@getForgotPasswordConfirm'));
-	Route::post('forgot-password/{passwordResetCode}', 'AuthController@postForgotPasswordConfirm');
-
-	# Logout
-	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@getLogout'));
+# Forgot Password Confirmation
+Route::get('forgot-password/{passwordResetCode}', array('as' => 'forgot-password-confirm', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPasswordConfirm'));
+Route::post('forgot-password/{passwordResetCode}', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPasswordConfirm');
 
 });
 
@@ -132,7 +167,7 @@ Route::group(array('prefix' => 'account1'), function()
 	Route::post('change-email', 'Controllers\Account\ChangeEmailController@postIndex');
 
 });
-
+/*
 // account routes
 Route::get('account/profile', array('as' => 'account.profile', 'uses' => 'GrahamCampbell\BootstrapCMS\Controllers\AccountController@getProfile'));
 Route::delete('account/profile', array('as' => 'account.profile.delete', 'uses' => 'GrahamCampbell\BootstrapCMS\Controllers\AccountController@deleteProfile'));

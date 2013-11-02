@@ -32,7 +32,12 @@ class UsersController extends BaseController {
     public function index()
     {
         $users = Sentry::getUserProvider()->createModel()->with('groups')->get();
-        return View::make(Config::get('vedette::views.users_index'), compact('users'));
+
+		foreach ($users as $user) {
+			$throttles = Sentry::getThrottleProvider()->findByUserId($user->id);
+		}
+
+        return View::make(Config::get('vedette::views.users_index'), compact('users', 'throttles'));
     }
 
     /**
@@ -49,7 +54,8 @@ class UsersController extends BaseController {
         try
         {
             $user = Sentry::getUserProvider()->findById($id);
-            return View::make(Config::get('vedette::views.users_show'),compact('user'));
+			$throttles = Sentry::getThrottleProvider()->findByUserId($id);
+            return View::make(Config::get('vedette::views.users_show'),compact('user', 'throttles'));
         }
         catch ( UserNotFoundException $e)
         {
@@ -89,7 +95,9 @@ class UsersController extends BaseController {
             //get only the group id the user belong to
             $userGroupsId = array_pluck($user->getGroups()->toArray(), 'id');
 
-            return View::make(Config::get('vedette::views.users_edit'),compact('user','groups','userGroupsId'));
+			$throttles = Sentry::getThrottleProvider()->findByUserId($id);
+
+            return View::make(Config::get('vedette::views.users_edit'),compact('user','groups','userGroupsId', 'throttles'));
         }
         catch (UserNotFoundException $e)
         {

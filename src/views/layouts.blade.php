@@ -9,10 +9,10 @@
     <title>{{ $vedette['title'] }}</title>
     <meta name="description" content="{{ $vedette['description'] }}">
     <meta name="viewport" content="width=device-width">
-    {{ HTML::style('packages/illuminate3/vedette/bootstrap/css/bootstrap.min.css') }}
-    {{ HTML::style('packages/illuminate3/vedette/font-awesome/css/font-awesome.min.css') }}
-    {{ HTML::style('packages/illuminate3/vedette/select2-3.3.1/select2.css') }}
-    {{ HTML::style('packages/illuminate3/vedette/css/theme.css') }}
+    {{ HTML::style('public/bootstrap/css/bootstrap.min.css') }}
+    {{ HTML::style('public/font-awesome/css/font-awesome.min.css') }}
+    {{ HTML::style('public/select2-3.3.1/select2.css') }}
+    {{ HTML::style('public/css/theme.css') }}
     @yield('style')
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
