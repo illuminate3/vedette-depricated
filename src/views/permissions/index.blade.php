@@ -52,7 +52,7 @@
                 <div class="block-body">
                     <p></p>
                     <div class="btn-toolbar">
-                        <a href="{{ URL::route('admin.permissions.create') }}" class="btn btn-primary" rel="tooltip" title="Create New Permission">
+                        <a href="{{ URL::route('admin.permissions.create') }}" class="btn btn-primary" title="Create New Permission">
                             <i class="icon-plus"></i>
                             New Permission
                         </a>
@@ -84,11 +84,11 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.permissions.edit', array($permission->id)) }}"
-                                                class="btn" rel="tooltip" title="Edit Permission">
+                                                class="btn" title="Edit Permission">
                                                 <i class="icon-edit"></i>
                                             </a>
                                             <a href="{{ route('admin.permissions.destroy', array($permission->id)) }}"
-                                                class="btn btn-danger" rel="tooltip" title="Delete Permission" data-method="delete"
+                                                class="btn btn-danger" title="Delete Permission" data-method="delete"
                                                 data-modal-text="delete this Permission?">
                                                 <i class="icon-remove"></i>
                                             </a>

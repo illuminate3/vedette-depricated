@@ -59,7 +59,7 @@ class UsersController extends BaseController {
         }
         catch ( UserNotFoundException $e)
         {
-            return Redirect::route('admin.users.index')->with('error', $e->getMessage());
+            return Redirect::route('auth.users.index')->with('error', $e->getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ class UsersController extends BaseController {
         }
         catch (UserNotFoundException $e)
         {
-            return Redirect::route('admin.users.index')->with('error',$e->getMessage());
+            return Redirect::route('auth.users.index')->with('error',$e->getMessage());
         }
     }
 
@@ -124,7 +124,7 @@ class UsersController extends BaseController {
                 //create the user
                 $user = Sentry::register($validation->getData(), true);
                 Event::fire('users.create', array($user));
-                return Redirect::route('admin.users.index')->with('success', Lang::get('vedette::users.create_success'));
+                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::auth.success.create'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -156,9 +156,8 @@ class UsersController extends BaseController {
     {
         try
         {
-            $credentials = Input::except('groups');
+            $credentials = Input::except('groups', 'banned', 'suspended');
             $credentials['id'] = $id;
-
             $validation = $this->getValidationService('user', $credentials);
 
             if( $validation->passes() )
@@ -167,12 +166,36 @@ class UsersController extends BaseController {
                 $user->fill($validation->getData());
                 $user->save();
 
+
+// update throttle
+	//Prep for suspension
+	$throttle = Sentry::getThrottleProvider()->findByUserId($id);
+if (Input::has('suspended'))
+{
+	// Suspend the user
+	$throttle->suspend();
+} else {
+	// Suspend the user
+	$throttle->unsuspend();
+}
+if (Input::has('banned'))
+{
+	// Ban the user
+	$throttle->ban();
+} else {
+	// Ban the user
+	$throttle->unBan();
+}
+
+
+
+
                 //update groups
                 $user->groups()->detach();
                 $user->groups()->sync(Input::get('groups',array()));
-
                 Event::fire('users.update', array($user));
-                return Redirect::route('admin.users.index')->with('success', Lang::get('vedette::users.update_success'));
+
+                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::auth.success.update'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -215,11 +238,11 @@ class UsersController extends BaseController {
             $eventData = $user;
             $user->delete();
             Event::fire('users.delete', array($eventData));
-            return Redirect::route('admin.users.index')->with('success',Lang::get('vedette::users.delete_success'));
+            return Redirect::route('auth.users.index')->with('success',Lang::get('vedette::users.delete_success'));
         }
         catch (UserNotFoundException $e)
         {
-            return Redirect::route('admin.users.index')->with('error',$e->getMessage());
+            return Redirect::route('auth.users.index')->with('error',$e->getMessage());
         }
     }
 
@@ -244,7 +267,7 @@ class UsersController extends BaseController {
                 $user->activated = 0;
                 $user->activated_at = null;
                 $user->save();
-                return Redirect::route('admin.users.index')->with('success',Lang::get('vedette::users.deactivation_success'));
+                return Redirect::route('auth.users.index')->with('success',Lang::get('vedette::users.deactivation_success'));
             }
             else
             {
@@ -253,23 +276,49 @@ class UsersController extends BaseController {
                 if ($user->attemptActivation($code))
                 {
                     // User activation passed
-                    return Redirect::route('admin.users.index')->with('success',Lang::get('vedette::users.activation_success'));
+                    return Redirect::route('auth.users.index')->with('success',Lang::get('vedette::users.activation_success'));
                 }
                 else
                 {
                     // User activation failed
-                    return Redirect::route('admin.users.index')->with('error',Lang::get('vedette::users.activation_fail'));
+                    return Redirect::route('auth.users.index')->with('error',Lang::get('vedette::users.activation_fail'));
                 }
             }
         }
         catch (UserNotFoundException $e)
         {
-            return Redirect::route('admin.users.index')->with('error',$e->getMessage());
+            return Redirect::route('auth.users.index')->with('error',$e->getMessage());
         }
         catch (UserAlreadyActivatedException $e)
         {
-            return Redirect::route('admin.users.index')->with('error',$e->getMessage());
+            return Redirect::route('auth.users.index')->with('error',$e->getMessage());
         }
     }
+
+
+	public function postDelete($id)
+	{
+		try
+		{
+		    // Find the user using the user id
+		    $user = Sentry::getUserProvider()->findById($id);
+
+		    // Delete the user
+		    if ($user->delete())
+		    {
+		        // User was successfully deleted
+return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::auth.success.delete'));
+		    }
+		    else
+		    {
+		        // There was a problem deleting the user
+return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::auth.error.delete'));
+		    }
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::auth.user_not_found'));
+		}
+	}
 
 }

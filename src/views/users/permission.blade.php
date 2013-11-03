@@ -1,28 +1,112 @@
 @extends(Config::get('vedette::views.layout'))
 
-@section('header')
-    <h3>
-        <i class="icon-user"></i>
-        {{ Lang::get('lingos::general.users_permissions') }}
-    </h3>
+@section('css')
 @stop
 
-@section('help')
-    <p class="lead">{{ Lang::get('vedette::vedette.permission_inheritance') }}</p>
-    <p>
-        {{ Lang::get('vedette::vedette.help_user_permissions') }}
-    </p>
-    <br>
-    <p class="text-warning">
-        {{ Lang::get('vedette::vedette.permission_inheritance_only_users_permissions') }}
-    </p>
-     <p class="text-info">
-        {{ Lang::get('lingos::general.visit_sentry_site') }}
-    </p>
+@section('js')
+	<script src="{{ asset('assets/js/twitter-bootstrap-hover-dropdown.js') }}"></script>
+	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
+	<script>
+		var text_confirm_message = '{{ Lang::get('lingos::general.ask_delete_user') }}';
+		$(document).ready(function() {
+			$('.js-activated').dropdownHover().dropdown();
+		});
+	</script>
+@stop
+
+@section('page_title')
+	- {{ Lang::get('lingos::sentry.users_permissions') }}
+@stop
+
+@section('title')
+	<h1>
+		<i class="fa fa-wrench fa-lg"></i>
+		{{ Lang::get('lingos::sentry.users_permissions') }}
+	</h1>
 @stop
 
 @section('content')
-    {{Former::horizontal_open( route('admin.users.permissions', array($user->id)), 'PUT' )}}
+
+<div class="row">
+<div class="row btn-toolbar pull-right" role="toolbar">
+	<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::general.back') }}">
+		<i class="fa fa-backward"></i>
+		{{ Lang::get('lingos::general.back') }}
+	</a>
+</div>
+</div>
+
+<div class="row">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#info" data-toggle="tab">
+				{{ Lang::get('lingos::general.information') }}
+			</a>
+		</li>
+		<li>
+			<a href="#status" data-toggle="tab">
+				{{ Lang::get('lingos::general.status') }}
+			</a>
+		</li>
+	</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane active in padding-lg" id="info">
+
+	<table class="table table-striped table-hover">
+		<tbody>
+			<tr>
+				<td>{{ Lang::get('lingos::general.first_name') }}</td>
+				<td>{{ $user->first_name }}</td>
+			</tr>
+			<tr>
+				<td>{{ Lang::get('lingos::general.last_name') }}</td>
+				<td>{{ $user->last_name }}</td>
+			</tr>
+			<tr>
+				<td>{{ Lang::get('lingos::general.email') }}</td>
+				<td>{{ $user->email }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+<div class="tab-pane fade padding-lg" id="status">
+
+	<table class="table table-striped table-hover">
+		<tbody>
+			<tr>
+				<td>{{ Lang::get('lingos::sentry.groups') }}</td>
+				<td>
+					@foreach($user->groups as $group)
+						{{ $group->getName() }}
+					@endforeach
+				</td>
+			</tr>
+			<tr>
+				<td>{{ Lang::get('lingos::general.active') }}</td>
+				<td>{{ ($user->activated) ? Lang::get('lingos::general.yes') : Lang::get('lingos::general.no') }}</td>
+			</tr>
+				<td>{{ Lang::get('lingos::general.date_activated') }}</td>
+				<td>{{ $user->activated_at ? $user->activated_at : Lang::get('lingos::general.never_activated') }}</td>
+			</tr>
+			<tr>
+				<td>{{ Lang::get('lingos::general.last_login') }}</td>
+				<td>{{ is_null($user->last_login) ? Lang::get('lingos::general.never_visited') : $user->last_login }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+</div>
+
+</div>
+
+
+
+
+
+    {{Former::horizontal_open( route('auth.users.permissions', array($user->id)), 'POST' )}}
     <div class="row">
         <div class="span12">
             <div class="block">
@@ -73,7 +157,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
-                        <a href="{{route('admin.users.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
+                        <a href="{{route('auth.users.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
                     </div>
                 </div>
             </div>

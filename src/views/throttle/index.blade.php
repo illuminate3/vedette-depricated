@@ -33,7 +33,7 @@
                             <h4 class="media-heading">{{ Lang::get('lingos::sentry.banned') }}</h4>
                             <p>
                                 <a href="{{ route('admin.users.throttling.update',array($user->id,'unban')) }}"
-                                   class="btn btn-primary" rel="tooltip" title="{{ Lang::get('lingos::sentry.unban_user') }}"
+                                   class="btn btn-primary" title="{{ Lang::get('lingos::sentry.unban_user') }}"
                                    data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.unban_user_confirm') }}">
                                     <i class="icon-check"></i>
                                     {{ Lang::get('lingos::sentry.unban') }}
@@ -50,7 +50,7 @@
                             <h4 class="media-heading">{{ Lang::get('lingos::sentry.not_banned') }}</h4>
                             <p>
                                 <a href="{{ route('admin.users.throttling.update',array($user->id,'ban')) }}"
-                                   class="btn btn-danger" rel="tooltip" title="{{ Lang::get('lingos::sentry.ban_user') }}"
+                                   class="btn btn-danger" title="{{ Lang::get('lingos::sentry.ban_user') }}"
                                    data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.ban_user_confirm') }}">
                                     <i class="icon-ban-circle"></i>
                                     {{ Lang::get('lingos::sentry.ban') }}
@@ -69,7 +69,7 @@
                         <h4 class="media-heading">{{ Lang::get('lingos::sentry.suspended') }}</h4>
                         <p>
                             <a href="{{ route('admin.users.throttling.update',array($user->id,'unsuspend')) }}"
-                               class="btn btn-primary" rel="tooltip" title="{{ Lang::get('lingos::sentry.unban_ser') }}"
+                               class="btn btn-primary" title="{{ Lang::get('lingos::sentry.unban_ser') }}"
                                data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.unsuspend_user_confirm') }}">
                                 <i class="icon-check"></i>
                                 {{ Lang::get('lingos::sentry.unsuspend_user') }}
@@ -86,7 +86,7 @@
                         <h4 class="media-heading">{{ Lang::get('lingos::sentry.not_suspended') }}</h4>
                         <p>
                             <a href="{{ route('admin.users.throttling.update',array($user->id,'suspend')) }}"
-                               class="btn btn-danger" rel="tooltip" title="{{ Lang::get('lingos::sentry.ban_user') }}"
+                               class="btn btn-danger" title="{{ Lang::get('lingos::sentry.ban_user') }}"
                                data-method="put" data-modal-text="{{ Lang::get('lingos::sentry.suspend_user_confirm') }}">
                                 <i class="icon-ban-circle"></i>
                                 {{ Lang::get('lingos::sentry.suspend_user') }}

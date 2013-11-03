@@ -23,7 +23,7 @@
                 <p class="block-heading">{{ Lang::get('lingos::sentry.groups') }}</p>
                 <div class="block-body">
                     <div class="btn-toolbar">
-                        <a href="{{ URL::route('admin.groups.create') }}" class="btn btn-primary" rel="tooltip" title="{{ Lang::get('lingos::sentry.create_new_group') }}">
+                        <a href="{{ URL::route('admin.groups.create') }}" class="btn btn-primary" title="{{ Lang::get('lingos::sentry.create_new_group') }}">
                             <i class="icon-plus"></i>
                             {{ Lang::get('lingos::sentry.new_group') }}
                         </a>
@@ -46,15 +46,15 @@
                                 <td>{{ $group->name }}</td>
                                 <td>
                                     <a href="{{ route('admin.groups.edit', array($group->id)) }}"
-                                        class="btn" rel="tooltip" title="{{ Lang::get('lingos::sentry.edit_group') }}">
+                                        class="btn" title="{{ Lang::get('lingos::sentry.edit_group') }}">
                                         <i class="icon-edit"></i>
                                     </a>
                                     <a href="{{ route('admin.groups.permissions', array($group->id)) }}"
-                                        class="btn" rel="tooltip" title="{{ Lang::get('lingos::sentry.edit_group_permissions') }}">
+                                        class="btn" title="{{ Lang::get('lingos::sentry.edit_group_permissions') }}">
                                         Permissions <i class="icon-arrow-right"></i>
                                     </a>
                                     <a href="{{ route('admin.groups.destroy', array($group->id)) }}"
-                                        class="btn btn-danger" rel="tooltip" title="{{ Lang::get('lingos::sentry.delete_group') }}" data-method="delete"
+                                        class="btn btn-danger" title="{{ Lang::get('lingos::sentry.delete_group') }}" data-method="delete"
                                         data-modal-text="{{ Lang::get('lingos::sentry.delete_group_confirm') }}">
                                         <i class="icon-remove"></i>
                                     </a>

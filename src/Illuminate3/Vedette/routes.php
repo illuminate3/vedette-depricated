@@ -78,6 +78,24 @@ Route::get('forgot-password/{passwordResetCode}', array('as' => 'forgot-password
 Route::post('forgot-password/{passwordResetCode}', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPasswordConfirm');
 
 });
+/*
+# User Management
+Route::group(array('prefix' => 'auth'), function()
+{
+//	Route::get('/', array('as' => 'users', 'uses' => 'Controllers\Admin\UsersController@getIndex'));
+//	Route::get('create', array('as' => 'create/user', 'uses' => 'Controllers\Admin\UsersController@getCreate'));
+//	Route::post('create', 'Controllers\Admin\UsersController@postCreate');
+	Route::get('users/{userId}/edit', array(
+		'as' => 'update/user',
+		'uses' => 'Illuminate3\Vedette\Controllers\UsersController@edit')
+	);
+	Route::post('users/{userId}/edit', 'Illuminate3\Vedette\Controllers\UsersController@update');
+//	Route::get('{userId}/delete', array('as' => 'delete/user', 'uses' => 'Controllers\Admin\UsersController@getDelete'));
+//	Route::get('{userId}/restore', array('as' => 'restore/user', 'uses' => 'Controllers\Admin\UsersController@getRestore'));
+});
+
+*/
+
 
 //
 // @author Steve Montambeault
@@ -96,12 +114,13 @@ Route::get('admin', array(
     'before' => 'auth.vedette:admin.view'
 ));
 
-Route::group(array('prefix' => 'admin', 'before' => 'auth.vedette'), function()
+Route::group(array('prefix' => 'auth', 'before' => 'auth.vedette'), function()
 {
     Route::resource('users', 'Illuminate3\Vedette\Controllers\UsersController');
     Route::resource('groups', 'Illuminate3\Vedette\Controllers\GroupsController',array('except' => array('show')));
     Route::resource('permissions', 'Illuminate3\Vedette\Controllers\PermissionsController',array('except' => array('show')));
 });
+Route::controller('users', 'Illuminate3\Vedette\Controllers\UsersController');
 
 /*
 |--------------------------------------------------------------------------
@@ -109,14 +128,14 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.vedette'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::put('admin/users/{users}/activate', array(
-    'as'     => 'admin.users.activate',
+Route::put('auth/users/{users}/activate', array(
+    'as'     => 'auth.users.activate',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersController@putStatus',
     'before' => 'auth.vedette:users.update'
 ));
 
-Route::put('admin/users/{users}/deactivate', array(
-    'as'     => 'admin.users.deactivate',
+Route::put('auth/users/{users}/deactivate', array(
+    'as'     => 'auth.users.deactivate',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersController@putStatus',
     'before' => 'auth.vedette:users.update'
 ));
@@ -127,13 +146,13 @@ Route::put('admin/users/{users}/deactivate', array(
 |--------------------------------------------------------------------------
 */
 
-Route::get('admin/users/{users}/permissions', array(
-    'as'     => 'admin.users.permissions',
+Route::get('auth/users/{users}/permissions', array(
+    'as'     => 'auth.users.permissions',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersPermissionsController@index',
     'before' => 'auth.vedette:users.update'
 ));
 
-Route::put('admin/users/{users}/permissions', array(
+Route::put('auth/users/{users}/permissions', array(
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersPermissionsController@update',
     'before' => 'auth.vedette:users.update'
 ));
@@ -144,14 +163,14 @@ Route::put('admin/users/{users}/permissions', array(
 |--------------------------------------------------------------------------
 */
 
-Route::get('admin/users/{user}/throttling', array(
-    'as'     => 'admin.users.throttling',
+Route::get('auth/users/{user}/throttling', array(
+    'as'     => 'auth.users.throttling',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersThrottlingController@getStatus',
     'before' => 'auth.vedette:users.view'
 ));
 
-Route::put('admin/users/{user}/throttling/{action}', array(
-    'as'     => 'admin.users.throttling.update',
+Route::put('auth/users/{user}/throttling/{action}', array(
+    'as'     => 'auth.users.throttling.update',
     'uses'   => 'Illuminate3\Vedette\Controllers\UsersThrottlingController@putStatus',
     'before' => 'auth.vedette:users.update'
 ));
@@ -162,13 +181,13 @@ Route::put('admin/users/{user}/throttling/{action}', array(
 |--------------------------------------------------------------------------
 */
 
-Route::get('admin/groups/{groups}/permissions', array(
-    'as'     => 'admin.groups.permissions',
+Route::get('auth/groups/{groups}/permissions', array(
+    'as'     => 'auth.groups.permissions',
     'uses'   => 'Illuminate3\Vedette\Controllers\GroupsPermissionsController@index',
     'before' => 'auth.vedette:groups.update'
 ));
 
-Route::put('admin/groups/{groups}/permissions', array(
+Route::put('auth/groups/{groups}/permissions', array(
     'uses'   => 'Illuminate3\Vedette\Controllers\GroupsPermissionsController@update',
     'before' => 'auth.vedette:groups.update'
 ));
@@ -179,28 +198,28 @@ Route::put('admin/groups/{groups}/permissions', array(
 |--------------------------------------------------------------------------
 */
 
-Route::get('admin/login', array(
-    'as'   => 'admin.login',
+Route::get('auth/login', array(
+    'as'   => 'auth.login',
 //    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
     'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignin'
 ));
 
-//Route::post('admin/login','Illuminate3\Vedette\Controllers\VedetteController@postLogin');
-Route::post('admin/login','Illuminate3\Vedette\Controllers\VedetteController@postSignin');
+//Route::post('auth/login','Illuminate3\Vedette\Controllers\VedetteController@postLogin');
+Route::post('auth/login','Illuminate3\Vedette\Controllers\VedetteController@postSignin');
 
-Route::get('admin/logout', array(
-    'as'   => 'admin.logout',
+Route::get('auth/logout', array(
+    'as'   => 'auth.logout',
     'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogout'
 ));
 
-Route::get('admin/register', array(
-    'as'   => 'admin.register',
+Route::get('auth/register', array(
+    'as'   => 'auth.register',
 //    'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
     'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getSignup'
 ));
 
 //Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@postRegister');
-Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@postSignup');
+Route::post('auth/register','Illuminate3\Vedette\Controllers\VedetteController@postSignup');
 
 /*
 |--------------------------------------------------------------------------
@@ -208,7 +227,7 @@ Route::post('admin/register','Illuminate3\Vedette\Controllers\VedetteController@
 |--------------------------------------------------------------------------
 | You need to give your routes a name before using this filter.
 | I assume you are using resource. so the route for the UsersController index method
-| will be admin.users.index then the filter will look for permission on users.view
+| will be auth.users.index then the filter will look for permission on users.view
 | You can provide your own rule by passing a argument to the filter
 |
 */
@@ -218,7 +237,7 @@ Route::filter('auth.vedette', function($route, $request, $userRule = null)
     if (! Sentry::check())
     {
         Session::put('url.intended', URL::full());
-        return Redirect::route('admin.login');
+        return Redirect::route('auth.login');
     }
 
     // no special route name passed, use the current name route
@@ -248,12 +267,12 @@ Route::filter('auth.vedette', function($route, $request, $userRule = null)
         }
     }
     // no access to the request page and request page not the root admin page
-    if ( ! Sentry::hasAccess($userRule) and $userRule !== 'admin.view' )
+    if ( ! Sentry::hasAccess($userRule) and $userRule !== 'auth.view' )
     {
-        return Redirect::route('admin.home')->with('error', Lang::get('vedette::permissions.access_denied'));
+        return Redirect::route('auth.home')->with('error', Lang::get('vedette::permissions.access_denied'));
     }
     // no access to the request page and request page is the root admin page
-    else if( ! Sentry::hasAccess($userRule) and $userRule === 'admin.view' )
+    else if( ! Sentry::hasAccess($userRule) and $userRule === 'auth.view' )
     {
         //can't see the admin home page go back to home site page
         return Redirect::to('/')->with('error', Lang::get('vedette::permissions.access_denied'));

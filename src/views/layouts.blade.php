@@ -37,13 +37,13 @@
                         @if (Sentry::check())
                             <div class="btn-toolbar topnav">
                                 <div class="btn-group">
-                                    <a href="#helpModal" class="btn btn-inverse" rel="tooltip" data-placement="bottom"
+                                    <a href="#helpModal" class="btn btn-inverse" data-placement="bottom"
                                        data-original-title="{{ Lang::get('lingos::general.help') }}" data-toggle="modal">
                                         <i class="icon-question-sign"></i>
                                     </a>
                                 </div>
                                 <div class="btn-group">
-                                    <a class="btn btn-inverse" data-placement="bottom" data-original-title="{{ Lang::get('lingos::general.sign_out') }}" rel="tooltip"
+                                    <a class="btn btn-inverse" data-placement="bottom" data-original-title="{{ Lang::get('lingos::general.sign_out') }}"
                                        href="{{ route('admin.logout') }}"><i class="icon-off"></i>
                                     </a>
                                 </div>
