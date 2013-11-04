@@ -29,9 +29,8 @@
 
 @if (Sentry::check())
 
-
 <div class="row btn-toolbar pull-right margin-bottom" role="toolbar">
-	<a href="{{ route('auth.users.create') }}" class="btn btn-success" title="{{ Lang::get('vedette::vedette.create_new_user') }}">
+	<a href="{{ route('auth.users.create') }}" class="btn btn-success" title="{{ Lang::get('lingos::general.new_user') }}">
 		<i class="fa fa-plus-circle"></i>
 		{{ Lang::get('lingos::general.new_user') }}
 	</a>
@@ -131,11 +130,12 @@
 </div>
 </div>
 
-
 @else
-	<h2>
-		{{ Lang::get('lingos::auth.insufficient_permissions') }}
-	</h2>
+	<div class="alert alert-warning">
+		<h2>
+			{{ Lang::get('lingos::auth.insufficient_permissions') }}
+		</h2>
+	</div>
 @endif
 
 @stop

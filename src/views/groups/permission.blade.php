@@ -22,7 +22,7 @@
 @section('content')
     <div class="row">
         <div class="span12">
-            {{ Former::horizontal_open(route('admin.groups.permissions', array($group->id)))->method('PUT') }}
+            {{ Former::horizontal_open(route('auth.groups.permissions', array($group->id)))->method('PUT') }}
             <div class="block">
                 <p class="block-heading">{{$group->name}} {{ Lang::get('lingos::sentry.group_permissions') }}</p>
                 <div class="block-body">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
-                        <a href="{{route('admin.groups.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
+                        <a href="{{route('auth.groups.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
                     </div>
                 </div>
             </div>

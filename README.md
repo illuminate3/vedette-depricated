@@ -5,6 +5,15 @@ Vedette
 User Management Skeleton based on several Laravel packages provided by the laravel community.
 
 
+## Version
+0.5.0
+
+* Fork Steve Montambeault's Cpanel package into Vedette (Keep Steve's authorship but change out PSR naming)
+* Redo views to allow a more generic approach to using in main app
+* Add in some missing functions that Brunogaspar's package includes
+* Use anahkiasen/former for forms
+
+
 # Requirements
 * Bootstrap 3.x
 * Font-Awesome 4.x
@@ -18,14 +27,6 @@ These are not included since I thought most people will already have included th
 * "anahkiasen/former": "dev-master"  // used for forms
 * "illuminate3/lingos": "dev-master" // used for lang files. Lingos is an attempt to centralize commonly used words and phrases.
 
-
-# Version
-1.0.0
-
-* Fork Steve Montambeault's Cpanel package into Vedette (Keep Steve's authorship but change out PSR naming)
-* Redo views to allow a more generic approach to using in main app
-* Add in some missing functions that Brunogaspar's package includes
-* Use anahkiasen/former for forms
 
 ## Future
 * Take more advantage of validation in the anahikiasen/former package

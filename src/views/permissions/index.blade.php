@@ -1,106 +1,113 @@
 @extends(Config::get('vedette::views.layout'))
 
-@section('header')
-    <h3>
-        <i class="icon-ban-circle"></i>
-        Permissions
-    </h3>
+@section('css')
 @stop
-@section('help')
-    <p class="lead">Permission Inheritance</p>
-    <p>
-        Just as permissions are defined for groups and individual users, the permission inheritance model depends on a user's group.
-        An Administrator can assign different permissions to a user that is assigned to a group, and if that group has different access permissions, the user's access is always determined by the group access.
-    </p>
-    <br>
-    <p class="text-warning">
-        Permission Inheritance only works for users permissions.
-    </p>
-     <p class="text-info">
-        For more info visit <a href="http://docs.cartalyst.com/sentry-2/permissions" target="_blank">Sentry website</a>
-    </p>
+
+@section('js')
+	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
+	<script>
+		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask_delete_permission') }}';
+	</script>
 @stop
+
+@section('page_title')
+	- {{ Lang::get('lingos::sentry.permissions') }}
+@stop
+
+@section('title')
+	<h1>
+		<i class="fa fa-wrench fa-lg"></i>
+		{{ Lang::get('lingos::sentry.permissions') }}
+	</h1>
+@stop
+
 @section('content')
 
-    <div class="row">
-        <div class="span12">
+@if (Sentry::check())
 
-            <div class="block">
-                <p class="block-heading">
-                    Permissions |
-                    <em>Generic permissions</em>
-                </p>
-                <div class="block-body">
-                    <ul>
-                        @foreach ($roles['inputs'] as $role => $value)
-                             <li>{{ ucfirst($role) }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{ Lang::get('lingos::sentry.generic_permissions') }}</h3>
+	</div>
+	<div class="panel-body">
+		<ul>
+			@foreach ($roles['inputs'] as $role => $value)
+				<li>{{ ucfirst($role) }}</li>
+			@endforeach
+		</ul>
+	</div>
+</div>
 
-    <div class="row">
-        <div class="span12">
+@if($permissions->isEmpty())
+	<div class="alert alert-warning margin-top">
+		{{ Lang::get('lingos::sentry.permission_module_not_found') }}
+	</div>
+@else
 
-            <div class="block">
-                <p class="block-heading">
-                    Permissions |
-                    <em>Modules Permissions</em>
-                </p>
-                <div class="block-body">
-                    <p></p>
-                    <div class="btn-toolbar">
-                        <a href="{{ URL::route('admin.permissions.create') }}" class="btn btn-primary" title="Create New Permission">
-                            <i class="icon-plus"></i>
-                            New Permission
-                        </a>
-                    </div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ Lang::get('lingos::sentry.generic_permissions') }}</h3>
+		</div>
+		<div class="panel-body">
 
-                    @if($permissions->isEmpty())
-                        <div class="alert alert-info">
-                            {{ Lang::get('vedette::permissions.no_found') }}
-                        </div>
-                    @else
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Module</th>
-                                    <th>Roles</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($permissions->all() as $permission)
-                                    <tr>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>
-                                            <ul class="inline">
-                                                @foreach ($permission->permissions as $role)
-                                                    <li>{{ $role }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('admin.permissions.edit', array($permission->id)) }}"
-                                                class="btn" title="Edit Permission">
-                                                <i class="icon-edit"></i>
-                                            </a>
-                                            <a href="{{ route('admin.permissions.destroy', array($permission->id)) }}"
-                                                class="btn btn-danger" title="Delete Permission" data-method="delete"
-                                                data-modal-text="delete this Permission?">
-                                                <i class="icon-remove"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                </div>
-            </div>
+			<div class="row btn-toolbar pull-right margin-right" role="toolbar">
+				<a href="{{ route('auth.permissions.create') }}" class="btn btn-success" title="{{ Lang::get('lingos::sentry.new_permission') }}">
+					<i class="fa fa-plus-circle"></i>
+					{{ Lang::get('lingos::sentry.new_permission') }}
+				</a>
+			</div>
 
-        </div>
-    </div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+					<th>{{ Lang::get('lingos::general.module') }}</th>
+					<th>{{ Lang::get('lingos::general.role') }}</th>
+					<th>{{ Lang::get('lingos::general.action') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($permissions->all() as $permission)
+					<tr>
+						<td>
+							{{ $permission->name }}
+						</td>
+						<td>
+							<ul>
+								@foreach ($permission->permissions as $role)
+									<li>{{ $role }}</li>
+								@endforeach
+							</ul>
+						</td>
+						<td>
+							<a href="{{ route('auth.permissions.edit', array($permission->id)) }}"
+								class="btn btn-warning" title="{{ Lang::get('lingos::sentry.edit_permissions') }}">
+								<i class="fa fa-pencil"></i>
+								{{ Lang::get('lingos::sentry.edit_permissions') }}
+							</a>
+							<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
+								class="btn btn-danger action_confirm"
+								data-method="post"
+								title="{{ Lang::get('lingos::general.delete_user') }}">
+								<i class="fa fa-trash-o"></i>
+								{{ Lang::get('lingos::sentry.delete_permission') }}
+							</a>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+@endif
+
+@else
+	<div class="alert alert-warning">
+		<h2>
+			{{ Lang::get('lingos::auth.insufficient_permissions') }}
+		</h2>
+	</div>
+@endif
+
 @stop

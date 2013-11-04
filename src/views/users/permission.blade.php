@@ -4,14 +4,6 @@
 @stop
 
 @section('js')
-	<script src="{{ asset('assets/js/twitter-bootstrap-hover-dropdown.js') }}"></script>
-	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
-	<script>
-		var text_confirm_message = '{{ Lang::get('lingos::general.ask_delete_user') }}';
-		$(document).ready(function() {
-			$('.js-activated').dropdownHover().dropdown();
-		});
-	</script>
 @stop
 
 @section('page_title')
@@ -27,6 +19,8 @@
 
 @section('content')
 
+@if (Sentry::check())
+
 <div class="row">
 <div class="row btn-toolbar pull-right" role="toolbar">
 	<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::general.back') }}">
@@ -39,129 +33,131 @@
 <div class="row">
 	<ul class="nav nav-tabs">
 		<li class="active">
-			<a href="#info" data-toggle="tab">
-				{{ Lang::get('lingos::general.information') }}
+			<a href="#generics" data-toggle="tab">
+				{{ Lang::get('lingos::sentry.generic_permissions') }}
 			</a>
 		</li>
 		<li>
-			<a href="#status" data-toggle="tab">
-				{{ Lang::get('lingos::general.status') }}
+			<a href="#modules" data-toggle="tab">
+				{{ Lang::get('lingos::sentry.modules_permissions') }}
 			</a>
 		</li>
 	</ul>
+
+{{ Former::horizontal_open( route('auth.users.permissions', array($user->id)), 'POST' ) }}
+
 <div id="myTabContent" class="tab-content">
 
-<div class="tab-pane active in padding-lg" id="info">
+<div class="tab-pane active in padding-lg" id="generics">
 
+	<fieldset>
+		<legend>
+			<i class="fa fa-gavel"></i>
+			{{ Lang::get('lingos::sentry.access_everything') }}
+		</legend>
 	<table class="table table-striped table-hover">
 		<tbody>
 			<tr>
-				<td>{{ Lang::get('lingos::general.first_name') }}</td>
-				<td>{{ $user->first_name }}</td>
-			</tr>
-			<tr>
-				<td>{{ Lang::get('lingos::general.last_name') }}</td>
-				<td>{{ $user->last_name }}</td>
-			</tr>
-			<tr>
-				<td>{{ Lang::get('lingos::general.email') }}</td>
-				<td>{{ $user->email }}</td>
+				<td class="padding-left-lg">
+					{{ Former::select('rules[superuser]', Lang::get('lingos::general.super_user') )
+						->options(array('0' => Lang::get('lingos::general.no'),'1' => Lang::get('lingos::general.yes') ))
+						->value($user->isSuperUser() ? 1 : 0)
+						->class('margin-left')
+					}}
+					@foreach( $genericPerm as $perm)
+				</td>
 			</tr>
 		</tbody>
 	</table>
+	</fieldset>
 
-</div>
-<div class="tab-pane fade padding-lg" id="status">
-
+	<fieldset>
+		<legend>
+			<i class="fa fa-filter"></i>
+			{{ Lang::get('lingos::sentry.generic_permissions') }}
+		</legend>
 	<table class="table table-striped table-hover">
 		<tbody>
+			@foreach( $perm['permissions'] as $input )
 			<tr>
-				<td>{{ Lang::get('lingos::sentry.groups') }}</td>
+				<td class="padding-left-lg">
+					{{ Former::select($input['name'],$input['text'])
+						->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
+						->value($input['value'])
+						->class('margin-left')
+						->id($input['id'])
+					}}
+				</td>
+			</tr>
+			@endforeach
+			@endforeach
+		</tbody>
+	</table>
+	</fieldset>
+
+</div>
+<div class="tab-pane fade padding-lg" id="modules">
+
+	@if (count($modulePerm) < 1)
+		<div class="alert alert-warning">
+			{{ Lang::get('lingos::sentry.permission_module_not_found') }}
+		</div>
+	@else
+	<table class="table table-striped table-hover">
+		<tbody>
+		@foreach( $modulePerm as $perm)
+			<tr>
 				<td>
-					@foreach($user->groups as $group)
-						{{ $group->getName() }}
-					@endforeach
+					{{ $perm['name'] }} {{ Lang::get('lingos::general.module') }}
 				</td>
 			</tr>
 			<tr>
-				<td>{{ Lang::get('lingos::general.active') }}</td>
-				<td>{{ ($user->activated) ? Lang::get('lingos::general.yes') : Lang::get('lingos::general.no') }}</td>
+				<td class="padding-left-lg">
+					@foreach( $perm['permissions'] as $input )
+						{{ Former::select($input['name'],$input['text'])
+							->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
+							->value($input['value'])
+							->class('margin-left')
+							->id($input['id'])
+						}}
+					@endforeach
+				</td>
 			</tr>
-				<td>{{ Lang::get('lingos::general.date_activated') }}</td>
-				<td>{{ $user->activated_at ? $user->activated_at : Lang::get('lingos::general.never_activated') }}</td>
-			</tr>
-			<tr>
-				<td>{{ Lang::get('lingos::general.last_login') }}</td>
-				<td>{{ is_null($user->last_login) ? Lang::get('lingos::general.never_visited') : $user->last_login }}</td>
-			</tr>
+		@endforeach
 		</tbody>
 	</table>
+	@endif
+
+</div>
+
+	<hr>
+
+		{{ Former::actions()
+			->success_submit(Lang::get('lingos::button.save_changes'))
+			->inverse_reset(Lang::get('lingos::button.reset'))
+		}}
+
+{{ Former::close() }}
 
 </div>
 </div>
 
+<div class="row btn-toolbar margin-top" role="toolbar">
+	<a href="{{ URL::to('users/delete') }}/{{ $user->id}}"
+	class="btn btn-danger action_confirm"
+	data-method="post"
+	title="{{ Lang::get('lingos::general.delete_user') }}">
+		<i class="fa fa-trash-o"></i>
+		{{ Lang::get('lingos::general.delete_user') }}
+	</a>
 </div>
 
+@else
+	<div class="alert alert-warning">
+		<h2>
+			{{ Lang::get('lingos::auth.insufficient_permissions') }}
+		</h2>
+	</div>
+@endif
 
-
-
-
-    {{Former::horizontal_open( route('auth.users.permissions', array($user->id)), 'POST' )}}
-    <div class="row">
-        <div class="span12">
-            <div class="block">
-                <p class="block-heading">{{ $user->first_name }} {{ Lang::get('lingos::sentry.permissions') }} | {{ Lang::get('vedette::vedette.permissions_override_group_permissions') }}</p>
-                <div class="block-body">
-                    <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a href="#generic" data-toggle="tab">{{ Lang::get('lingos::general.generic_permissions') }}</a></li>
-                        <li><a href="#module" data-toggle="tab">{{ Lang::get('lingos::general.modules_permissions') }}</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="generic">
-                            <legend>{{ Lang::get('lingos::general.super_user') }} <small>{{ Lang::get('vedette::vedette.access_everything') }}</small></legend>
-                            {{ Former::select('rules[superuser]', Lang::get('lingos::general.super_user') )
-                                ->options(array('0' => Lang::get('lingos::general.no'),'1' => Lang::get('lingos::general.yes') ))
-                                ->value($user->isSuperUser() ? 1 : 0)
-                                ->class('select2')
-                            }}
-                            @foreach( $genericPerm as $perm)
-                                <legend>{{ Lang::get('lingos::general.generic_permissions') }}</legend>
-                                @foreach( $perm['permissions'] as $input )
-                                    {{ Former::select($input['name'],$input['text'])
-                                        ->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
-                                        ->value($input['value'])
-                                        ->class('select2')->id($input['id'])
-                                    }}
-                                @endforeach
-                            @endforeach
-                        </div>
-                        <div class="tab-pane" id="module">
-                           @if (count($modulePerm) < 1)
-                                <div class="alert alert-info">
-                                    {{ Lang::get('lingos::sentry.no_found') }}
-                                </div>
-                            @else
-                                @foreach( $modulePerm as $perm)
-                                    <legend>{{ $perm['name'] }} {{ Lang::get('lingos::general.module') }}</legend>
-                                    @foreach( $perm['permissions'] as $input )
-                                        {{ Former::select($input['name'],$input['text'])
-                                            ->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
-                                            ->value($input['value'])
-                                            ->class('select2')->id($input['id'])
-                                        }}
-                                    @endforeach
-                                @endforeach
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
-                        <a href="{{route('auth.users.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{ Former::close() }}
 @stop

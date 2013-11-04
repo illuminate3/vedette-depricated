@@ -25,6 +25,8 @@
 
 @section('content')
 
+@if (Sentry::check())
+
 <div class="row btn-toolbar pull-right" role="toolbar">
 	<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::general.back') }}">
 		<i class="fa fa-backward"></i>
@@ -197,10 +199,10 @@
 
 	<hr>
 
-		{{ Former::actions()
-			->success_submit(Lang::get('lingos::button.save_changes'))
-			->inverse_reset(Lang::get('lingos::button.reset'))
-		}}
+	{{ Former::actions()
+		->success_submit(Lang::get('lingos::button.save_changes'))
+		->inverse_reset(Lang::get('lingos::button.reset'))
+	}}
 
 {{ Former::close() }}
 
@@ -215,5 +217,13 @@
 		{{ Lang::get('lingos::general.delete_user') }}
 	</a>
 </div>
+
+@else
+	<div class="alert alert-warning">
+		<h2>
+			{{ Lang::get('lingos::auth.insufficient_permissions') }}
+		</h2>
+	</div>
+@endif
 
 @stop

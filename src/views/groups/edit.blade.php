@@ -19,14 +19,14 @@
 @section('content')
     <div class="row">
         <div class="span12">
-            {{ Former::horizontal_open(route('admin.groups.update', array($group->id)))->method('PUT') }}
+            {{ Former::horizontal_open(route('auth.groups.update', array($group->id)))->method('PUT') }}
             <div class="block">
                 <p class="block-heading">{{ Lang::get('lingos::general.edit') }} "{{ $group->name }}" {{ Lang::get('lingos::sentry.group') }}</p>
                 <div class="block-body">
                     {{ Former::xlarge_text('name','Name')->value($group->name)->required() }}
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">{{ Lang::get('lingos::button.save_changes') }}</button>
-                        <a href="{{route('admin.groups.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
+                        <a href="{{route('auth.groups.index')}}" class="btn">{{ Lang::get('lingos::button.cancel') }}</a>
                     </div>
                 </div>
             </div>
