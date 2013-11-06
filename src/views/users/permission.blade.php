@@ -4,6 +4,13 @@
 @stop
 
 @section('js')
+	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
+	<script>
+		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask_delete_user') }}';
+		$(document).ready(function() {
+			$('.js-activated').dropdownHover().dropdown();
+		});
+	</script>
 @stop
 
 @section('page_title')
@@ -143,6 +150,7 @@
 </div>
 
 <div class="row btn-toolbar margin-top" role="toolbar">
+	<a class="btn btn-warning" href="{{ URL::route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 	<a href="{{ URL::to('users/delete') }}/{{ $user->id}}"
 	class="btn btn-danger action_confirm"
 	data-method="post"

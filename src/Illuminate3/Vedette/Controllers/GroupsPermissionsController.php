@@ -88,7 +88,7 @@ class GroupsPermissionsController extends BaseController {
             $group->permissions = Input::get('rules');
             $group->save();
             Event::fire('groups.permissions.update', array($group));
-            return Redirect::route('auth.groups.index')->with('success', Lang::get('Lingos::sentry.update_success') );
+            return Redirect::route('auth.groups.index')->with('success', Lang::get('lingos::sentry.update_permission_success') );
         }
         catch (GroupNotFoundException $e)
         {

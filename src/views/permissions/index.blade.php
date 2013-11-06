@@ -80,16 +80,16 @@
 						</td>
 						<td>
 							<a href="{{ route('auth.permissions.edit', array($permission->id)) }}"
-								class="btn btn-warning" title="{{ Lang::get('lingos::sentry.edit_permissions') }}">
+								class="btn btn-primary" title="{{ Lang::get('lingos::sentry.edit_permissions') }}">
 								<i class="fa fa-pencil"></i>
 								{{ Lang::get('lingos::sentry.edit_permissions') }}
 							</a>
 							<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
 								class="btn btn-danger action_confirm"
 								data-method="post"
-								title="{{ Lang::get('lingos::general.delete_user') }}">
+								title="{{ Lang::get('lingos::sentry.delete_permissions') }}">
 								<i class="fa fa-trash-o"></i>
-								{{ Lang::get('lingos::sentry.delete_permission') }}
+								{{ Lang::get('lingos::sentry.delete_permissions') }}
 							</a>
 						</td>
 					</tr>

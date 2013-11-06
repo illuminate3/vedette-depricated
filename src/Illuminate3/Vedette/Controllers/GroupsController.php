@@ -82,7 +82,7 @@ class GroupsController extends BaseController {
         {
             $group = Sentry::getGroupProvider()->create(Input::only('name'));
             Event::fire('groups.create', array($group));
-            return Redirect::route('auth.groups.index')->with('success', Lang::get('Lingos::sentry.create_success'));
+            return Redirect::route('auth.groups.index')->with('success', Lang::get('lingos::sentry.create_group_success'));
         }
         catch (NameRequiredException $e)
         {
@@ -110,7 +110,7 @@ class GroupsController extends BaseController {
             $group->name = Input::get('name');
             $group->save();
             Event::fire('groups.update', array($group));
-            return Redirect::route('auth.groups.index')->with('success', Lang::get('Lingos::sentry.update_success') );
+            return Redirect::route('auth.groups.index')->with('success', Lang::get('lingos::sentry.update_group_success') );
         }
         catch (GroupNotFoundException $e)
         {
@@ -138,7 +138,7 @@ class GroupsController extends BaseController {
             $eventData = $group;
             $group->delete();
             Event::fire('groups.delete', array($eventData));
-            return Redirect::route('auth.groups.index')->with('success', Lang::get('Lingos::sentry.Lingos::sentry.delete_success'));
+            return Redirect::route('auth.groups.index')->with('success', Lang::get('lingos::sentry.delete_group_success'));
         }
         catch (GroupNotFoundException $e)
         {

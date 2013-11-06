@@ -209,6 +209,7 @@
 </div>
 
 <div class="row btn-toolbar margin-top" role="toolbar">
+	<a class="btn btn-warning" href="{{ URL::route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 	<a href="{{ URL::to('users/delete') }}/{{ $user->id}}"
 	class="btn btn-danger action_confirm"
 	data-method="post"

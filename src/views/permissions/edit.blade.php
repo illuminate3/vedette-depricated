@@ -1,6 +1,13 @@
 @extends(Config::get('vedette::views.layout'))
 
 @section('js')
+	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
+	<script>
+		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask_delete_permission') }}';
+		$(document).ready(function() {
+			$('.js-activated').dropdownHover().dropdown();
+		});
+	</script>
 @stop
 
 @section('css')
@@ -70,7 +77,14 @@
 	</div>
 
 	<div class="margin-top">
-		<a class="btn btn-danger" href="{{ URL::route('auth.permissions.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+		<a class="btn btn-warning" href="{{ URL::route('auth.permissions.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+		<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
+			class="btn btn-danger action_confirm"
+			data-method="post"
+			title="{{ Lang::get('lingos::sentry.delete_permission') }}">
+			<i class="fa fa-trash-o"></i>
+			{{ Lang::get('lingos::sentry.delete_permission') }}
+		</a>
 	</div>
 
 {{ Former::close() }}
