@@ -6,7 +6,7 @@ User Management Skeleton based on several Laravel packages provided by the larav
 
 
 ## Version
-0.5.0
+0.8.0
 
 * Fork Steve Montambeault's Cpanel package into Vedette (Keep Steve's authorship but change out PSR naming)
 * Redo views to allow a more generic approach to using in main app
@@ -38,7 +38,9 @@ These are not included since I thought most people will already have included th
 
 ## Projects used to create Vedette
 [Stevemo's Cpanel](https://github.com/stevemo/cpanel "Stevemo's Cpanel")
+
 [Brunogaspar's Laravel 4 - Starter Kit](https://github.com/brunogaspar/laravel4-starter-kit "Brunogaspar's Laravel 4 - Starter Kit")
+
 [Rydurham's Cpanel](https://github.com/rydurham/L4withSentry "Rydurham's L4withSentry")
 
 
