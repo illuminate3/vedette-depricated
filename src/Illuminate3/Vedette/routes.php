@@ -1,5 +1,8 @@
 <?php
 
+# Logout
+Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@getLogout'));
+
 Route::filter('auth', function()
 {
   if (Auth::guest())
