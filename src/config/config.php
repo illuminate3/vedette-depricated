@@ -9,20 +9,11 @@ return array(
         'description' => 'Laravel 4 Admin Panel'
     ),
 
-    //menu 2 type are available single or dropdown and it must be a route
-    'menu' => array(
-        'Dashboard' => array('type' => 'single', 'route' => 'admin.home'),
-        'Users'     => array('type' => 'dropdown', 'links' => array(
-            'Manage Users' => array('route' => 'admin.users.index'),
-            'Groups'       => array('route' => 'admin.groups.index'),
-            'Permissions'  => array('route' => 'admin.permissions.index')
-        )),
-    ),
 
     'views' => array(
 
-//        'layout' => 'vedette::layouts',
-        'layout' => 'frontend/layouts/default',
+        'layout' => 'vedette::layouts',
+//        'layout' => 'frontend/layouts/default',
 //        'layout' => 'layouts/default',
 
 'dashboard' => 'vedette::auth.index',
@@ -62,8 +53,9 @@ return array(
         'email_layout'      => 'vedette::emails.layouts.default',
     ),
 
-    'validation' => array(
-        'user'       => 'Illuminate3\Vedette\Services\Validators\Users\Validator',
-        'permission' => 'Illuminate3\Vedette\Services\Validators\Permissions\Validator',
-    ),
+'validation' => array(
+	'user'			=> 'Illuminate3\Vedette\Services\Validators\Users\Validator',
+	'permission'	=> 'Illuminate3\Vedette\Services\Validators\Permissions\Validator',
+),
+
 );

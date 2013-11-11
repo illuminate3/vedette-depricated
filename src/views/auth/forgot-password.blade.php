@@ -3,15 +3,16 @@
 @section('css')
 @stop
 
+@section('js')
+@stop
+
 @section('page_title')
 	- {{ Lang::get('lingos::auth.forgot_password') }}
 @stop
 
 @section('title')
-	<h1>
-		<i class="fa fa-external-link fa-lg"></i>
-		{{ Lang::get('lingos::auth.forgot_password') }}
-	</h1>
+	<i class="fa fa-external-link fa-lg"></i>
+	{{ Lang::get('lingos::auth.forgot_password') }}
 @stop
 
 @section('content')
@@ -22,25 +23,25 @@
 		->rules(['email' => 'required'])
 	}}
 
-		{{ Former::text('email', '')
-			->prepend('<i class="fa fa-envelope-o"></i>')
-			->class('form-control has-error')
-			->id('email')
-			->placeholder(Lang::get('lingos::general.email'))
-		}}
+	{{ Former::text('email', '')
+		->prepend('<i class="fa fa-envelope-o"></i>')
+		->class('form-control has-error')
+		->id('email')
+		->placeholder(Lang::get('lingos::general.email'))
+	}}
 
-		<div class="margin-top">
-			{{ Former::actions()
-				->success_submit(Lang::get('lingos::button.send'))
-				->inverse_reset(Lang::get('lingos::button.reset'))
-			}}
-		</div>
+	<br>
 
-		<hr>
-
-		<div class="margin-top">
+	<div class="row btn-toolbar" role="toolbar">
+		<div class="col-xs-6 col-md-4">
+			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ Lang::get('lingos::button.send') }}">
+			<div>
+				<br>
+			</div>
+			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
 			<a class="btn btn-warning" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 		</div>
+	</div>
 
 	{{ Former::close() }}
 

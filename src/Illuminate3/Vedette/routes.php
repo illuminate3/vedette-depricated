@@ -1,7 +1,7 @@
 <?php
 
 # Logout
-Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@getLogout'));
+Route::get('logout', array('as' => 'logout', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogout'));
 
 Route::filter('auth', function()
 {

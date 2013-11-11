@@ -1,46 +1,43 @@
 @extends(Config::get('vedette::views.layout'))
 
+@section('css')
+@stop
+
 @section('js')
-	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
+	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
-		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask_delete_permission') }}';
+		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_permission') }}';
 		$(document).ready(function() {
 			$('.js-activated').dropdownHover().dropdown();
 		});
 	</script>
 @stop
 
-@section('css')
-@stop
-
 @section('page_title')
-	- {{ Lang::get('lingos::sentry.edit_permissions') }}
+	- {{ Lang::get('lingos::sentry.permission_command.edit') }}
 @stop
 
 @section('title')
-	<h1>
-		<i class="fa fa-pencil-square-o fa-lg"></i>
-		{{ Lang::get('lingos::sentry.edit_permissions') }}
-	</h1>
+	<i class="fa fa-pencil-square-o fa-lg"></i>
+	{{ Lang::get('lingos::sentry.permission_command.edit') }}
 @stop
 
 @section('content')
-
 @if (Sentry::check())
 
-<div class="row">
-<div class="row btn-toolbar pull-right" role="toolbar">
-	<a href="{{ route('auth.permissions.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::general.back') }}">
-		<i class="fa fa-backward"></i>
-		{{ Lang::get('lingos::general.back') }}
-	</a>
-</div>
-</div>
+	<div class="row">
+	<div class="row btn-toolbar pull-right" role="toolbar">
+		<a href="{{ route('auth.permissions.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::button.back') }}">
+			<i class="fa fa-backward"></i>
+			{{ Lang::get('lingos::button.back') }}
+		</a>
+	</div>
+	</div>
 
-<br>
+	<br>
 
-<div class="row">
-{{ Former::horizontal_open(route('auth.permissions.update', array($permission->id)))->method('PUT') }}
+	<div class="row">
+	{{ Former::horizontal_open(route('auth.permissions.update', array($permission->id)))->method('PUT') }}
 
 	{{ Former::text('name', '', $permission->name)
 		->prepend('<i class="fa fa-building"></i>')
@@ -69,33 +66,34 @@
 		</div>
 	</div>
 
-	<div class="margin-top">
-		{{ Former::actions()
-			->success_submit(Lang::get('lingos::button.save_changes'))
-			->inverse_reset(Lang::get('lingos::button.reset'))
-		}}
+	<hr>
+
+	<div class="row btn-toolbar" role="toolbar">
+		<div class="col-xs-6 col-md-4">
+			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ Lang::get('lingos::button.save_changes') }}">
+			<div>
+				<br>
+			</div>
+			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
+			<a class="btn btn-warning" href="{{ URL::route('auth.permissions.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
+				class="btn btn-danger action_confirm"
+				data-method="post"
+				title="{{ Lang::get('lingos::button.permission.delete') }}">
+				<i class="fa fa-trash-o"></i>
+				{{ Lang::get('lingos::button.permission.delete') }}
+			</a>
+		</div>
 	</div>
 
-	<div class="margin-top">
-		<a class="btn btn-warning" href="{{ URL::route('auth.permissions.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
-		<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
-			class="btn btn-danger action_confirm"
-			data-method="post"
-			title="{{ Lang::get('lingos::sentry.delete_permission') }}">
-			<i class="fa fa-trash-o"></i>
-			{{ Lang::get('lingos::sentry.delete_permission') }}
-		</a>
+	{{ Former::close() }}
 	</div>
-
-{{ Former::close() }}
-</div>
 
 @else
 	<div class="alert alert-warning">
 		<h2>
-			{{ Lang::get('lingos::auth.insufficient_permissions') }}
+			{{ Lang::get('lingos::sentry.permission_error.insufficient') }}
 		</h2>
 	</div>
 @endif
-
 @stop

@@ -86,23 +86,23 @@ public function index()
 			Session::forget('loginRedirect');
 
 			// Redirect to the users page
-			return Redirect::to($redirect)->with('success', Lang::get('auth/message.signin.success'));
+			return Redirect::to($redirect)->with('success', Lang::get('lingos::auth.success.sign_in'));
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-			$this->messageBag->add('email', Lang::get('auth/message.account_not_found'));
+			$this->messageBag->add('email', Lang::get('lingos::auth.account.not_found'));
 		}
 		catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
 		{
-			$this->messageBag->add('email', Lang::get('auth/message.account_not_activated'));
+			$this->messageBag->add('email', Lang::get('lingos::auth.account.not_activated'));
 		}
 		catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
 		{
-			$this->messageBag->add('email', Lang::get('auth/message.account_suspended'));
+			$this->messageBag->add('email', Lang::get('lingos::auth.account.suspended'));
 		}
 		catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
 		{
-			$this->messageBag->add('email', Lang::get('auth/message.account_banned'));
+			$this->messageBag->add('email', Lang::get('lingos::auth.account.banned'));
 		}
 
 		// Ooops.. something went wrong
@@ -178,11 +178,11 @@ public function index()
 			});
 
 			// Redirect to the register page
-			return Redirect::back()->with('success', Lang::get('auth/message.signup.success'));
+			return Redirect::back()->with('success', Lang::get('lingos::auth.success.signup'));
 		}
 		catch (Cartalyst\Sentry\Users\UserExistsException $e)
 		{
-			$this->messageBag->add('email', Lang::get('auth/message.account_already_exists'));
+			$this->messageBag->add('email', Lang::get('lingos::auth.account.already_exists'));
 		}
 
 		// Ooops.. something went wrong
@@ -212,15 +212,15 @@ public function index()
 			if ($user->attemptActivation($activationCode))
 			{
 				// Redirect to the login page
-				return Redirect::route('signin')->with('success', Lang::get('auth/message.activate.success'));
+				return Redirect::route('signin')->with('success', Lang::get('lingos::auth.success.activate'));
 			}
 
 			// The activation failed.
-			$error = Lang::get('auth/message.activate.error');
+			$error = Lang::get('lingos::auth.error.activate');
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-			$error = Lang::get('auth/message.activate.error');
+			$error = Lang::get('lingos::auth.error.activate');
 		}
 
 		// Ooops.. something went wrong
@@ -288,7 +288,7 @@ public function index()
 		}
 
 		//  Redirect to the forgot password
-		return Redirect::route('forgot-password')->with('success', Lang::get('auth/message.forgot-password.success'));
+		return Redirect::route('forgot-password')->with('success', Lang::get('lingos::auth.success.forgot-password'));
 	}
 
 	/**
@@ -307,7 +307,7 @@ public function index()
 		catch(Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
 			// Redirect to the forgot password page
-			return Redirect::route('forgot-password')->with('error', Lang::get('auth/message.account_not_found'));
+			return Redirect::route('forgot-password')->with('error', Lang::get('lingos::auth.account.not_found'));
 		}
 
 		// Show the page
@@ -348,18 +348,18 @@ public function index()
 			if ($user->attemptResetPassword($passwordResetCode, Input::get('password')))
 			{
 				// Password successfully reseted
-				return Redirect::route('signin')->with('success', Lang::get('auth/message.forgot-password-confirm.success'));
+				return Redirect::route('signin')->with('success', Lang::get('lingos::auth.success.reset_password'));
 			}
 			else
 			{
 				// Ooops.. something went wrong
-				return Redirect::route('signin')->with('error', Lang::get('auth/message.forgot-password-confirm.error'));
+				return Redirect::route('signin')->with('error', Lang::get('lingos::auth.error.reset_password'));
 			}
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
 			// Redirect to the forgot password page
-			return Redirect::route('forgot-password')->with('error', Lang::get('auth/message.account_not_found'));
+			return Redirect::route('forgot-password')->with('error', Lang::get('lingos::auth.account.not_found'));
 		}
 	}
 
@@ -374,7 +374,7 @@ public function index()
 		Sentry::logout();
 
 		// Redirect to the users page
-		return Redirect::route('home')->with('success', 'You have successfully logged out!');
+		return Redirect::route('home')->with('success', Lang::get('lingos::auth.success.logout'));
 	}
 
 }

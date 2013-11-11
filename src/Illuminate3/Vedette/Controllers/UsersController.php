@@ -124,7 +124,7 @@ class UsersController extends BaseController {
                 //create the user
                 $user = Sentry::register($validation->getData(), true);
                 Event::fire('users.create', array($user));
-                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::auth.success.create'));
+                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::sentry.user_success.create'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -195,7 +195,7 @@ if (Input::has('banned'))
                 $user->groups()->sync(Input::get('groups',array()));
                 Event::fire('users.update', array($user));
 
-                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::auth.success.update'));
+                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::sentry.user_success.update'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -307,17 +307,17 @@ if (Input::has('banned'))
 		    if ($user->delete())
 		    {
 		        // User was successfully deleted
-return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::auth.success.delete'));
+return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.delete'));
 		    }
 		    else
 		    {
 		        // There was a problem deleting the user
-return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::auth.error.delete'));
+return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::sentry.user_error.delete'));
 		    }
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::auth.user_not_found'));
+return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::sentry.user_error.not_found'));
 		}
 	}
 

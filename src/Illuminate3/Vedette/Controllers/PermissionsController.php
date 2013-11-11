@@ -131,7 +131,7 @@ class PermissionsController extends BaseController {
             {
                 $perm = $this->permissions->update($id,$validation->getData());
                 Event::fire('permissions.update', array($perm));
-                return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.update_success'));
+                return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.permission_success.create'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -157,7 +157,7 @@ class PermissionsController extends BaseController {
         {
             $eventData = $this->permissions->delete($id);
             Event::fire('permission.delete', array($eventData));
-            return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.delete_success'));
+            return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.permission_success.delete'));
         }
         catch ( ModelNotFoundException $e)
         {

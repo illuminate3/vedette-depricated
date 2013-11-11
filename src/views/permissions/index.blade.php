@@ -4,9 +4,9 @@
 @stop
 
 @section('js')
-	<script src="{{ asset('assets/js/restfulizer.js') }}"></script>
+	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
-		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask_delete_permission') }}';
+		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_permission') }}';
 	</script>
 @stop
 
@@ -15,10 +15,8 @@
 @stop
 
 @section('title')
-	<h1>
-		<i class="fa fa-wrench fa-lg"></i>
-		{{ Lang::get('lingos::sentry.permissions') }}
-	</h1>
+	<i class="fa fa-wrench fa-lg"></i>
+	{{ Lang::get('lingos::sentry.permissions') }}
 @stop
 
 @section('content')
@@ -51,18 +49,18 @@
 		<div class="panel-body">
 
 			<div class="row btn-toolbar pull-right margin-right" role="toolbar">
-				<a href="{{ route('auth.permissions.create') }}" class="btn btn-success" title="{{ Lang::get('lingos::sentry.new_permission') }}">
+				<a href="{{ route('auth.permissions.create') }}" class="btn btn-success" title="{{ Lang::get('lingos::button.permission.new') }}">
 					<i class="fa fa-plus-circle"></i>
-					{{ Lang::get('lingos::sentry.new_permission') }}
+					{{ Lang::get('lingos::button.permission.new') }}
 				</a>
 			</div>
 
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-					<th>{{ Lang::get('lingos::general.module') }}</th>
-					<th>{{ Lang::get('lingos::general.role') }}</th>
-					<th>{{ Lang::get('lingos::general.action') }}</th>
+					<th>{{ Lang::get('lingos::table.module') }}</th>
+					<th>{{ Lang::get('lingos::table.role') }}</th>
+					<th>{{ Lang::get('lingos::table.action') }}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -80,16 +78,16 @@
 						</td>
 						<td>
 							<a href="{{ route('auth.permissions.edit', array($permission->id)) }}"
-								class="btn btn-primary" title="{{ Lang::get('lingos::sentry.edit_permissions') }}">
+								class="btn btn-primary" title="{{ Lang::get('lingos::button.permission.edit') }}">
 								<i class="fa fa-pencil"></i>
-								{{ Lang::get('lingos::sentry.edit_permissions') }}
+								{{ Lang::get('lingos::button.permission.edit') }}
 							</a>
 							<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
 								class="btn btn-danger action_confirm"
 								data-method="post"
-								title="{{ Lang::get('lingos::sentry.delete_permissions') }}">
+								title="{{ Lang::get('lingos::button.permission.delete') }}">
 								<i class="fa fa-trash-o"></i>
-								{{ Lang::get('lingos::sentry.delete_permissions') }}
+								{{ Lang::get('lingos::button.permission.delete') }}
 							</a>
 						</td>
 					</tr>
@@ -105,7 +103,7 @@
 @else
 	<div class="alert alert-warning">
 		<h2>
-			{{ Lang::get('lingos::auth.insufficient_permissions') }}
+			{{ Lang::get('lingos::sentry.permission_error.insufficient') }}
 		</h2>
 	</div>
 @endif

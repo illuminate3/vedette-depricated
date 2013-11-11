@@ -1,7 +1,7 @@
 Vedette
 =======
 
-# About
+## About
 User Management Skeleton based on several Laravel packages provided by the laravel community.
 
 
@@ -14,18 +14,36 @@ User Management Skeleton based on several Laravel packages provided by the larav
 * Use anahkiasen/former for forms
 
 
-# Requirements
+## Requirements
 * Bootstrap 3.x
 * Font-Awesome 4.x
+* jquery-2.x
 
 These are not included since I thought most people will already have included them in their main app.
 
 
-## packages
+## Packages
 * "illuminate/support": "4.0.x"      // Need to make sure laravel exists
 * "cartalyst/sentry": "2.0.*"        // Obvious what this is for
 * "anahkiasen/former": "dev-master"  // used for forms
 * "illuminate3/lingos": "dev-master" // used for lang files. Lingos is an attempt to centralize commonly used words and phrases.
+
+
+## Usage
+
+Edit the config file for former:
+
+Change
+`
+'automatic_label'   => true,
+'framework'         => 'TwitterBootstrap',
+`
+
+To
+`
+'automatic_label'   => false,
+'framework'         => 'TwitterBootstrap3',
+`
 
 
 ## Future
