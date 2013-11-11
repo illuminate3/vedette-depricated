@@ -63,7 +63,7 @@
 			<li><a href="{{ URL::to('auth/groups') }}"><i class="icon-wrench"></i> {{ Lang::get('lingos::sentry.groups') }}</a></li>
 			<li><a href="{{ URL::to('auth/permissions') }}"><i class="icon-wrench"></i> {{ Lang::get('lingos::sentry.permissions') }}</a></li>
 			@if(Sentry::getUser()->hasAccess('admin'))
-				<li><a href="{{ URL::to('auth/admin') }}"><i class="icon-cog"></i> {{ Lang::get('lingos::general.administration') }}</a></li>
+				<li><a href="{{ route('admin') }}"><i class="icon-cog"></i> {{ Lang::get('lingos::general.administration') }}</a></li>
 			@endif
 			<li class="divider"></li>
 			<li><a href="{{ URL::to('auth/logout') }}"><i class="icon-off"></i> {{ Lang::get('lingos::auth.log_out') }}</a></li>

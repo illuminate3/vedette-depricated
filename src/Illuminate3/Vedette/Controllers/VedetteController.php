@@ -28,10 +28,10 @@ use Session;
 
 class VedetteController extends BaseController {
 
-public function index()
-{
-	return View::make(Config::get('vedette::views.dashboard'));
-}
+	public function index()
+	{
+		return View::make(Config::get('vedette::views.auth'));
+	}
 
 	/**
 	 * Account sign in.

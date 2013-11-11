@@ -112,7 +112,7 @@ Route::group(array('prefix' => 'auth'), function()
 */
 
 Route::get('admin', array(
-    'as'     => 'admin.home',
+    'as'     => 'admin',
     'uses'   => 'Illuminate3\Vedette\Controllers\VedetteController@index',
     'before' => 'auth.vedette:admin.view'
 ));
