@@ -38,7 +38,7 @@ class VedetteController extends BaseController {
 	 *
 	 * @return View
 	 */
-	public function getSignin()
+	public function getLogin()
 	{
 		// Is the user logged in?
 		if (Sentry::check())
@@ -56,7 +56,7 @@ class VedetteController extends BaseController {
 	 *
 	 * @return Redirect
 	 */
-	public function postSignin()
+	public function postLogin()
 	{
 		// Declare the rules for the form validation
 		$rules = array(
@@ -114,7 +114,7 @@ class VedetteController extends BaseController {
 	 *
 	 * @return View
 	 */
-	public function getSignup()
+	public function getRegister()
 	{
 		// Is the user logged in?
 		if (Sentry::check())
@@ -123,7 +123,6 @@ class VedetteController extends BaseController {
 		}
 
 		// Show the page
-//		return View::make('frontend.auth.signup');
 		return View::make(Config::get('vedette::views.register'));
 	}
 
@@ -132,7 +131,7 @@ class VedetteController extends BaseController {
 	 *
 	 * @return Redirect
 	 */
-	public function postSignup()
+	public function postRegister()
 	{
 		// Declare the rules for the form validation
 		$rules = array(

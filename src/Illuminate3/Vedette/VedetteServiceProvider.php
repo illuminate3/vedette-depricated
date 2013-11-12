@@ -26,6 +26,8 @@ class VedetteServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('illuminate3/vedette');
+//include __DIR__.'/../../config/routes.php';
+		include __DIR__ .'/routes.php';
 	}
 
 	/**
@@ -35,7 +37,6 @@ class VedetteServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		include __DIR__ .'/routes.php';
         $this->registerInstallCommands();
         $this->registerUserSeedCommands();
         $this->commands('command.vedette.install','command.vedette.user');

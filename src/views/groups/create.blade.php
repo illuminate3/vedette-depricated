@@ -49,7 +49,7 @@
 					<br>
 				</div>
 				<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
-				<a class="btn btn-warning" href="{{ URL::route('auth.groups.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+				<a class="btn btn-warning" href="{{ route('auth.groups.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 			</div>
 		</div>
 

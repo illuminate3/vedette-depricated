@@ -84,7 +84,7 @@
 							</a>
 							<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
 								class="btn btn-danger action_confirm"
-								data-method="post"
+								data-method="delete"
 								title="{{ Lang::get('lingos::button.permission.delete') }}">
 								<i class="fa fa-trash-o"></i>
 								{{ Lang::get('lingos::button.permission.delete') }}

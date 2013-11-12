@@ -114,10 +114,10 @@
 				->id('password')
 				->placeholder(Lang::get('lingos::auth.password'))
 			}}
-			{{ Former::password('confirm_password', '')
+			{{ Former::password('password_confirmation', '')
 				->prepend('<i class="fa fa-unlock"></i>')
 				->class('form-control has-error')
-				->id('confirm_password')
+				->id('password_confirmation')
 				->placeholder(Lang::get('lingos::auth.confirm_password'))
 			}}
 		</fieldset>
@@ -210,10 +210,10 @@
 				<br>
 			</div>
 			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
-			<a class="btn btn-warning" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
-			<a href="{{ URL::to('users/delete') }}/{{ $user->id}}"
+			<a class="btn btn-warning" href="{{ route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<a href="{{ route('auth.users.destroy', array($user->id)) }}"
 			class="btn btn-danger action_confirm"
-			data-method="post"
+			data-method="delete"
 			title="{{ Lang::get('lingos::button.user.delete') }}">
 				<i class="fa fa-trash-o"></i>
 				{{ Lang::get('lingos::button.user.delete') }}

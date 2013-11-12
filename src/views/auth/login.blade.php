@@ -54,9 +54,9 @@
 			<div>
 				<br>
 			</div>
-			<a class="btn btn-warning" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
-			<a class="btn btn-primary" href="{{ URL::route('signup') }}"><i class="fa fa-plus-circle"></i>{{ Lang::get('lingos::button.register') }}</a>
-			<a class="btn btn-info" href="{{ URL::route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ Lang::get('lingos::button.forgot_password') }}</a>
+			<a class="btn btn-warning" href="{{ route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<a class="btn btn-primary" href="{{ route('register') }}"><i class="fa fa-plus-circle"></i>{{ Lang::get('lingos::button.register') }}</a>
+			<a class="btn btn-info" href="{{ route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ Lang::get('lingos::button.forgot_password') }}</a>
 		</div>
 	</div>
 

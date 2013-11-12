@@ -108,9 +108,9 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a href="{{ URL::to('users/delete') }}/{{ $user->id}}"
+								<a href="{{ route('auth.users.destroy', array($user->id)) }}"
 									class="action_confirm"
-									data-method="post"
+									data-method="delete"
 									title="{{ Lang::get('lingos::sentry.user_command.delete') }}">
 									<i class="fa fa-trash-o"></i>
 									{{ Lang::get('lingos::sentry.user_command.delete') }}

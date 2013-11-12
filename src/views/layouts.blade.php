@@ -52,26 +52,26 @@
 
 <ul class="nav navbar-nav navbar-right">
 	@if (Sentry::check())
-	<li class="dropdown{{ (Request::is('account*') ? ' active' : '') }}">
+	<li class="dropdown{{ (Request::is('auth*') ? ' active' : '') }}">
 		<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{{ route('home') }}" data-hover="dropdown">
-			<i class="icon-user"></i>
+			<i class="fa fa-user"></i>
 			{{ Sentry::getUser()->first_name }}
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a href="{{ URL::to('auth/users') }}"><i class="icon-wrench"></i> {{ Lang::get('lingos::general.users') }}</a></li>
-			<li><a href="{{ URL::to('auth/groups') }}"><i class="icon-wrench"></i> {{ Lang::get('lingos::sentry.groups') }}</a></li>
-			<li><a href="{{ URL::to('auth/permissions') }}"><i class="icon-wrench"></i> {{ Lang::get('lingos::sentry.permissions') }}</a></li>
+			<li><a href="{{ route('auth/users') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::general.users') }}</a></li>
+			<li><a href="{{ route('auth/groups') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.groups') }}</a></li>
+			<li><a href="{{ route('auth/permissions') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.permissions') }}</a></li>
 			@if(Sentry::getUser()->hasAccess('admin'))
-				<li><a href="{{ route('admin') }}"><i class="icon-cog"></i> {{ Lang::get('lingos::general.administration') }}</a></li>
+				<li><a href="{{ route('admin') }}"><i class="fa fa-gear"></i>{{ Lang::get('lingos::general.administration') }}</a></li>
 			@endif
 			<li class="divider"></li>
-			<li><a href="{{ URL::to('auth/logout') }}"><i class="icon-off"></i> {{ Lang::get('lingos::auth.log_out') }}</a></li>
+			<li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i>{{ Lang::get('lingos::auth.log_out') }}</a></li>
 		</ul>
 	</li>
 	@else
-		<li {{ (Request::is('auth/signin') ? 'class="active"' : '') }}><a href="{{ route('signin') }}">{{ Lang::get('lingos::auth.sign_in') }}</a></li>
-		<li {{ (Request::is('auth/signup') ? 'class="active"' : '') }}><a href="{{ route('signup') }}">{{ Lang::get('lingos::auth.sign_up') }}</a></li>
+		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('login') }}">{{ Lang::get('lingos::auth.sign_in') }}</a></li>
+		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('register') }}">{{ Lang::get('lingos::auth.sign_up') }}</a></li>
 	@endif
 </ul>
 
@@ -90,6 +90,42 @@
 			@show
 		</h1>
 	</div>
+
+<!-- notifications ================================================== -->
+	@if (count($errors->all()) > 0)
+	<div class="alert alert-danger">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	Please check the form below for errors
+	</div>
+	@endif
+
+	@if ($message = Session::get('success'))
+	<div class="alert alert-success">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		{{ $message }}
+	</div>
+	@endif
+
+	@if ($message = Session::get('error'))
+	<div class="alert alert-danger">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		{{ $message }}
+	</div>
+	@endif
+
+	@if ($message = Session::get('warning'))
+	<div class="alert alert-warning">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		{{ $message }}
+	</div>
+	@endif
+
+	@if ($message = Session::get('info'))
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		{{ $message }}
+	</div>
+	@endif
 
 <!-- content ================================================== -->
 	@section('content')

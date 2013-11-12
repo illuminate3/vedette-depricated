@@ -7,9 +7,6 @@
 	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
 		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_permission') }}';
-		$(document).ready(function() {
-			$('.js-activated').dropdownHover().dropdown();
-		});
 	</script>
 @stop
 
@@ -78,7 +75,7 @@
 			<a class="btn btn-warning" href="{{ URL::route('auth.permissions.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 			<a href="{{ route('auth.permissions.destroy', array($permission->id)) }}"
 				class="btn btn-danger action_confirm"
-				data-method="post"
+				data-method="delete"
 				title="{{ Lang::get('lingos::button.permission.delete') }}">
 				<i class="fa fa-trash-o"></i>
 				{{ Lang::get('lingos::button.permission.delete') }}

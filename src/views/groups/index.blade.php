@@ -6,10 +6,7 @@
 @section('js')
 	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
-		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask_delete_group') }}';
-		$(document).ready(function() {
-			$('.js-activated').dropdownHover().dropdown();
-		});
+		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_group') }}';
 	</script>
 @stop
 
@@ -66,7 +63,7 @@
 				</a>
 				<a href="{{ route('auth.groups.destroy', array($group->id)) }}"
 					class="btn btn-danger action_confirm"
-					data-method="post"
+					data-method="delete"
 					title="{{ Lang::get('lingos::sentry.ask.delete_group') }}">
 					<i class="fa fa-trash-o"></i>
 					{{ Lang::get('lingos::sentry.ask.delete_group') }}

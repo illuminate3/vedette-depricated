@@ -142,7 +142,7 @@ class GroupsController extends BaseController {
         }
         catch (GroupNotFoundException $e)
         {
-            return Redirect::back()->with('error', $e->getMessage());
+            return Redirect::route('auth.groups.index')->with('error',$e->getMessage());
         }
     }
 

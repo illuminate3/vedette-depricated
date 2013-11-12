@@ -1,6 +1,14 @@
 Vedette
 =======
 
+> vedette |viˈdet|(also vidette )
+> noun
+> historical, a mounted sentry positioned beyond an army's outposts to observe the movements of the enemy.
+
+
+Using Sentry2 as the core of this package, I couldn't help from coming up with a name related to "sentry".
+
+
 ## About
 User Management Skeleton based on several Laravel packages provided by the laravel community.
 

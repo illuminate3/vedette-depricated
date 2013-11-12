@@ -51,7 +51,7 @@ class UsersPermissionsController extends BaseController {
         }
         catch ( UserNotFoundException $e)
         {
-            return Redirect::route('admin.users.index')->with('error', $e->getMessage());
+            return Redirect::route('auth.users.index')->with('error', $e->getMessage());
         }
     }
 
@@ -75,11 +75,11 @@ class UsersPermissionsController extends BaseController {
 
             Event::fire('users.permissions.update', array($user));
 
-            return Redirect::route('admin.users.index')->with('success', Lang::get('vedette::users.permissions_update_success'));
+            return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::sentry.permission_success.update'));
         }
         catch ( UserNotFoundException $e)
         {
-            return Redirect::route('admin.users.permissions')->with('error', $e->getMessage());
+            return Redirect::route('auth.users.permissions')->with('error', $e->getMessage());
         }
 
     }

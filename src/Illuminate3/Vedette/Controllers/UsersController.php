@@ -72,7 +72,7 @@ class UsersController extends BaseController {
      */
     public function create()
     {
-        return View::make(Config::get('vedette::views.users_create'));
+        return View::make(Config::get('vedette::views.users_create'))->with('success', Lang::get('lingos::sentry.user_success.create'));
     }
 
     /**
@@ -229,7 +229,7 @@ if (Input::has('banned'))
 
         if ($currentUser->id === (int) $id)
         {
-            return Redirect::back()->with('error', Lang::get('vedette::users.delete_denied') );
+            return Redirect::back()->with('error', Lang::get('lingos::sentry.user_error.denied') );
         }
 
         try
@@ -238,7 +238,7 @@ if (Input::has('banned'))
             $eventData = $user;
             $user->delete();
             Event::fire('users.delete', array($eventData));
-            return Redirect::route('auth.users.index')->with('success',Lang::get('vedette::users.delete_success'));
+            return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.delete'));
         }
         catch (UserNotFoundException $e)
         {
@@ -267,7 +267,7 @@ if (Input::has('banned'))
                 $user->activated = 0;
                 $user->activated_at = null;
                 $user->save();
-                return Redirect::route('auth.users.index')->with('success',Lang::get('vedette::users.deactivation_success'));
+                return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.deactivate'));
             }
             else
             {
@@ -276,12 +276,12 @@ if (Input::has('banned'))
                 if ($user->attemptActivation($code))
                 {
                     // User activation passed
-                    return Redirect::route('auth.users.index')->with('success',Lang::get('vedette::users.activation_success'));
+                    return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.activate'));
                 }
                 else
                 {
                     // User activation failed
-                    return Redirect::route('auth.users.index')->with('error',Lang::get('vedette::users.activation_fail'));
+                    return Redirect::route('auth.users.index')->with('error',Lang::get('lingos::sentry.user_error.activate'));
                 }
             }
         }

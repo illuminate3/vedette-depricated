@@ -7,9 +7,6 @@
 	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
 		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_user') }}';
-		$(document).ready(function() {
-			$('.js-activated').dropdownHover().dropdown();
-		});
 	</script>
 @stop
 
@@ -35,7 +32,7 @@
 	</div>
 
 	<div class="row">
-	{{ Former::horizontal_open( route('auth.users.permissions', array($user->id)), 'POST' ) }}
+	{{ Former::horizontal_open( route('auth.users.permissions', array($user->id)), 'PUT' ) }}
 
 		<ul class="nav nav-tabs">
 			<li class="active">
@@ -149,10 +146,10 @@
 				<br>
 			</div>
 			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
-			<a class="btn btn-warning" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
-			<a href="{{ URL::to('users/delete') }}/{{ $user->id}}"
+			<a class="btn btn-warning" href="{{ route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<a href="{{ route('auth.users.destroy', array($user->id)) }}"
 			class="btn btn-danger action_confirm"
-			data-method="post"
+			data-method="delete"
 			title="{{ Lang::get('lingos::button.user.delete') }}">
 				<i class="fa fa-trash-o"></i>
 				{{ Lang::get('lingos::button.user.delete') }}

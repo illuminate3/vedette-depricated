@@ -17,7 +17,7 @@
 
 @section('content')
 
-	{{ Former::horizontal_open(route('auth.register')) }}
+	{{ Former::horizontal_open(route('register')) }}
 
 	<fieldset>
 		<legend><i class="fa fa-user"></i>{{ Lang::get('lingos::general.personal_information') }}</legend>
@@ -75,7 +75,7 @@
 				<br>
 			</div>
 			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
-			<a class="btn btn-warning" href="{{ URL::route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<a class="btn btn-warning" href="{{ route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
 		</div>
 	</div>
 

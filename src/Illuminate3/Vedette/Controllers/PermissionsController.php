@@ -104,7 +104,7 @@ class PermissionsController extends BaseController {
         {
             $perm = $this->permissions->create($validation->getData());
             Event::fire('permissions.create', array($perm));
-            return Redirect::route('auth.permissions.index')->with('success', Lang::get('Lingos::sentry.create_permission_success'));
+            return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.permission_success.create'));
         }
         return Redirect::back()->withInput()->withErrors($validation->getErrors());
 
