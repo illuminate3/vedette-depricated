@@ -14,7 +14,7 @@ User Management Skeleton based on several Laravel packages provided by the larav
 
 
 ## Version
-0.8.0
+0.9.0
 
 * Fork Steve Montambeault's Cpanel package into Vedette (Keep Steve's authorship but change out PSR naming)
 * Redo views to allow a more generic approach to using in main app
@@ -81,7 +81,97 @@ To
 `
 
 4.)
-Make changes to the vedette configs.
+You can use the included layout or you can point to your own.
+To point to you own change:
+
+`
+'layout' => 'vedette::layouts',
+`
+
+To the location that points to your own layout. for example:
+
+`
+'layout' => 'frontend/layouts/default',
+`
+
+5.)
+If you change to a different layout there are several points that you should be aware of.
+I strongly suggest looking at the included default layout as a template or at least a reference
+to make sure you have all the necessary sections.
+
+5.1)
+Menu area
+
+This is the main code that creates the menu.
+
+`
+<ul class="nav navbar-nav navbar-right">
+	@if (Sentry::check())
+	<li class="dropdown{{ (Request::is('auth*') ? ' active' : '') }}">
+		<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{{ route('home') }}" data-hover="dropdown">
+			<i class="fa fa-user"></i>
+			{{ Sentry::getUser()->first_name }}
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			@if(Sentry::getUser()->hasAccess('admin'))
+				<li><a href="{{ route('users') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::general.users') }}</a></li>
+				<li><a href="{{ route('groups') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.groups') }}</a></li>
+				<li><a href="{{ route('permissions') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.permissions') }}</a></li>
+				<li><a href="{{ route('admin') }}"><i class="fa fa-gear"></i>{{ trans('lingos::general.administration') }}</a></li>
+			@endif
+			<li class="divider"></li>
+			<li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i>{{ trans('lingos::auth.log_out') }}</a></li>
+		</ul>
+	</li>
+	@else
+		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('login') }}">{{ trans('lingos::auth.sign_in') }}</a></li>
+		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('register') }}">{{ trans('lingos::auth.sign_up') }}</a></li>
+	@endif
+</ul>
+`
+
+5.2)
+section includes
+
+> @section('css')
+>
+> @section('js')
+>
+> @section('page_title')
+>
+> @section('title')
+>
+> @section('content')
+
+"title" is used for H 1 like headers.
+"page_title" is used for the title of the page, as in what you'd see in the browser title area.
+
+6.)
+I tried to keep the html to a minimum without too much fancy CSS styling. However, 1 CSS part should be noted.
+
+`
+.fa,
+.fa > a,
+.fa > li {
+  margin-right: 5px;
+}
+`
+
+I didn't like add a space in the html so I just forced a margin-right with CSS.
+
+7.)
+Javascript
+
+> restfulizer.js
+> twitter-bootstrap-hover-dropdown.js
+
+restufilizer.js is used to create a browser pop-up for when deleting data. I'm still sold on this but I
+wanted a way to interfere with users accidently deleting a user.
+
+twitter-bootstrap-hover-dropdown.js is straight up Bling. It adds a hover function for drop down buttons. Fall back
+is to the normal Bootstrap functionality. You probably wouldn't even notice it working or not ;)
+
 
 ## Usage
 
