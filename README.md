@@ -41,58 +41,58 @@ These are not included since I thought most people will already have included th
 
 1.)
 Add to the app.php providers list
-```'Illuminate3\Lingos\LingosServiceProvider',```
+`'Illuminate3\Lingos\LingosServiceProvider',`
 
 1.1)
 If you haven't already added these to the providers list in app.php, please add them.
-```
+`
 'Former\FormerServiceProvider',
 'Cartalyst\Sentry\SentryServiceProvider',
-```
+`
 
 If you haven't already added these to the aliases in app.php, please add them.
-```
+`
 'Former' => 'Former\Facades\Former',
 'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-```
+`
 
 2.)
 Vedette comes with a few handy commands that are available in artisan.
-```
+`
 vedette
   vedette:install        publish assets and configs, run migration, create primary user (admin)
   vedette:user           Create a new user with superuser role
-```
+`
 Run "vedette:install" to install to start using vedette.
 
 Edit the config file for former:
 
 3.)
 Change
-```
+`
 'automatic_label'   => true,
 'framework'         => 'TwitterBootstrap',
-```
+`
 
 To
-```
+`
 'automatic_label'   => false,
 'framework'         => 'TwitterBootstrap3',
-```
+`
 
 4.)
 You can use the included layout or you can point to your own.
 To point to you own change:
 
-```
+`
 'layout' => 'vedette::layouts',
-```
+`
 
 To the location that points to your own layout. for example:
 
-```
+`
 'layout' => 'frontend/layouts/default',
-```
+`
 
 5.)
 If you change to a different layout there are several points that you should be aware of.
@@ -150,13 +150,13 @@ section includes
 6.)
 I tried to keep the html to a minimum without too much fancy CSS styling. However, 1 CSS part should be noted.
 
-```
+`
 .fa,
 .fa > a,
 .fa > li {
   margin-right: 5px;
 }
-```
+`
 
 I didn't like add a space in the html so I just forced a margin-right with CSS.
 
