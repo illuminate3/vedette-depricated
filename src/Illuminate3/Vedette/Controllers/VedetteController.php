@@ -43,13 +43,11 @@ class VedetteController extends BaseController {
 		// Is the user logged in?
 		if (Sentry::check())
 		{
-//			return Redirect::route('home');
-			$redirect = Session::get('loginRedirect', 'auth.home');
+			return Redirect::route('home');
+//			$redirect = Session::get('loginRedirect', 'auth.home');
 
 		}
-
 		// Show the page
-//		return View::make('frontend.auth.signin');
 		return View::make(Config::get('vedette::views.login'));
 	}
 
