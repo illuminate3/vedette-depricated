@@ -72,7 +72,7 @@ class UsersController extends BaseController {
      */
     public function create()
     {
-        return View::make(Config::get('vedette::views.users_create'))->with('success', Lang::get('lingos::sentry.user_success.create'));
+        return View::make(Config::get('vedette::views.users_create'))->with('success', trans('lingos::sentry.user_success.create'));
     }
 
     /**
@@ -124,7 +124,7 @@ class UsersController extends BaseController {
                 //create the user
                 $user = Sentry::register($validation->getData(), true);
                 Event::fire('users.create', array($user));
-                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::sentry.user_success.create'));
+                return Redirect::route('auth.users.index')->with('success', trans('lingos::sentry.user_success.create'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -164,12 +164,24 @@ class UsersController extends BaseController {
             {
                 $user = Sentry::getUserProvider()->findById($id);
                 $user->fill($validation->getData());
-                $user->save();
 
 
+if (Input::has('activated'))
+{
+	if ($user->isActivated())
+	{
+	//
+	} else {
+		$user = Sentry::getUserProvider()->findById($id);
+		$activationCode = $user->getActivationCode();
+		$user->attemptActivation($activationCode);
+	}
+} else {
+	$user->activated = 0;
+	$user->activated_at = null;
+}
 // update throttle
-	//Prep for suspension
-	$throttle = Sentry::getThrottleProvider()->findByUserId($id);
+$throttle = Sentry::getThrottleProvider()->findByUserId($id);
 if (Input::has('suspended'))
 {
 	// Suspend the user
@@ -187,15 +199,14 @@ if (Input::has('banned'))
 	$throttle->unBan();
 }
 
-
-
+                $user->save();
 
                 //update groups
                 $user->groups()->detach();
                 $user->groups()->sync(Input::get('groups',array()));
                 Event::fire('users.update', array($user));
 
-                return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::sentry.user_success.update'));
+                return Redirect::route('auth.users.index')->with('success', trans('lingos::sentry.user_success.update'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
@@ -212,6 +223,12 @@ if (Input::has('banned'))
         {
             return Redirect::back()->with('error', $e->getMessage());
         }
+
+	catch ( UserAlreadyActivatedException $e)
+	{
+            return Redirect::back()->with('error', $e->getMessage());
+	}
+
     }
 
     /**
@@ -229,7 +246,7 @@ if (Input::has('banned'))
 
         if ($currentUser->id === (int) $id)
         {
-            return Redirect::back()->with('error', Lang::get('lingos::sentry.user_error.denied') );
+            return Redirect::back()->with('error', trans('lingos::sentry.user_error.denied') );
         }
 
         try
@@ -238,7 +255,7 @@ if (Input::has('banned'))
             $eventData = $user;
             $user->delete();
             Event::fire('users.delete', array($eventData));
-            return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.delete'));
+            return Redirect::route('auth.users.index')->with('success',trans('lingos::sentry.user_success.delete'));
         }
         catch (UserNotFoundException $e)
         {
@@ -267,7 +284,7 @@ if (Input::has('banned'))
                 $user->activated = 0;
                 $user->activated_at = null;
                 $user->save();
-                return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.deactivate'));
+                return Redirect::route('auth.users.index')->with('success',trans('lingos::sentry.user_success.deactivate'));
             }
             else
             {
@@ -276,12 +293,12 @@ if (Input::has('banned'))
                 if ($user->attemptActivation($code))
                 {
                     // User activation passed
-                    return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.activate'));
+                    return Redirect::route('auth.users.index')->with('success',trans('lingos::sentry.user_success.activate'));
                 }
                 else
                 {
                     // User activation failed
-                    return Redirect::route('auth.users.index')->with('error',Lang::get('lingos::sentry.user_error.activate'));
+                    return Redirect::route('auth.users.index')->with('error',trans('lingos::sentry.user_error.activate'));
                 }
             }
         }
@@ -307,17 +324,17 @@ if (Input::has('banned'))
 		    if ($user->delete())
 		    {
 		        // User was successfully deleted
-return Redirect::route('auth.users.index')->with('success',Lang::get('lingos::sentry.user_success.delete'));
+return Redirect::route('auth.users.index')->with('success',trans('lingos::sentry.user_success.delete'));
 		    }
 		    else
 		    {
 		        // There was a problem deleting the user
-return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::sentry.user_error.delete'));
+return Redirect::route('auth.users.index')->with('danger',trans('lingos::sentry.user_error.delete'));
 		    }
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-return Redirect::route('auth.users.index')->with('danger',Lang::get('lingos::sentry.user_error.not_found'));
+return Redirect::route('auth.users.index')->with('danger',trans('lingos::sentry.user_error.not_found'));
 		}
 	}
 

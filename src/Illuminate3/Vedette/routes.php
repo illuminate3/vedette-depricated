@@ -192,13 +192,13 @@ Route::filter('auth.vedette', function($route, $request, $userRule = null)
 // no access to the request page and request page not the root admin page
 	if ( !Sentry::hasAccess($userRule) and $userRule !== 'auth.view' )
 	{
-		return Redirect::route('auth.home')->with('error', Lang::get('lingos::sentry.permission_error.insufficient'));
+		return Redirect::route('home')->with('error', trans('lingos::sentry.permission_error.insufficient'));
 	}
 // no access to the request page and request page is the root admin page
 	else if( !Sentry::hasAccess($userRule) and $userRule === 'auth.view' )
 	{
 //can't see the admin home page go back to home site page
-		return Redirect::to('/')->with('error', Lang::get('lingos::sentry.permission_error.insufficient'));
+		return Redirect::to('auth.home')->with('error', trans('lingos::sentry.permission_error.insufficient'));
 	}
 
 });

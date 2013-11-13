@@ -29,7 +29,7 @@
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.1/css/font-awesome.min.css" rel="stylesheet">
 <link href="{{ asset('packages/illuminate3/vedette/assets/css/vedette.css') }}" rel="stylesheet">
 
 <!-- CSS ================================================== -->
@@ -59,19 +59,19 @@
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			<li><a href="{{ route('auth/users') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::general.users') }}</a></li>
-			<li><a href="{{ route('auth/groups') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.groups') }}</a></li>
-			<li><a href="{{ route('auth/permissions') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.permissions') }}</a></li>
 			@if(Sentry::getUser()->hasAccess('admin'))
-				<li><a href="{{ route('admin') }}"><i class="fa fa-gear"></i>{{ Lang::get('lingos::general.administration') }}</a></li>
+				<li><a href="{{ route('users') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::general.users') }}</a></li>
+				<li><a href="{{ route('groups') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.groups') }}</a></li>
+				<li><a href="{{ route('permissions') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.permissions') }}</a></li>
+				<li><a href="{{ route('admin') }}"><i class="fa fa-gear"></i>{{ trans('lingos::general.administration') }}</a></li>
 			@endif
 			<li class="divider"></li>
-			<li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i>{{ Lang::get('lingos::auth.log_out') }}</a></li>
+			<li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i>{{ trans('lingos::auth.log_out') }}</a></li>
 		</ul>
 	</li>
 	@else
-		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('login') }}">{{ Lang::get('lingos::auth.sign_in') }}</a></li>
-		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('register') }}">{{ Lang::get('lingos::auth.sign_up') }}</a></li>
+		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('login') }}">{{ trans('lingos::auth.sign_in') }}</a></li>
+		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('register') }}">{{ trans('lingos::auth.sign_up') }}</a></li>
 	@endif
 </ul>
 

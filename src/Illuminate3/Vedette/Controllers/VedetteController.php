@@ -43,7 +43,9 @@ class VedetteController extends BaseController {
 		// Is the user logged in?
 		if (Sentry::check())
 		{
-			return Redirect::route('/');
+//			return Redirect::route('home');
+			$redirect = Session::get('loginRedirect', 'auth.home');
+
 		}
 
 		// Show the page
@@ -51,63 +53,76 @@ class VedetteController extends BaseController {
 		return View::make(Config::get('vedette::views.login'));
 	}
 
-	/**
-	 * Account sign in form processing.
-	 *
-	 * @return Redirect
-	 */
-	public function postLogin()
-	{
-		// Declare the rules for the form validation
-		$rules = array(
-			'email'    => 'required|email',
-			'password' => 'required|between:4,255',
-		);
+    /**
+     * Authenticate the user
+     *
+     * @author Steve Montambeault
+     * @link   http://stevemo.ca
+     *
+     *
+     * @return Response
+     */
+    public function postLogin()
+    {
+        try
+        {
+            $remember = Input::get('remember_me', false);
+/*
+if(!empty($input['rememberMe'])) {
+   $user = Sentry::authenticate($credentials, true);
+} else {
+   $user = Sentry::authenticate($credentials, false);
+}
+*/
 
-		// Create a new validator instance from our validation rules
-		$validator = Validator::make(Input::all(), $rules);
+            $userdata = array(
+//                Config::get('cartalyst/sentry::users.login_attribute') => Input::get('email'),
+                'email' => Input::get('email'),
+                'password' => Input::get('password')
+            );
 
-		// If validation fails, we'll exit the operation now.
-		if ($validator->fails())
-		{
-			// Ooops.. something went wrong
-			return Redirect::back()->withInput()->withErrors($validator);
-		}
+            $user = Sentry::authenticate($userdata, $remember);
+            Event::fire('users.login', array($user));
+            return Redirect::intended('/')->with('success', trans('lingos::auth.success.login'));
+        }
+        catch (LoginRequiredException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.login_required'));
+        }
+        catch (PasswordRequiredException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.password_required'));
+        }
+        catch (WrongPasswordException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.wrong_password'));
+        }
+        catch (UserNotActivatedException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.not_activated'));
+        }
+        catch (UserNotFoundException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.not_found'));
+        }
+        catch (UserSuspendedException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.suspended'));
+        }
+        catch (UserBannedException $e)
+        {
+//            return Redirect::back()->withInput()->with('login_error',$e->getMessage());
+            return Redirect::back()->withInput()->with('error',trans('lingos::auth.account.banned'));
+        }
+    }
 
-		try
-		{
-			// Try to log the user in
-			Sentry::authenticate(Input::only('email', 'password'), Input::get('remember-me', 0));
-			// Get the page we were before
-//			$redirect = Session::get('loginRedirect', 'account');
-			$redirect = Session::get('loginRedirect', '/');
-//$redirect = '/';
-			// Unset the page we were before from the session
-			Session::forget('loginRedirect');
 
-			// Redirect to the users page
-			return Redirect::to($redirect)->with('success', Lang::get('lingos::auth.success.sign_in'));
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-			$this->messageBag->add('email', Lang::get('lingos::auth.account.not_found'));
-		}
-		catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
-		{
-			$this->messageBag->add('email', Lang::get('lingos::auth.account.not_activated'));
-		}
-		catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
-		{
-			$this->messageBag->add('email', Lang::get('lingos::auth.account.suspended'));
-		}
-		catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
-		{
-			$this->messageBag->add('email', Lang::get('lingos::auth.account.banned'));
-		}
-
-		// Ooops.. something went wrong
-		return Redirect::back()->withInput()->withErrors($this->messageBag);
-	}
 
 	/**
 	 * Account sign up.
@@ -177,11 +192,11 @@ class VedetteController extends BaseController {
 			});
 
 			// Redirect to the register page
-			return Redirect::back()->with('success', Lang::get('lingos::auth.success.signup'));
+			return Redirect::back()->with('success', trans('lingos::auth.success.signup'));
 		}
 		catch (Cartalyst\Sentry\Users\UserExistsException $e)
 		{
-			$this->messageBag->add('email', Lang::get('lingos::auth.account.already_exists'));
+			$this->messageBag->add('email', trans('lingos::auth.account.already_exists'));
 		}
 
 		// Ooops.. something went wrong
@@ -211,15 +226,15 @@ class VedetteController extends BaseController {
 			if ($user->attemptActivation($activationCode))
 			{
 				// Redirect to the login page
-				return Redirect::route('signin')->with('success', Lang::get('lingos::auth.success.activate'));
+				return Redirect::route('signin')->with('success', trans('lingos::auth.success.activate'));
 			}
 
 			// The activation failed.
-			$error = Lang::get('lingos::auth.error.activate');
+			$error = trans('lingos::auth.error.activate');
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-			$error = Lang::get('lingos::auth.error.activate');
+			$error = trans('lingos::auth.error.activate');
 		}
 
 		// Ooops.. something went wrong
@@ -276,7 +291,7 @@ class VedetteController extends BaseController {
 			{
 				$m->to($user->email, $user->first_name . ' ' . $user->last_name);
 //				$m->subject('Account Password Recovery');
-				$m->subject( Lang::get('lingos::auth.account_password_recovery') );
+				$m->subject( trans('lingos::auth.account_password_recovery') );
 			});
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
@@ -287,7 +302,7 @@ class VedetteController extends BaseController {
 		}
 
 		//  Redirect to the forgot password
-		return Redirect::route('forgot-password')->with('success', Lang::get('lingos::auth.success.forgot-password'));
+		return Redirect::route('forgot-password')->with('success', trans('lingos::auth.success.forgot-password'));
 	}
 
 	/**
@@ -306,7 +321,7 @@ class VedetteController extends BaseController {
 		catch(Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
 			// Redirect to the forgot password page
-			return Redirect::route('forgot-password')->with('error', Lang::get('lingos::auth.account.not_found'));
+			return Redirect::route('forgot-password')->with('error', trans('lingos::auth.account.not_found'));
 		}
 
 		// Show the page
@@ -347,18 +362,18 @@ class VedetteController extends BaseController {
 			if ($user->attemptResetPassword($passwordResetCode, Input::get('password')))
 			{
 				// Password successfully reseted
-				return Redirect::route('signin')->with('success', Lang::get('lingos::auth.success.reset_password'));
+				return Redirect::route('signin')->with('success', trans('lingos::auth.success.reset_password'));
 			}
 			else
 			{
 				// Ooops.. something went wrong
-				return Redirect::route('signin')->with('error', Lang::get('lingos::auth.error.reset_password'));
+				return Redirect::route('signin')->with('error', trans('lingos::auth.error.reset_password'));
 			}
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
 			// Redirect to the forgot password page
-			return Redirect::route('forgot-password')->with('error', Lang::get('lingos::auth.account.not_found'));
+			return Redirect::route('forgot-password')->with('error', trans('lingos::auth.account.not_found'));
 		}
 	}
 
@@ -373,7 +388,7 @@ class VedetteController extends BaseController {
 		Sentry::logout();
 
 		// Redirect to the users page
-		return Redirect::route('home')->with('success', Lang::get('lingos::auth.success.logout'));
+		return Redirect::route('home')->with('success', trans('lingos::auth.success.logout'));
 	}
 
 }

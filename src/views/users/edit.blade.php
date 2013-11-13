@@ -6,17 +6,17 @@
 @section('js')
 	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
-		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_user') }}';
+		var text_confirm_message = '{{ trans('lingos::sentry.ask.delete_user') }}';
 	</script>
 @stop
 
 @section('page_title')
-	- {{ Lang::get('lingos::sentry.user_command.edit') }}
+	- {{ trans('lingos::sentry.user_command.edit') }}
 @stop
 
 @section('title')
 	<i class="fa fa-pencil fa-lg"></i>
-	{{ Lang::get('lingos::sentry.user_command.edit') }}
+	{{ trans('lingos::sentry.user_command.edit') }}
 	&nbsp;&quot;{{ $user->first_name }}&nbsp;{{ $user->last_name }}&quot;
 @stop
 
@@ -25,9 +25,9 @@
 
 	<div class="row">
 	<div class="row btn-toolbar pull-right" role="toolbar">
-		<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::button.back') }}">
+		<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ trans('lingos::button.back') }}">
 			<i class="fa fa-backward"></i>
-			{{ Lang::get('lingos::button.back') }}
+			{{ trans('lingos::button.back') }}
 		</a>
 	</div>
 	</div>
@@ -38,17 +38,17 @@
 		<ul class="nav nav-tabs">
 			<li class="active">
 				<a href="#info" data-toggle="tab">
-					{{ Lang::get('lingos::general.information') }}
+					{{ trans('lingos::general.information') }}
 				</a>
 			</li>
 			<li>
 				<a href="#password" data-toggle="tab">
-					{{ Lang::get('lingos::auth.password') }}
+					{{ trans('lingos::auth.password') }}
 				</a>
 			</li>
 			<li>
 				<a href="#status" data-toggle="tab">
-					{{ Lang::get('lingos::general.status') }}
+					{{ trans('lingos::general.status') }}
 				</a>
 			</li>
 		</ul>
@@ -60,13 +60,13 @@
 		<br>
 
 		<fieldset>
-			<legend><i class="fa fa-user"></i>{{ Lang::get('lingos::general.personal_information') }}</legend>
+			<legend><i class="fa fa-user"></i>{{ trans('lingos::general.personal_information') }}</legend>
 			{{ Former::text('first_name', '')
 				->prepend('<i class="fa fa-check-circle"></i>')
 				->class('form-control has-error')
 				->id('first_name')
 				->value($user->first_name)
-				->placeholder(Lang::get('lingos::general.first_name'))
+				->placeholder(trans('lingos::general.first_name'))
 				->required()
 				->autofocus()
 			}}
@@ -75,7 +75,7 @@
 				->class('form-control has-error')
 				->id('last_name')
 				->value($user->last_name)
-				->placeholder(Lang::get('lingos::general.last_name'))
+				->placeholder(trans('lingos::general.last_name'))
 				->required()
 			}}
 		</fieldset>
@@ -83,13 +83,13 @@
 		<br>
 
 		<fieldset>
-			<legend><i class="fa fa-envelope-o"></i>{{ Lang::get('lingos::general.email') }}</legend>
+			<legend><i class="fa fa-envelope-o"></i>{{ trans('lingos::general.email') }}</legend>
 			{{ Former::text('email', '')
 				->prepend('<i class="fa fa-envelope-o"></i>')
 				->class('form-control has-error')
 				->id('email')
 				->value($user->email)
-				->placeholder(Lang::get('lingos::general.email'))
+				->placeholder(trans('lingos::general.email'))
 				->required()
 			}}
 		</fieldset>
@@ -103,22 +103,22 @@
 		<fieldset>
 			<legend>
 				<i class="fa fa-key"></i>
-				{{ Lang::get('lingos::auth.password') }}
+				{{ trans('lingos::auth.password') }}
 				<span class="text-danger pull-right">
-					<small>{{ Lang::get('lingos::auth.leave_blank_keep_same') }}</small>
+					<small>{{ trans('lingos::auth.leave_blank_keep_same') }}</small>
 				</span>
 			</legend>
 			{{ Former::password('password', '')
 				->prepend('<i class="fa fa-unlock-o"></i>')
 				->class('form-control has-error')
 				->id('password')
-				->placeholder(Lang::get('lingos::auth.password'))
+				->placeholder(trans('lingos::auth.password'))
 			}}
 			{{ Former::password('password_confirmation', '')
 				->prepend('<i class="fa fa-unlock"></i>')
 				->class('form-control has-error')
 				->id('password_confirmation')
-				->placeholder(Lang::get('lingos::auth.confirm_password'))
+				->placeholder(trans('lingos::auth.confirm_password'))
 			}}
 		</fieldset>
 
@@ -129,7 +129,7 @@
 		<br>
 
 		<fieldset>
-			<legend><i class="fa fa-group"></i>{{ Lang::get('lingos::sentry.groups') }}</legend>
+			<legend><i class="fa fa-group"></i>{{ trans('lingos::sentry.groups') }}</legend>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-umbrella"></i></span>
 				<select multiple class="form-control" id="groups" name="groups[]" multiple="true">
@@ -147,11 +147,11 @@
 		<br>
 
 		<fieldset>
-			<legend><i class="fa fa-tachometer"></i>{{ Lang::get('lingos::sentry.suspension') }}</legend>
+			<legend><i class="fa fa-tachometer"></i>{{ trans('lingos::sentry.suspension') }}</legend>
 		<table class="table table-striped table-hover">
 			<tbody>
 				<tr>
-					<td>{{ Lang::get('lingos::general.active') }}</td>
+					<td>{{ trans('lingos::general.active') }} {{ $user->activated }}</td>
 					<td>
 						{{ Former::checkbox('activated', '')
 							->id('activated')
@@ -160,7 +160,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ Lang::get('lingos::sentry.banned') }}</td>
+					<td>{{ trans('lingos::sentry.banned') }}</td>
 					<td>
 						{{ Former::checkbox('banned', '')
 							->id('banned')
@@ -169,7 +169,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ Lang::get('lingos::sentry.suspended') }}</td>
+					<td>{{ trans('lingos::sentry.suspended') }}</td>
 					<td>
 						{{ Former::checkbox('suspended', '')
 							->id('suspended')
@@ -183,16 +183,16 @@
 		<br>
 
 		<fieldset>
-			<legend><i class="fa fa-heart"></i>{{ Lang::get('lingos::general.activity') }}</legend>
+			<legend><i class="fa fa-heart"></i>{{ trans('lingos::general.activity') }}</legend>
 		<table class="table table-striped table-hover">
 			<tbody>
 				<tr>
-					<td>{{ Lang::get('lingos::general.date_activated') }}</td>
-					<td>{{ $user->activated_at ? $user->activated_at : Lang::get('lingos::general.never_activated') }}</td>
+					<td>{{ trans('lingos::general.date_activated') }}</td>
+					<td>{{ $user->activated_at ? $user->activated_at : trans('lingos::general.never_activated') }}</td>
 				</tr>
 				<tr>
-					<td>{{ Lang::get('lingos::general.last_login') }}</td>
-					<td>{{ is_null($user->last_login) ? Lang::get('lingos::general.never_visited') : $user->last_login }}</td>
+					<td>{{ trans('lingos::general.last_login') }}</td>
+					<td>{{ is_null($user->last_login) ? trans('lingos::general.never_visited') : $user->last_login }}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -205,18 +205,18 @@
 
 	<div class="row btn-toolbar" role="toolbar">
 		<div class="col-xs-6 col-md-4">
-			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ Lang::get('lingos::button.save_changes') }}">
+			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ trans('lingos::button.save_changes') }}">
 			<div>
 				<br>
 			</div>
-			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
-			<a class="btn btn-warning" href="{{ route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<input class="btn-inverse btn" type="reset" value="{{ trans('lingos::button.reset') }}">
+			<a class="btn btn-warning" href="{{ route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
 			<a href="{{ route('auth.users.destroy', array($user->id)) }}"
 			class="btn btn-danger action_confirm"
 			data-method="delete"
-			title="{{ Lang::get('lingos::button.user.delete') }}">
+			title="{{ trans('lingos::button.user.delete') }}">
 				<i class="fa fa-trash-o"></i>
-				{{ Lang::get('lingos::button.user.delete') }}
+				{{ trans('lingos::button.user.delete') }}
 			</a>
 		</div>
 	</div>
@@ -227,7 +227,7 @@
 @else
 	<div class="alert alert-warning">
 		<h2>
-			{{ Lang::get('lingos::sentry.permission_error.insufficient') }}
+			{{ trans('lingos::sentry.permission_error.insufficient') }}
 		</h2>
 	</div>
 @endif

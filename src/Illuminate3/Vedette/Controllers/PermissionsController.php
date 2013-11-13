@@ -83,7 +83,7 @@ class PermissionsController extends BaseController {
         }
         catch ( ModelNotFoundException $e )
         {
-            return Redirect::route('auth.permissions.index')->with('error', Lang::get('Lingos::sentry.model_not_found'));
+            return Redirect::route('auth.permissions.index')->with('error', trans('Lingos::sentry.model_not_found'));
         }
     }
 
@@ -104,7 +104,7 @@ class PermissionsController extends BaseController {
         {
             $perm = $this->permissions->create($validation->getData());
             Event::fire('permissions.create', array($perm));
-            return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.permission_success.create'));
+            return Redirect::route('auth.permissions.index')->with('success', trans('lingos::sentry.permission_success.create'));
         }
         return Redirect::back()->withInput()->withErrors($validation->getErrors());
 
@@ -131,14 +131,14 @@ class PermissionsController extends BaseController {
             {
                 $perm = $this->permissions->update($id,$validation->getData());
                 Event::fire('permissions.update', array($perm));
-                return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.permission_success.create'));
+                return Redirect::route('auth.permissions.index')->with('success', trans('lingos::sentry.permission_success.create'));
             }
 
             return Redirect::back()->withInput()->withErrors($validation->getErrors());
         }
         catch ( ModelNotFoundException $e )
         {
-            return Redirect::route('auth.permissions.index')->with('error', Lang::get('lingos::sentry.model_not_found'));
+            return Redirect::route('auth.permissions.index')->with('error', trans('lingos::sentry.model_not_found'));
         }
     }
 
@@ -157,11 +157,11 @@ class PermissionsController extends BaseController {
         {
             $eventData = $this->permissions->delete($id);
             Event::fire('permission.delete', array($eventData));
-            return Redirect::route('auth.permissions.index')->with('success', Lang::get('lingos::sentry.permission_success.delete'));
+            return Redirect::route('auth.permissions.index')->with('success', trans('lingos::sentry.permission_success.delete'));
         }
         catch ( ModelNotFoundException $e)
         {
-            return Redirect::route('auth.permissions.index')->with('error', Lang::get('lingos::sentry.model_not_found'));
+            return Redirect::route('auth.permissions.index')->with('error', trans('lingos::sentry.model_not_found'));
         }
     }
 

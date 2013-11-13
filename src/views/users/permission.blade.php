@@ -6,17 +6,17 @@
 @section('js')
 	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script>
-		var text_confirm_message = '{{ Lang::get('lingos::sentry.ask.delete_user') }}';
+		var text_confirm_message = '{{ trans('lingos::sentry.ask.delete_user') }}';
 	</script>
 @stop
 
 @section('page_title')
-	- {{ Lang::get('lingos::sentry.users_permissions') }}
+	- {{ trans('lingos::sentry.users_permissions') }}
 @stop
 
 @section('title')
 	<i class="fa fa-wrench fa-lg"></i>
-	{{ Lang::get('lingos::sentry.users_permissions') }}
+	{{ trans('lingos::sentry.users_permissions') }}
 @stop
 
 @section('content')
@@ -24,9 +24,9 @@
 
 	<div class="row">
 	<div class="row btn-toolbar pull-right" role="toolbar">
-		<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ Lang::get('lingos::button.back') }}">
+		<a href="{{ route('auth.users.index') }}" class="btn btn-info" title="{{ trans('lingos::button.back') }}">
 			<i class="fa fa-backward"></i>
-			{{ Lang::get('lingos::button.back') }}
+			{{ trans('lingos::button.back') }}
 		</a>
 	</div>
 	</div>
@@ -37,12 +37,12 @@
 		<ul class="nav nav-tabs">
 			<li class="active">
 				<a href="#generics" data-toggle="tab">
-					{{ Lang::get('lingos::sentry.generic_permissions') }}
+					{{ trans('lingos::sentry.generic_permissions') }}
 				</a>
 			</li>
 			<li>
 				<a href="#modules" data-toggle="tab">
-					{{ Lang::get('lingos::sentry.modules_permissions') }}
+					{{ trans('lingos::sentry.modules_permissions') }}
 				</a>
 			</li>
 		</ul>
@@ -56,14 +56,14 @@
 		<fieldset>
 			<legend>
 				<i class="fa fa-gavel"></i>
-				{{ Lang::get('lingos::sentry.access_everything') }}
+				{{ trans('lingos::sentry.access_everything') }}
 			</legend>
 		<table class="table table-striped table-hover">
 			<tbody>
 				<tr>
 					<td class="padding-left-lg">
-						{{ Former::select('rules[superuser]', Lang::get('lingos::general.super_user') )
-							->options(array('0' => Lang::get('lingos::general.no'),'1' => Lang::get('lingos::general.yes') ))
+						{{ Former::select('rules[superuser]', trans('lingos::general.super_user') )
+							->options(array('0' => trans('lingos::general.no'),'1' => trans('lingos::general.yes') ))
 							->value($user->isSuperUser() ? 1 : 0)
 							->class('margin-left')
 						}}
@@ -77,7 +77,7 @@
 		<fieldset>
 			<legend>
 				<i class="fa fa-filter"></i>
-				{{ Lang::get('lingos::sentry.generic_permissions') }}
+				{{ trans('lingos::sentry.generic_permissions') }}
 			</legend>
 		<table class="table table-striped table-hover">
 			<tbody>
@@ -85,7 +85,7 @@
 				<tr>
 					<td class="padding-left-lg">
 						{{ Former::select($input['name'],$input['text'])
-							->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
+							->options(array('0' => trans('lingos::sentry.inherit'),'1' => trans('lingos::sentry.allow'),'-1' => trans('lingos::sentry.deny')))
 							->value($input['value'])
 							->class('margin-left')
 							->id($input['id'])
@@ -105,7 +105,7 @@
 
 		@if (count($modulePerm) < 1)
 			<div class="alert alert-warning">
-				{{ Lang::get('lingos::sentry.permission_module_not_found') }}
+				{{ trans('lingos::sentry.permission_module_not_found') }}
 			</div>
 		@else
 		<table class="table table-striped table-hover">
@@ -113,14 +113,14 @@
 			@foreach( $modulePerm as $perm)
 				<tr>
 					<td>
-						{{ $perm['name'] }} {{ Lang::get('lingos::general.module') }}
+						{{ $perm['name'] }} {{ trans('lingos::general.module') }}
 					</td>
 				</tr>
 				<tr>
 					<td class="padding-left-lg">
 						@foreach( $perm['permissions'] as $input )
 							{{ Former::select($input['name'],$input['text'])
-								->options(array('0' => Lang::get('lingos::sentry.inherit'),'1' => Lang::get('lingos::sentry.allow'),'-1' => Lang::get('lingos::sentry.deny')))
+								->options(array('0' => trans('lingos::sentry.inherit'),'1' => trans('lingos::sentry.allow'),'-1' => trans('lingos::sentry.deny')))
 								->value($input['value'])
 								->class('margin-left')
 								->id($input['id'])
@@ -141,18 +141,18 @@
 
 	<div class="row btn-toolbar" role="toolbar">
 		<div class="col-xs-6 col-md-4">
-			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ Lang::get('lingos::button.save_changes') }}">
+			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ trans('lingos::button.save_changes') }}">
 			<div>
 				<br>
 			</div>
-			<input class="btn-inverse btn" type="reset" value="{{ Lang::get('lingos::button.reset') }}">
-			<a class="btn btn-warning" href="{{ route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
+			<input class="btn-inverse btn" type="reset" value="{{ trans('lingos::button.reset') }}">
+			<a class="btn btn-warning" href="{{ route('auth.users.index') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
 			<a href="{{ route('auth.users.destroy', array($user->id)) }}"
 			class="btn btn-danger action_confirm"
 			data-method="delete"
-			title="{{ Lang::get('lingos::button.user.delete') }}">
+			title="{{ trans('lingos::button.user.delete') }}">
 				<i class="fa fa-trash-o"></i>
-				{{ Lang::get('lingos::button.user.delete') }}
+				{{ trans('lingos::button.user.delete') }}
 			</a>
 		</div>
 	</div>
@@ -163,7 +163,7 @@
 @else
 	<div class="alert alert-warning">
 		<h2>
-			{{ Lang::get('lingos::sentry.permission_error.insufficient') }}
+			{{ trans('lingos::sentry.permission_error.insufficient') }}
 		</h2>
 	</div>
 @endif

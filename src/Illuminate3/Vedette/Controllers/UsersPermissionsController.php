@@ -75,7 +75,7 @@ class UsersPermissionsController extends BaseController {
 
             Event::fire('users.permissions.update', array($user));
 
-            return Redirect::route('auth.users.index')->with('success', Lang::get('lingos::sentry.permission_success.update'));
+            return Redirect::route('auth.users.index')->with('success', trans('lingos::sentry.permission_success.update'));
         }
         catch ( UserNotFoundException $e)
         {

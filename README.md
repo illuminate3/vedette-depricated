@@ -101,6 +101,8 @@ Make changes to the vedette configs.
 
 [Rydurham's Cpanel](https://github.com/rydurham/L4withSentry "Rydurham's L4withSentry")
 
+[MrJuliuss's Syntara](https://github.com/MrJuliuss/syntara "MrJuliuss's Syntara")
+
 
 # Notes
 Vedette is a fork of Steve Montambeault's Cpanel package.

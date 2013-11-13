@@ -3,7 +3,7 @@
         <div class="span12 margin-10-top">
             <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-11111                {{ Lang::get('vedette::vedette.alert_validation_failed') }}
+11111                {{ trans('vedette::vedette.alert_validation_failed') }}
             </div>
         </div>
     </div>

@@ -7,12 +7,12 @@
 @stop
 
 @section('page_title')
-	- {{ Lang::get('lingos::auth.sign_in') }}
+	- {{ trans('lingos::auth.sign_in') }}
 @stop
 
 @section('title')
 	<i class="fa fa-sign-in fa-lg"></i>
-	{{ Lang::get('lingos::auth.sign_in') }}
+	{{ trans('lingos::auth.sign_in') }}
 @stop
 
 @section('content')
@@ -28,7 +28,7 @@
 			->prepend('<i class="fa fa-envelope-o"></i>')
 			->class('form-control has-error')
 			->id('email')
-			->placeholder(Lang::get('lingos::general.email'))
+			->placeholder(trans('lingos::general.email'))
 			->value(Input::old('email'))
 			->autofocus()
 		}}
@@ -37,11 +37,11 @@
 			->class('form-control has-error')
 			->id('password')
 			->value(Input::old('password'))
-			->placeholder(Lang::get('lingos::auth.password'))
+			->placeholder(trans('lingos::auth.password'))
 		}}
 		<div class="checkbox">
 			<label>
-				<input type="checkbox"name="remember-me" value="true">{{ Lang::get('lingos::auth.remember_me') }}
+				<input type="checkbox"name="remember_me" id="remember_me" value="true">{{ trans('lingos::auth.remember_me') }}
 			</label>
 		</div>
 	</fieldset>
@@ -50,13 +50,13 @@
 
 	<div class="row btn-toolbar" role="toolbar">
 		<div class="col-xs-6 col-md-4">
-			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ Lang::get('lingos::button.sign_in') }}">
+			<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ trans('lingos::button.sign_in') }}">
 			<div>
 				<br>
 			</div>
-			<a class="btn btn-warning" href="{{ route('home') }}"><i class="fa fa-minus-circle"></i>{{ Lang::get('lingos::button.cancel') }}</a>
-			<a class="btn btn-primary" href="{{ route('register') }}"><i class="fa fa-plus-circle"></i>{{ Lang::get('lingos::button.register') }}</a>
-			<a class="btn btn-info" href="{{ route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ Lang::get('lingos::button.forgot_password') }}</a>
+			<a class="btn btn-warning" href="{{ route('home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
+			<a class="btn btn-primary" href="{{ route('register') }}"><i class="fa fa-plus-circle"></i>{{ trans('lingos::button.register') }}</a>
+			<a class="btn btn-info" href="{{ route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ trans('lingos::button.forgot_password') }}</a>
 		</div>
 	</div>
 
