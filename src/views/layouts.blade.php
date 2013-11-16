@@ -53,25 +53,25 @@
 <ul class="nav navbar-nav navbar-right">
 	@if (Sentry::check())
 	<li class="dropdown{{ (Request::is('auth*') ? ' active' : '') }}">
-		<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{{ route('home') }}" data-hover="dropdown">
+		<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{{ route('vedette.home') }}" data-hover="dropdown">
 			<i class="fa fa-user"></i>
 			{{ Sentry::getUser()->first_name }}
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			@if(Sentry::getUser()->hasAccess('admin'))
-				<li><a href="{{ route('users') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::general.users') }}</a></li>
-				<li><a href="{{ route('groups') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.groups') }}</a></li>
-				<li><a href="{{ route('permissions') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.permissions') }}</a></li>
-				<li><a href="{{ route('admin') }}"><i class="fa fa-gear"></i>{{ trans('lingos::general.administration') }}</a></li>
+				<li><a href="{{ route('vedette.users') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::general.users') }}</a></li>
+				<li><a href="{{ route('vedette.groups') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.groups') }}</a></li>
+				<li><a href="{{ route('vedette.permissions') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.permissions') }}</a></li>
+				<li><a href="{{ route('vedette.admin') }}"><i class="fa fa-gear"></i>{{ trans('lingos::general.administration') }}</a></li>
 			@endif
 			<li class="divider"></li>
-			<li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i>{{ trans('lingos::auth.log_out') }}</a></li>
+			<li><a href="{{ route('vedette.logout') }}"><i class="fa fa-power-off"></i>{{ trans('lingos::auth.log_out') }}</a></li>
 		</ul>
 	</li>
 	@else
-		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('login') }}">{{ trans('lingos::auth.sign_in') }}</a></li>
-		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('register') }}">{{ trans('lingos::auth.sign_up') }}</a></li>
+		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('vedette.login') }}">{{ trans('lingos::auth.sign_in') }}</a></li>
+		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('vedette.register') }}">{{ trans('lingos::auth.sign_up') }}</a></li>
 	@endif
 </ul>
 

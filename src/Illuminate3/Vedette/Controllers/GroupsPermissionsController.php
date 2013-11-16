@@ -63,7 +63,7 @@ class GroupsPermissionsController extends BaseController {
 
             $genericPerm = $this->permissions->getMergePermissions($groupPermissions, $roles);
 
-            return View::make(Config::get('vedette::views.groups_permission'), compact('modulePerm','group','genericPerm'));
+            return View::make(Config::get('vedette::vedette_views.groups_permission'), compact('modulePerm','group','genericPerm'));
         }
         catch ( GroupNotFoundException $e)
         {

@@ -47,7 +47,7 @@ class UsersPermissionsController extends BaseController {
             $roles = array(array('name' => 'generic', 'permissions' => array('view','create','update','delete')));
             $genericPerm = $this->permissions->getMergePermissions($user->getPermissions(), $roles);
 
-            return View::make(Config::get('vedette::views.users_permission'),compact('user','modulePerm','genericPerm'));
+            return View::make(Config::get('vedette::vedette_views.users_permission'),compact('user','modulePerm','genericPerm'));
         }
         catch ( UserNotFoundException $e)
         {

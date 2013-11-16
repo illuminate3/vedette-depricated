@@ -37,7 +37,7 @@ class UsersController extends BaseController {
 			$throttles = Sentry::getThrottleProvider()->findByUserId($user->id);
 		}
 
-        return View::make(Config::get('vedette::views.users_index'), compact('users', 'throttles'));
+        return View::make(Config::get('vedette::vedette_views.users_index'), compact('users', 'throttles'));
     }
 
     /**
@@ -55,7 +55,7 @@ class UsersController extends BaseController {
         {
             $user = Sentry::getUserProvider()->findById($id);
 			$throttles = Sentry::getThrottleProvider()->findByUserId($id);
-            return View::make(Config::get('vedette::views.users_show'),compact('user', 'throttles'));
+            return View::make(Config::get('vedette::vedette_views.users_show'),compact('user', 'throttles'));
         }
         catch ( UserNotFoundException $e)
         {
@@ -72,7 +72,7 @@ class UsersController extends BaseController {
      */
     public function create()
     {
-        return View::make(Config::get('vedette::views.users_create'))->with('success', trans('lingos::sentry.user_success.create'));
+        return View::make(Config::get('vedette::vedette_views.users_create'))->with('success', trans('lingos::sentry.user_success.create'));
     }
 
     /**
@@ -97,7 +97,7 @@ class UsersController extends BaseController {
 
 			$throttles = Sentry::getThrottleProvider()->findByUserId($id);
 
-            return View::make(Config::get('vedette::views.users_edit'),compact('user','groups','userGroupsId', 'throttles'));
+            return View::make(Config::get('vedette::vedette_views.users_edit'),compact('user','groups','userGroupsId', 'throttles'));
         }
         catch (UserNotFoundException $e)
         {

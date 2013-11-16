@@ -30,7 +30,7 @@ class VedetteController extends BaseController {
 
 	public function index()
 	{
-		return View::make(Config::get('vedette::views.auth'));
+		return View::make(Config::get('vedette::vedette_views.auth'));
 	}
 
 	/**
@@ -43,12 +43,12 @@ class VedetteController extends BaseController {
 		// Is the user logged in?
 		if (Sentry::check())
 		{
-			return Redirect::route('home');
+			return Redirect::route('vedette.home');
 //			$redirect = Session::get('loginRedirect', 'auth.home');
 
 		}
 		// Show the page
-		return View::make(Config::get('vedette::views.login'));
+		return View::make(Config::get('vedette::vedette_views.login'));
 	}
 
     /**
@@ -81,7 +81,7 @@ if(!empty($input['rememberMe'])) {
 
             $user = Sentry::authenticate($userdata, $remember);
             Event::fire('users.login', array($user));
-            return Redirect::intended('/')->with('success', trans('lingos::auth.success.login'));
+            return Redirect::intended(Config::get('vedette::vedette_settings.home_route'))->with('success', trans('lingos::auth.success.login'));
         }
         catch (LoginRequiredException $e)
         {
@@ -136,7 +136,7 @@ if(!empty($input['rememberMe'])) {
 		}
 
 		// Show the page
-		return View::make(Config::get('vedette::views.register'));
+		return View::make(Config::get('vedette::vedette_views.register'));
 	}
 
 	/**
@@ -248,7 +248,7 @@ if(!empty($input['rememberMe'])) {
 	{
 		// Show the page
 //		return View::make('frontend.auth.forgot-password');
-		return View::make(Config::get('vedette::views.forgot'));
+		return View::make(Config::get('vedette::vedette_views.forgot'));
 	}
 
 	/**
@@ -270,7 +270,7 @@ if(!empty($input['rememberMe'])) {
 		if ($validator->fails())
 		{
 			// Ooops.. something went wrong
-			return Redirect::route('forgot-password')->withInput()->withErrors($validator);
+			return Redirect::route('vedette.forgot-password')->withInput()->withErrors($validator);
 		}
 
 		try
@@ -285,7 +285,7 @@ if(!empty($input['rememberMe'])) {
 			);
 			// Send the activation code through email
 //			Mail::send('emails.forgot-password', $data, function($m) use ($user)
-			Mail::send(Config::get('vedette::views.forgot_password'), $data, function($m) use ($user)
+			Mail::send(Config::get('vedette::vedette_views.forgot_password'), $data, function($m) use ($user)
 			{
 				$m->to($user->email, $user->first_name . ' ' . $user->last_name);
 //				$m->subject('Account Password Recovery');
@@ -300,7 +300,7 @@ if(!empty($input['rememberMe'])) {
 		}
 
 		//  Redirect to the forgot password
-		return Redirect::route('forgot-password')->with('success', trans('lingos::auth.success.forgot-password'));
+		return Redirect::route('vedette.forgot-password')->with('success', trans('lingos::auth.success.forgot-password'));
 	}
 
 	/**
@@ -319,12 +319,12 @@ if(!empty($input['rememberMe'])) {
 		catch(Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
 			// Redirect to the forgot password page
-			return Redirect::route('forgot-password')->with('error', trans('lingos::auth.account.not_found'));
+			return Redirect::route('vedette.forgot-password')->with('error', trans('lingos::auth.account.not_found'));
 		}
 
 		// Show the page
 //		return View::make('frontend.auth.forgot-password-confirm');
-		return View::make(Config::get('vedette::views.forgot_confirm'));
+		return View::make(Config::get('vedette::vedette_views.forgot_confirm'));
 	}
 
 	/**
@@ -371,7 +371,7 @@ if(!empty($input['rememberMe'])) {
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
 			// Redirect to the forgot password page
-			return Redirect::route('forgot-password')->with('error', trans('lingos::auth.account.not_found'));
+			return Redirect::route('vedette.forgot-password')->with('error', trans('lingos::auth.account.not_found'));
 		}
 	}
 
@@ -386,7 +386,7 @@ if(!empty($input['rememberMe'])) {
 		Sentry::logout();
 
 		// Redirect to the users page
-		return Redirect::route('home')->with('success', trans('lingos::auth.success.logout'));
+		return Redirect::route('vedette.home')->with('success', trans('lingos::auth.success.logout'));
 	}
 
 }

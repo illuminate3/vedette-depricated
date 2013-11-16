@@ -1,6 +1,10 @@
 <?php
 
-Route::get('/', array('as' => 'home', 'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@index'));
+Route::get(Config::get('vedette::vedette_settings.home_route'), array(
+	'as' => 'vedette.home',
+	'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@index')
+);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -10,84 +14,104 @@ Route::get('/', array('as' => 'home', 'uses' => 'Illuminate3\Vedette\Controllers
 | Login/Logout/Register Routes
 |--------------------------------------------------------------------------
 */
-Route::group(array('prefix' => 'auth'), function()
+
+Route::group(array(
+	'prefix' => Config::get('vedette::vedette_settings.prefix_auth')),
+	function()
 {
 
 // Shortcut Routes
 	Route::get('admin', array(
-		'as'     => 'admin',
+		'as'     => 'vedette.admin',
 		'uses'   => 'Illuminate3\Vedette\Controllers\VedetteController@index',
 		'before' => 'auth.vedette:admin.view'
 	));
 	Route::get('users', array(
-		'as'     => 'users',
+		'as'     => 'vedette.users',
 		'uses'   => 'Illuminate3\Vedette\Controllers\UsersController@index',
 		'before' => 'auth.vedette:users.view'
 	));
 	Route::get('groups', array(
-		'as'     => 'groups',
+		'as'     => 'vedette.groups',
 		'uses'   => 'Illuminate3\Vedette\Controllers\GroupsController@index',
 		'before' => 'auth.vedette:groups.view'
 	));
 	Route::get('permissions', array(
-		'as'     => 'permissions',
+		'as'     => 'vedette.permissions',
 		'uses'   => 'Illuminate3\Vedette\Controllers\PermissionsController@index',
 		'before' => 'auth.vedette:groups.view'
 	));
 
 // Login/Sign In
 	Route::get('login', array(
-		'as'   => 'login',
+		'as'   => 'vedette/login',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
 	));
-	Route::post('login','Illuminate3\Vedette\Controllers\VedetteController@postLogin');
+	Route::post('login', array(
+		'as'   => 'vedette.login',
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postLogin'
+	));
 
 // Logout/Sign Out
 	Route::get('logout', array(
-		'as'   => 'logout',
+		'as'   => 'vedette.logout',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogout'
 	));
 
 // Register/Sign Up
 	Route::get('register', array(
-		'as'   => 'register',
+		'as'   => 'vedette.register',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
 	));
 
-	Route::post('register','Illuminate3\Vedette\Controllers\VedetteController@postRegister');
+	Route::post('register', array(
+		'as'   => 'vedette.register',
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
+	));
 
 // Forgot Password
 	Route::get('forgot-password', array(
-		'as' => 'forgot-password',
+		'as' => 'vedette.forgot-password',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPassword'
 		));
-	Route::post('forgot-password', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword');
+	Route::post('forgot-password', array(
+		'as' => 'vedette.forgot-password',
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword'
+		));
 
 // Forgot Password Confirmation
 	Route::get('forgot-password/{passwordResetCode}', array(
-		'as' => 'forgot-password-confirm',
+		'as' => 'vedette.forgot-password-confirm',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPasswordConfirm'
 		));
-	Route::post('forgot-password/{passwordResetCode}', 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPasswordConfirm');
+	Route::post('forgot-password/{passwordResetCode}', array(
+		'as' => 'vedette.forgot-password/{passwordResetCode}',
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPasswordConfirm'
+		));
 
 });
+
 
 /*
 |--------------------------------------------------------------------------
 | @author Steve Montambeault
 | @link   http://stevemo.ca
 |--------------------------------------------------------------------------
-| Users Permissions Routes
+| Resource Routes
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'auth', 'before' => 'auth.vedette'), function()
+Route::group(array(
+	'prefix' => Config::get('vedette::vedette_settings.prefix_auth'),
+	'before' => 'auth.vedette'),
+	function()
 {
 	Route::resource('users', 'Illuminate3\Vedette\Controllers\UsersController');
 	Route::resource('groups', 'Illuminate3\Vedette\Controllers\GroupsController',array('except' => array('show')));
 	Route::resource('permissions', 'Illuminate3\Vedette\Controllers\PermissionsController',array('except' => array('show')));
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | @author Steve Montambeault
@@ -97,41 +121,34 @@ Route::group(array('prefix' => 'auth', 'before' => 'auth.vedette'), function()
 |--------------------------------------------------------------------------
 */
 
-Route::group(array('prefix' => 'auth/users'), function()
+Route::group(array(
+	'prefix' => Config::get('vedette::vedette_settings.prefix_auth')),
+	function()
 {
 
-	Route::get('{users}/permissions', array(
+// Users
+
+	Route::get('users/{users}/permissions', array(
 		'as'     => 'auth.users.permissions',
 		'uses'   => 'Illuminate3\Vedette\Controllers\UsersPermissionsController@index',
 		'before' => 'auth.vedette:users.update'
 	));
 
-	Route::put('{users}/permissions', array(
+	Route::put('users/{users}/permissions', array(
+//		'as'     => 'auth.users.permissions',
 		'uses'   => 'Illuminate3\Vedette\Controllers\UsersPermissionsController@update',
 		'before' => 'auth.vedette:users.update'
 	));
 
-});
+// Groups
 
-/*
-|--------------------------------------------------------------------------
-| @author Steve Montambeault
-| @link   http://stevemo.ca
-|--------------------------------------------------------------------------
-| Vedette Groups Permissions Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::group(array('prefix' => 'auth/groups'), function()
-{
-
-	Route::get('{groups}/permissions', array(
+	Route::get('groups/{groups}/permissions', array(
 		'as'     => 'auth.groups.permissions',
 		'uses'   => 'Illuminate3\Vedette\Controllers\GroupsPermissionsController@index',
 		'before' => 'auth.vedette:groups.update'
 	));
 
-	Route::put('{groups}/permissions', array(
+	Route::put('groups/{groups}/permissions', array(
 		'uses'   => 'Illuminate3\Vedette\Controllers\GroupsPermissionsController@update',
 		'before' => 'auth.vedette:groups.update'
 	));
@@ -159,7 +176,7 @@ Route::filter('auth.vedette', function($route, $request, $userRule = null)
 	if ( !Sentry::check() )
 	{
 		Session::put('url.intended', URL::full());
-		return Redirect::route('login');
+		return Redirect::route('vedette.login');
 	}
 
 // no special route name passed, use the current name route
@@ -192,13 +209,13 @@ Route::filter('auth.vedette', function($route, $request, $userRule = null)
 // no access to the request page and request page not the root admin page
 	if ( !Sentry::hasAccess($userRule) and $userRule !== 'auth.view' )
 	{
-		return Redirect::route('login')->with('error', trans('lingos::sentry.permission_error.insufficient'));
+		return Redirect::route('vedette.login')->with('error', trans('lingos::sentry.permission_error.insufficient'));
 	}
 // no access to the request page and request page is the root admin page
 	else if( !Sentry::hasAccess($userRule) and $userRule === 'auth.view' )
 	{
 //can't see the admin home page go back to home site page
-		return Redirect::to('login')->with('error', trans('lingos::sentry.permission_error.insufficient'));
+		return Redirect::to('vedette.login')->with('error', trans('lingos::sentry.permission_error.insufficient'));
 	}
 
 });

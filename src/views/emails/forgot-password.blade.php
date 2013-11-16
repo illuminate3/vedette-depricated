@@ -1,4 +1,4 @@
-@extends(Config::get('vedette::views.email_layout'))
+@extends(Config::get('vedette::vedette_views.email_layout'))
 
 @section('content')
 <p>{{ trans('lingos::email.hello') }} {{ $user->first_name }},</p>
@@ -9,5 +9,5 @@
 
 <p>{{ trans('lingos::email.regards') }},</p>
 
-<p>{{ Config::get('vedette::site_config.site_team') }}</p>
+<p>{{ Config::get('vedette::vedette_config.site_team') }}</p>
 @stop

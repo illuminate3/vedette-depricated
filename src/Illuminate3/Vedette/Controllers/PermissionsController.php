@@ -46,7 +46,7 @@ class PermissionsController extends BaseController {
     {
         $permissions = $this->permissions->all();
         $roles = $this->permissions->getRoles();
-        return View::make(Config::get('vedette::views.permissions_index') , compact('permissions','roles'));
+        return View::make(Config::get('vedette::vedette_views.permissions_index') , compact('permissions','roles'));
     }
 
     /**
@@ -60,7 +60,7 @@ class PermissionsController extends BaseController {
     public function create()
     {
         $roles = $this->permissions->getRoles();
-        return View::make( Config::get('vedette::views.permissions_create'), compact('roles'));
+        return View::make( Config::get('vedette::vedette_views.permissions_create'), compact('roles'));
     }
 
     /**
@@ -79,7 +79,7 @@ class PermissionsController extends BaseController {
         {
             $permission = $this->permissions->findOrFail($id);
             $roles = $this->permissions->getRoles();
-            return View::make( Config::get('vedette::views.permissions_edit'), compact('permission','roles'));
+            return View::make( Config::get('vedette::vedette_views.permissions_edit'), compact('permission','roles'));
         }
         catch ( ModelNotFoundException $e )
         {

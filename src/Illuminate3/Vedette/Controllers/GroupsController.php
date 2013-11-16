@@ -30,7 +30,7 @@ class GroupsController extends BaseController {
     public function index()
     {
         $groups = Sentry::getGroupProvider()->findAll();
-        return View::make(Config::get('vedette::views.groups_index'), compact('groups'));
+        return View::make(Config::get('vedette::vedette_views.groups_index'), compact('groups'));
     }
 
     /**
@@ -43,7 +43,7 @@ class GroupsController extends BaseController {
      */
     public function create()
     {
-        return View::make(Config::get('vedette::views.groups_create'));
+        return View::make(Config::get('vedette::vedette_views.groups_create'));
     }
 
     /**
@@ -59,7 +59,7 @@ class GroupsController extends BaseController {
         try
         {
             $group = Sentry::getGroupProvider()->findById($id);
-            return View::make(Config::get('vedette::views.groups_edit'),compact('group'));
+            return View::make(Config::get('vedette::vedette_views.groups_edit'),compact('group'));
         }
         catch ( GroupNotFoundException $e)
         {

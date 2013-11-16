@@ -1,4 +1,4 @@
-@extends(Config::get('vedette::views.layout'))
+@extends(Config::get('vedette::vedette_views.layout'))
 
 @section('css')
 @stop
@@ -39,7 +39,7 @@
 				<br>
 			</div>
 			<input class="btn-inverse btn" type="reset" value="{{ trans('lingos::button.reset') }}">
-			<a class="btn btn-warning" href="{{ route('home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
+			<a class="btn btn-warning" href="{{ route('vedette.home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
 		</div>
 	</div>
 

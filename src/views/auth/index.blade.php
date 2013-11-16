@@ -1,4 +1,4 @@
-@extends(Config::get('vedette::views.layout'))
+@extends(Config::get('vedette::vedette_views.layout'))
 
 @section('css')
 @stop

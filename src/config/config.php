@@ -2,60 +2,94 @@
 
 return array(
 
-    'site_config' => array(
-        'site_name'   => 'Vedette',
-        'title'       => 'My Admin Panel',
-        'site_team'   => 'Vedette Team',
-        'description' => 'Laravel 4 Admin Panel'
-    ),
+/*
+|--------------------------------------------------------------------------
+| General configs used for naming conventions
+|--------------------------------------------------------------------------
+*/
+'vedette_config' => array(
+	'site_name'				=> 'Vedette',
+	'title'					=> 'My Admin Panel',
+	'site_team'				=> 'Vedette Team',
+	'description'			=> 'Laravel 4 Admin Panel'
+),
 
 
-    'views' => array(
+/*
+|--------------------------------------------------------------------------
+| Package settings
+|--------------------------------------------------------------------------
+*/
+'vedette_settings' => array(
+	'prefix_auth'			=> 'auth',
+	'prefix_account'		=> 'account',
+	'home_route'			=> '/',
+),
 
-        'layout' => 'vedette::layouts',
-//        'layout' => 'frontend/layouts/default',
-//        'layout' => 'layouts/default',
 
-'dashboard' => 'vedette::auth.index',
+/*
+|--------------------------------------------------------------------------
+| General views and standard package views
+|--------------------------------------------------------------------------
+*/
+'vedette_views' => array(
 
-        // Auth views
-        'auth'            => 'vedette::auth.index',
-        'login'           => 'vedette::auth.login',
-        'register'        => 'vedette::auth.register',
-        'forgot'          => 'vedette::auth.forgot-password',
-        'forgot_confirm'  => 'vedette::auth.forgot-password-confirm',
+	// The layoiut to use : change to what matches your application
+	'layout'				=> 'vedette::layouts',
 
-        // Users views
-        'users_index'      => 'vedette::users.index',
-        'users_show'       => 'vedette::users.show',
-        'users_edit'       => 'vedette::users.edit',
-        'users_create'     => 'vedette::users.create',
-        'users_permission' => 'vedette::users.permission',
+	// Dashboard area : change to something more appropriate or build out what is provided
+	'dashboard'				=> 'vedette::auth.index',
 
-        //Groups Views
-        'groups_index'      => 'vedette::groups.index',
-        'groups_create'     => 'vedette::groups.create',
-        'groups_edit'       => 'vedette::groups.edit',
-        'groups_permission' => 'vedette::groups.permission',
+	// Following views won't probably be needed to be over ridden but just in case
 
-        //Permissions Views
-        'permissions_index'  => 'vedette::permissions.index',
-        'permissions_edit'   => 'vedette::permissions.edit',
-        'permissions_create' => 'vedette::permissions.create',
+	// Auth views
+	'auth'					=> 'vedette::auth.index',
+	'login'					=> 'vedette::auth.login',
+	'register'				=> 'vedette::auth.register',
+	'forgot'				=> 'vedette::auth.forgot-password',
+	'forgot_confirm'		=> 'vedette::auth.forgot-password-confirm',
 
-        //Throttling Views
-        'throttle_status'    => 'vedette::throttle.index',
+	// Users views
+	'users_index'			=> 'vedette::users.index',
+	'users_show'			=> 'vedette::users.show',
+	'users_edit'			=> 'vedette::users.edit',
+	'users_create'			=> 'vedette::users.create',
+	'users_permission'		=> 'vedette::users.permission',
 
-        //Email Views
-        'forgot_password'   => 'vedette::emails.forgot-password',
-        'register_activate' => 'vedette::emails.register-activate',
-        'reminder'          => 'vedette::emails.reminder',
-        'email_layout'      => 'vedette::emails.layouts.default',
-    ),
+	//Groups Views
+	'groups_index'			=> 'vedette::groups.index',
+	'groups_create'			=> 'vedette::groups.create',
+	'groups_edit'			=> 'vedette::groups.edit',
+	'groups_permission'		=> 'vedette::groups.permission',
+
+	//Permissions Views
+	'permissions_index'		=> 'vedette::permissions.index',
+	'permissions_edit'		=> 'vedette::permissions.edit',
+	'permissions_create'	=> 'vedette::permissions.create',
+
+	//Throttling Views
+	'throttle_status'		=> 'vedette::throttle.index',
+
+	//Email Views
+	'forgot_password'		=> 'vedette::emails.forgot-password',
+	'register_activate'		=> 'vedette::emails.register-activate',
+	'reminder'				=> 'vedette::emails.reminder',
+	'email_layout'			=> 'vedette::emails.layouts.default',
+
+),
+
+
+/*
+|--------------------------------------------------------------------------
+| Validation rules location
+|--------------------------------------------------------------------------
+| Need to add a section here to allow overriding of the rules used in the package
+|--------------------------------------------------------------------------
+*/
 
 'validation' => array(
-	'user'			=> 'Illuminate3\Vedette\Services\Validators\Users\Validator',
-	'permission'	=> 'Illuminate3\Vedette\Services\Validators\Permissions\Validator',
+	'user'					=> 'Illuminate3\Vedette\Services\Validators\Users\Validator',
+	'permission'			=> 'Illuminate3\Vedette\Services\Validators\Permissions\Validator',
 ),
 
 );

@@ -1,4 +1,4 @@
-@extends(Config::get('vedette::views.layout'))
+@extends(Config::get('vedette::vedette_views.layout'))
 
 @section('css')
 @stop
@@ -54,9 +54,9 @@
 			<div>
 				<br>
 			</div>
-			<a class="btn btn-warning" href="{{ route('home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
-			<a class="btn btn-primary" href="{{ route('register') }}"><i class="fa fa-plus-circle"></i>{{ trans('lingos::button.register') }}</a>
-			<a class="btn btn-info" href="{{ route('forgot-password') }}"><i class="fa fa-external-link"></i>{{ trans('lingos::button.forgot_password') }}</a>
+			<a class="btn btn-warning" href="{{ route('vedette.home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
+			<a class="btn btn-primary" href="{{ route('vedette.register') }}"><i class="fa fa-plus-circle"></i>{{ trans('lingos::button.register') }}</a>
+			<a class="btn btn-info" href="{{ route('vedette.forgot-password') }}"><i class="fa fa-external-link"></i>{{ trans('lingos::button.forgot_password') }}</a>
 		</div>
 	</div>
 
