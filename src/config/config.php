@@ -22,7 +22,6 @@ return array(
 */
 'vedette_settings' => array(
 	'prefix_auth'			=> 'auth',
-	'prefix_account'		=> 'account',
 	'home_route'			=> '/',
 ),
 
