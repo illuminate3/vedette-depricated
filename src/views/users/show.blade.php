@@ -116,6 +116,11 @@
 	<hr>
 
 	<div class="row btn-toolbar" role="toolbar">
+		<a href="{{ route('auth.users.edit', array($user->id)) }}"
+			class="btn btn-primary action_confirm">
+			<i class="fa fa-pencil"></i>&nbsp;
+			{{ trans('lingos::sentry.user_command.edit') }}
+		</a>
 		<a href="{{ route('auth.users.destroy', array($user->id)) }}"
 		class="btn btn-danger action_confirm"
 		data-method="delete"

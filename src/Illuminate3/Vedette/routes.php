@@ -60,7 +60,7 @@ Route::group(array(
 
 // Register/Sign Up
 	Route::get('register', array(
-		'as'   => 'vedette.register',
+		'as'   => 'vedette/register',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
 	));
 
