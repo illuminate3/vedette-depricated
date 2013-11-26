@@ -15,10 +15,10 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.0.x",
+        "illuminate/support": "4.0.*",
         "cartalyst/sentry": "2.0.*",
         "anahkiasen/former": "dev-master",
-        "illuminate3/lingos": "master"
+        "illuminate3/lingos": "dev-master"
     },
     "autoload": {
         "classmap": [
