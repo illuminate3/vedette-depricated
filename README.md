@@ -55,12 +55,6 @@ If you haven't already added these to the providers list in app.php, please add 
 'Cartalyst\Sentry\SentryServiceProvider',
 ```
 
-If you haven't already added these to the aliases in app.php, please add them.
-
-```
-'Former' => 'Former\Facades\Former',
-'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-```
 
 2.)
 Vedette comes with a few handy commands that are available in artisan.

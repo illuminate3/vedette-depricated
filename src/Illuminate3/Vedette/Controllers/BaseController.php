@@ -23,11 +23,11 @@ class BaseController extends Controller {
             $this->layout = View::make($this->layout);
         }
         //share the config option to all the views
-        View::share('vedette', Config::get('vedette::site_config'));
+        View::share('vedette', Config::get('vedette::vedette_config'));
 /*
-        View::share('vedette_package', Config::get('package.vedette_config'));
-        View::share('vedette_validators', Config::get('validators.validation'));
-        View::share('vedette_views', Config::get('views.views'));
+        View::share('vedette_package', Config::get('vedette::package'));
+        View::share('vedette_validators', Config::get('vedette::validators'));
+        View::share('vedette_views', Config::get('vedette::views'));
 */
     }
 
