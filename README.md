@@ -49,7 +49,6 @@ Add to composer.json in the require statement:
 },
 ```
 
-
 2.)
 Add to the app.php providers list
 
