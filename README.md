@@ -40,6 +40,17 @@ These are not included since I thought most people will already have included th
 ## Installation
 
 1.)
+Add to composer.json in the require statement:
+
+```
+"require": {
+    "illuminate3/vedette": "dev-master",
+    ...
+},
+```
+
+
+2.)
 Add to the app.php providers list
 
 ```
@@ -47,7 +58,7 @@ Add to the app.php providers list
 ```
 
 
-1.1)
+2.1)
 If you haven't already added these to the providers list in app.php, please add them.
 
 ```
@@ -56,7 +67,7 @@ If you haven't already added these to the providers list in app.php, please add 
 ```
 
 
-2.)
+3.)
 Vedette comes with a few handy commands that are available in artisan.
 
 ```
@@ -69,7 +80,7 @@ Run "vedette:install" to install to start using vedette.
 
 Edit the config file for former:
 
-3.)
+4.)
 Change
 
 ```
@@ -84,7 +95,7 @@ To
 'framework'         => 'TwitterBootstrap3',
 ```
 
-4.)
+5.)
 You can use the included layout or you can point to your own.
 To point to you own change:
 
@@ -98,12 +109,12 @@ To the location that points to your own layout. for example:
 'layout' => 'frontend/layouts/default',
 ```
 
-5.)
+6.)
 If you change to a different layout there are several points that you should be aware of.
 I strongly suggest looking at the included default layout as a template or at least a reference
 to make sure you have all the necessary sections.
 
-5.1)
+6.1)
 Menu area
 
 This is the main code that creates the menu.
@@ -135,7 +146,7 @@ This is the main code that creates the menu.
 </ul>
 ```
 
-5.2)
+6.2)
 section includes
 
 > @section('css')
@@ -151,7 +162,7 @@ section includes
 "title" is used for H 1 like headers.
 "page_title" is used for the title of the page, as in what you'd see in the browser title area.
 
-6.)
+7.)
 I tried to keep the html to a minimum without too much fancy CSS styling. However, 1 CSS part should be noted.
 
 ```
@@ -164,7 +175,7 @@ I tried to keep the html to a minimum without too much fancy CSS styling. Howeve
 
 I didn't like add a space in the html so I just forced a margin-right with CSS.
 
-7.)
+8.)
 Javascript
 
 > restfulizer.js
@@ -199,7 +210,7 @@ is to the normal Bootstrap functionality. You probably wouldn't even notice it w
 [MrJuliuss's Syntara](https://github.com/MrJuliuss/syntara "MrJuliuss's Syntara")
 
 
-# Notes
+## Notes
 Vedette is a fork of Steve Montambeault's Cpanel package.
 
 Also, I may have not properly credited each package due to laziness or just forgot to go back and comment those sections.
