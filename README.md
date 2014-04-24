@@ -54,6 +54,7 @@ Add to the app.php providers list
 
 ```
 'Illuminate3\Lingos\LingosServiceProvider',
+'Illuminate3\Vedette\VedetteServiceProvider',
 ```
 
 
@@ -65,6 +66,12 @@ If you haven't already added these to the providers list in app.php, please add 
 'Cartalyst\Sentry\SentryServiceProvider',
 ```
 
+2.2)
+Add the alias to Sentry if you haven't already
+
+```
+'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+```
 
 3.)
 Vedette comes with a few handy commands that are available in artisan.
@@ -77,7 +84,7 @@ vedette
 
 Run "vedette:install" to install to start using vedette.
 
-Edit the config file for former:
+Edit the config file in config/packages/anahkiasen/former/config.php
 
 4.)
 Change
