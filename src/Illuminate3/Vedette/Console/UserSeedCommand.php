@@ -8,7 +8,7 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Cartalyst\Sentry\Sentry;
+use Cartalyst\Sentry\Facades\Laravel\Sentry;
 
 class UserSeedCommand extends Command {
 
