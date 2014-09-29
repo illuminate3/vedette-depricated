@@ -24,9 +24,15 @@
 </head>
 
 <body>
+
 	@include('layouts.navigation')
-	@include('layouts.content')
+
+	<div id="wrap" class="container"><!-- Container -->
+		@include('layouts.content')
+	</div><!-- ./ container -->
+
 	@include('layouts.footer')
+
 </body>
 
 	{{ Bootstrap::js2x() }}

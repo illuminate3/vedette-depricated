@@ -1,41 +1,126 @@
-@extends('layouts.master')
+@extends(Config::get('vedette.vedette_views.layout'))
 
 @section('title')
+@parent
+	{{  Config::get('vedette.vedette_config.separator') }}
+	{{ trans('lingos::account.command.create') }}
+@stop
 
-Register
+@section('styles')
+@stop
 
+@section('scripts')
+@stop
+
+@section('inline-scripts')
 @stop
 
 @section('content')
+<div class="row">
+<h1>
+	@if (Auth::check())
+		<p class="pull-right">
+		{{ Bootstrap::linkIcon(
+			'admin.index',
+			trans('lingos::button.back'),
+			'fa-chevron-left fa-fw',
+			array('class' => 'btn btn-default')
+		) }}
+		</p>
+	@endif
+	<i class="fa fa-group fa-lg"></i>
+	{{ trans('lingos::account.command.create') }}
+	<hr>
+</h1>
+</div>
 
-	<div class="row">
 
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="row">
 
-			<h1>Register</h1>
+	{{ Form::open(array(
+		'route' => 'admin.users.store',
+		'role' => 'form'
+	)) }}
 
-		</div>
 
-		<div class="col-xs-12 col-sm-8 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
 
-			{{ Form::open(array('route' => 'user.store', 'role' => 'form', 'class' => 'well')) }}
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#info" data-toggle="tab">
+				<i class="fa fa-user fa-fw"></i>
+				{{ trans('lingos::general.information') }}
+			</a>
+		</li>
+		<li>
+			<a href="#password" data-toggle="tab">
+				{{ trans('lingos::auth.password') }}
+			</a>
+		</li>
+		<li>
+			<a href="#status" data-toggle="tab">
+				{{ trans('lingos::general.status') }}
+			</a>
+		</li>
+	</ul>
 
-				{{ Bootstrap::text('name', 'Name', null, $errors) }}
+	<div id="myTabContent" class="tab-content">
+	<div class="tab-pane active in padding-lg" id="info">
 
-				{{ Bootstrap::email('email', 'Email address', null, $errors) }}
+		<fieldset>
+			<h2>
+				<legend>
+					<i class="fa fa-user fa-fw"></i>
+					{{ trans('lingos::general.personal_information') }}
+				</legend>
+			</h2>
 
-				{{ Bootstrap::password('password', 'Password', $errors) }}
 
-				{{ Bootstrap::password('password_confirmation', 'Password confirmation', $errors) }}
+		</fieldset>
 
-				{{ Bootstrap::linkRoute('login', 'Login') }}
+		<fieldset>
+			<h2>
+				<legend><i class="fa fa-envelope-o fa-fw"></i>{{ trans('lingos::general.email') }}</legend>
+			</h2>
 
-				{{ Bootstrap::submit('Register') }}
+		</fieldset>
 
-			{{ Form::close() }}
+	</div><!-- tab-info -->
+	</div><!-- tab-info -->
 
-		</div>
 
-	</div>
+		{{ Bootstrap::email(
+			'email',
+			'Email address',
+			null,
+			$errors,
+			'fa-envelope fa-fw'
+		) }}
 
+
+		{{ Bootstrap::password(
+			'password',
+			'Password',
+			$errors,
+			'fa-unlock fa-fw'
+		) }}
+
+
+		{{ Bootstrap::password(
+			'password_confirmation',
+			'Password confirmation',
+			$errors,
+			'fa-unlock-alt fa-fw'
+		) }}
+
+		<h5><strong>Roles</strong></h5>
+		@foreach (Vedette\models\Role::All() as $role)
+			{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id) }}
+		@endforeach
+
+		{{ Bootstrap::linkRoute('admin.index', 'Back') }}
+		{{ Bootstrap::submit('Save') }}
+
+	{{ Form::close() }}
+
+</div>
 @stop

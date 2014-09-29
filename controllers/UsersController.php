@@ -9,6 +9,7 @@ use View;
 use Input;
 use Redirect;
 use Bootstrap;
+use Config;
 
 class UsersController extends \BaseController {
 
@@ -47,7 +48,9 @@ class UsersController extends \BaseController {
 	{
 		$users = User::all();
 
-		return View::make('admin.users.index')->with(compact("users"));
+		return View::make(
+			Config::get('vedette.vedette_views.users_index')
+			)->with(compact("users"));
 	}
 
 	/**
@@ -57,7 +60,9 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('admin.users.create');
+		return View::make(
+			Config::get('vedette.vedette_views.users_create')
+			);
 	}
 
 	/**
@@ -67,14 +72,12 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
-//		$input = Input::only('name', 'email', 'password', 'password_confirmation', 'roles');
 		$input = Input::only('email', 'password', 'password_confirmation', 'roles');
 		$this->usersCreateForm->validate($input);
 
 		if (empty($input['roles'])) $input['roles'] = array();
 
 		$user = new User;
-//		$user->name = $input['name'];
 		$user->email = $input['email'];
 		$user->password = Hash::make($input['password']);
 		$user->save();
@@ -94,7 +97,9 @@ class UsersController extends \BaseController {
 	{
 		$user = User::findOrFail($id);
 
-		return View::make('admin.users.edit')->with(compact('user'));
+		return View::make(
+			Config::get('vedette.vedette_views.users_edit')
+			)->with(compact('user'));
 	}
 
 	/**
@@ -106,14 +111,12 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-//		$input = Input::only('name', 'email', 'password', 'password_confirmation', 'roles');
 		$input = Input::only('email', 'password', 'password_confirmation', 'roles');
 		$this->usersUpdateForm->validate($input);
 
 		if (empty($input['roles'])) $input['roles'] = array();
 
 		$user = User::findOrFail($id);
-//		$user->name = $input['name'];
 		$user->email = $input['email'];
 
 		if ( ! empty($input['password']) && $input['password'] == $input['password_confirmation'])

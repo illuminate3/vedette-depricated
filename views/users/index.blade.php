@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends(Config::get('vedette.vedette_views.layout'))
 
 @section('title')
 @parent
@@ -37,45 +37,43 @@ $(document).ready(function() {
 
 @section('content')
 <div class="row">
-
-
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <h1>
 	@if (Auth::check())
-		@if (Auth::user()->hasRoleWithName('Admin'))
 		<p class="pull-right">
+		@if (Auth::user()->hasRoleWithName('Admin'))
 			{{ Bootstrap::linkIcon(
 				'admin.users.create',
 				trans('lingos::button.user.new'),
 				'fa-plus fa-fw',
-				array('class' => 'btn btn-success')
+				array('class' => 'btn btn-info')
 			) }}
-		</p>
 		@endif
+		{{ Bootstrap::linkIcon(
+			'admin.index',
+			trans('lingos::button.back'),
+			'fa-chevron-left fa-fw',
+			array('class' => 'btn btn-default')
+		) }}
+		</p>
 	@endif
 	<i class="fa fa-group fa-lg"></i>
 	{{ trans('lingos::account.users') }}
 	<hr>
 </h1>
-	</div>
+</div>
 
-
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<h1>Users</h1>
-	</div>
-	<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1">
-
-			@if (count($users))
+<div class="row">
+@if (count($users))
 
 <div class="table-responsive">
 <table class="table table-striped table-hover" id="DataTable">
 			<thead>
 			<tr>
 				<th>#</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Roles</th>
-				<th>Actions</th>
+				<th>{{ trans('lingos::table.name') }}</th>
+				<th>{{ trans('lingos::table.email') }}</th>
+				<th>{{ trans('lingos::table.roles') }}</th>
+				<th>{{ trans('lingos::table.actions') }}</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -87,8 +85,16 @@ $(document).ready(function() {
 						<td>{{ $user->present()->roles() }}</td>
 						<td width="20%">
 							{{ Form::open(array('route' => array('admin.users.destroy', $user->id), 'role' => 'form', 'method' => 'delete', 'class' => 'form-inline')) }}
-								{{ Bootstrap::linkRoute('admin.users.edit', 'Edit', array($user->id)) }}
-								{{ Bootstrap::submit('Delete', array('class' => 'btn btn-danger')) }}
+								{{ Bootstrap::linkRoute(
+									'admin.users.edit',
+									trans('lingos::button.user.edit'),
+									array($user->id),
+									array('class' => 'btn btn-success')
+								) }}
+								{{ Bootstrap::submit(
+									trans('lingos::button.user.delete'),
+									array('class' => 'btn btn-danger')
+								) }}
 							{{ Form::close() }}
 						</td>
 					</tr>
@@ -97,15 +103,9 @@ $(document).ready(function() {
 </table>
 </div> <!-- ./responsive -->
 
-			@else
-				{{ Bootstrap::info( trans('lingos::general.no_records'), true) }}
-			@endif
-
-
-
-		{{ Bootstrap::linkRoute('admin.index', 'Back') }}
-
-	</div>
+@else
+	{{ Bootstrap::info( trans('lingos::general.no_records'), true) }}
+@endif
 
 </div>
 @stop
