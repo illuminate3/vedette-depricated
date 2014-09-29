@@ -11,6 +11,7 @@
 	@endif
 @endif
 
+{{ trans('lingos::table.name') }}
 
 @yield('content')
 </div>

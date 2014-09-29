@@ -56,17 +56,17 @@ class PasswordController extends \BaseController {
 
 		$response = Password::remind($input, function($message)
 		{
-			$message->subject('Password Reminder');
+			$message->subject( trans('lingos::email.subject_reminder') );
 		});
 
 		if ($response != Password::REMINDER_SENT)
 		{
 			return Redirect::back()
-				->withMessage(Bootstrap::danger('An error occured sending the password reminder.', true))
+				->withMessage(Bootstrap::danger( trans('lingos::auth.error.password_send'), true))
 				->withInput();
 		}
 
-		return Redirect::back()->withMessage(Bootstrap::success('Password reminder sent successfully.', true));
+		return Redirect::back()->withMessage(Bootstrap::success( trans('lingos::auth.success.password_send'), true));
 	}
 
 	/**
@@ -99,10 +99,10 @@ class PasswordController extends \BaseController {
 
 		if ($response !=  Password::PASSWORD_RESET)
 		{
-			return Redirect::back()->withMessage(Bootstrap::danger('An error occured resetting your password', true))
+			return Redirect::back()->withMessage(Bootstrap::danger( trans('lingos::auth.error.password_reset'), true))
 				->withInput();
 		}
 
-		return Redirect::to('login')->withMessage(Bootstrap::success('Your password has been reset', true));
+		return Redirect::to('login')->withMessage(Bootstrap::success( trans('lingos::auth.success.password_reset'), true));
 	}
 }

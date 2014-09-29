@@ -22,7 +22,8 @@ trait PresentableTrait {
 	{
 		if ( ! $this->presenter or ! class_exists($this->presenter))
 		{
-			throw new PresenterException('Please set the $presenter property to your presenter class.');
+//			throw new PresenterException('Please set the $presenter property to your presenter class.');
+			throw new PresenterException( trans('lingos::general.presenters.exception', $presenter) );
 		}
 
 		if ( ! isset($this->presenterInstance))

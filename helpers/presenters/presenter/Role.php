@@ -21,7 +21,7 @@ class Role extends Presenter {
 	 */
 	public function active()
 	{
-		return $this->entity->active ? 'Yes' : 'No';
+		return $this->entity->active ? trans('lingos::general.yes') : trans('lingos::general.no');
 	}
 
 }

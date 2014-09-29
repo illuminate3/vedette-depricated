@@ -22,9 +22,6 @@ class FormValidationException extends Exception {
 	 */
 	public function __construct($message, MessageBag $errors)
 	{
-
-//dd($errors);
-
 		$this->errors = $errors;
 		parent::__construct($message);
 	}

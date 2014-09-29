@@ -78,7 +78,7 @@ class RolesController extends \BaseController {
 		$role->active = (Input::has('active') ? 1 : 0);
 		$role->save();
 
-		return Redirect::route('admin.index')->withMessage(Bootstrap::success('Role created successfully.', true));
+		return Redirect::route('admin.index')->withMessage(Bootstrap::success( trans('lingos::auth.role_success.create'), true));
 	}
 
 	/**
@@ -112,7 +112,7 @@ class RolesController extends \BaseController {
 		$role->active = (Input::has('active') ? 1 : 0);
 		$role->save();
 
-		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success('Role updated successfully.', true));
+		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::auth.role_success.create'), true));
 	}
 
 	/**
@@ -127,7 +127,7 @@ class RolesController extends \BaseController {
 		$role = Role::findOrFail($id);
 		$role->delete();
 
-		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success('Role has been destroyed.', true));
+		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::auth.role_success.delete'), true));
 	}
 
 }

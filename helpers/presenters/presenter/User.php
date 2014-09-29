@@ -44,7 +44,7 @@ class User extends Presenter {
 
 		if (empty($return))
 		{
-			$return = 'None';
+			$return = trans('lingos::general.none');
 		}
 
 		return trim($return, ', ');

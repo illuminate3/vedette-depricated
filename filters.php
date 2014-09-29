@@ -53,7 +53,8 @@ Route::filter('auth.admin', function()
 
 	if ( !Auth::user()->hasRoleWithName('Admin'))
 	{
-		return Redirect::home()->withMessage(Bootstrap::danger('You dont permission to access this page.'));
+		return Redirect::home()->withMessage(Bootstrap::danger( trans('lingos::permission.error.insufficient') ));
+
 	}
 });
 
@@ -108,6 +109,6 @@ Route::filter('currentUser', function($route)
 
 	if (Auth::user()->id != $route->parameter('user'))
 	{
-		return Redirect::home()->withMessage(Bootstrap::danger('You dont permission to access this page.', true));
+		return Redirect::home()->withMessage(Bootstrap::danger( trans('lingos::sentry.permission_error.insufficient'), true) );
 	}
 });

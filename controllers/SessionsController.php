@@ -61,16 +61,16 @@ class SessionsController extends \BaseController {
 
 		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
 			return Redirect::route('admin.index')
-				->withMessage(Bootstrap::success('You have been logged in.', true));
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
 		} elseif ($attempt) {
 
 //dd(Auth::User()->id);
 			return Redirect::route('user.show', Auth::User()->id)
-				->withMessage(Bootstrap::success('You have been logged in.', true));
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
 		} else {
 
 //		return Redirect::back()->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
-		return Redirect::route('login')->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
+		return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
 		}
 	}
 
@@ -83,7 +83,7 @@ class SessionsController extends \BaseController {
 	{
 		Auth::logout();
 
-		return Redirect::home()->withMessage(Bootstrap::success('You have been logged out.', true));
+		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::auth.success.logout'), true));
 	}
 
 }
