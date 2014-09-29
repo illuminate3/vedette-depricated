@@ -11,7 +11,8 @@ class Register extends FormValidator {
 	 */
 	protected $rules = array(
 		'email' => 'required|email|unique:users',
-		'password' => 'required|min:6',
+//		'password' => 'required|min:6',
+		'password' => 'required|confirmed|min:6',
 		'password_confirmation' => 'required'
 	);
 

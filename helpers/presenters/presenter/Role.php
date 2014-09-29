@@ -2,7 +2,7 @@
 
 use Vedette\helpers\presenters\Presenter;
 
-class Role extends \Presenter {
+class Role extends Presenter {
 
 	/**
 	 * Present the name

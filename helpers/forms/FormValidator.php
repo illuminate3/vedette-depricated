@@ -48,7 +48,7 @@ abstract class FormValidator implements FormValidationInterface {
 
 		if ($this->validation->fails())
 		{
-			throw new FormValidationException('Validation failed', $this->getValidationErrors());
+			new FormValidationException('Validation failed', $this->getValidationErrors());
 		}
 
 		return true;

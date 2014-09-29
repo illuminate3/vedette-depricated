@@ -10,7 +10,7 @@ class PasswordReset extends FormValidator {
 	 * @var array
 	 */
 	protected $rules = array(
-        'token' => 'required',
+		'token' => 'required',
 		'email' => 'required|email',
 		'password' => 'required|min:6|confirmed',
 		'password_confirmation' => 'required'

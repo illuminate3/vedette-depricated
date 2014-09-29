@@ -4,7 +4,11 @@ use Vedette\helpers\forms\form\UserCreate;
 use Vedette\helpers\forms\form\UserUpdate;
 use Vedette\helpers\forms\exceptions\FormValidationException;
 
+use Vedette\models\User as User;
 use View;
+use Input;
+use Redirect;
+use Bootstrap;
 
 class UsersController extends \BaseController {
 
@@ -63,13 +67,14 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('name', 'email', 'password', 'password_confirmation', 'roles');
+//		$input = Input::only('name', 'email', 'password', 'password_confirmation', 'roles');
+		$input = Input::only('email', 'password', 'password_confirmation', 'roles');
 		$this->usersCreateForm->validate($input);
 
 		if (empty($input['roles'])) $input['roles'] = array();
 
 		$user = new User;
-		$user->name = $input['name'];
+//		$user->name = $input['name'];
 		$user->email = $input['email'];
 		$user->password = Hash::make($input['password']);
 		$user->save();
@@ -101,13 +106,14 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('name', 'email', 'password', 'password_confirmation', 'roles');
+//		$input = Input::only('name', 'email', 'password', 'password_confirmation', 'roles');
+		$input = Input::only('email', 'password', 'password_confirmation', 'roles');
 		$this->usersUpdateForm->validate($input);
 
 		if (empty($input['roles'])) $input['roles'] = array();
 
 		$user = User::findOrFail($id);
-		$user->name = $input['name'];
+//		$user->name = $input['name'];
 		$user->email = $input['email'];
 
 		if ( ! empty($input['password']) && $input['password'] == $input['password_confirmation'])

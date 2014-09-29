@@ -1,15 +1,16 @@
 <div class="container">
+	<div class="row-fuild">
+		@if (Session::has('message'))
+			{{ Session::get('message') }}
+		@endif
+	</div>
 
-    <div class="row-fuild">
+@if (Auth::check())
+	@if (Auth::user()->hasRoleWithName('Admin'))
+	has role admin
+	@endif
+@endif
 
-        @if (Session::has('message'))
 
-            {{ Session::get('message') }}
-
-        @endif
-
-    </div>
-
-    @yield('content')
-
+@yield('content')
 </div>

@@ -30,7 +30,7 @@ Administration | Create User
 
 				<h5><strong>Roles</strong></h5>
 
-				@foreach (Role::All() as $role)
+				@foreach (Vedette\models\Role::All() as $role)
 
 					{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id) }}
 

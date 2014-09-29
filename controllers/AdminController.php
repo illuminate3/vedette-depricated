@@ -1,5 +1,6 @@
 <?php namespace Vedette\controllers;
 
+use Auth;
 use View;
 
 class AdminController extends \BaseController {

@@ -34,6 +34,7 @@ Route::group(array('before' => 'guest'), function()
 		'uses' => 'Vedette\controllers\PasswordController@remind'
 		));
 	Route::post('password/reset', array(
+		'before' => 'csrf',
 		'as' => 'password.request',
 		'uses' => 'Vedette\controllers\PasswordController@request'
 		));
@@ -42,6 +43,7 @@ Route::group(array('before' => 'guest'), function()
 		'uses' => 'Vedette\controllers\PasswordController@reset'
 		));
 	Route::post('password/reset/{token}', array(
+		'before' => 'csrf',
 		'as' => 'password.update',
 		'uses' => 'Vedette\controllers\PasswordController@update'
 		));
@@ -63,6 +65,7 @@ Route::get('logout', array(
 	'uses' => 'Vedette\controllers\SessionsController@destroy'
 	));
 Route::resource('sessions', 'Vedette\controllers\SessionsController', array(
+	'before' => 'csrf',
 	'only' => array('create', 'store', 'destroy')
 	));
 

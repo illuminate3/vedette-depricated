@@ -51,7 +51,7 @@ Route::filter('auth.admin', function()
 		return Redirect::guest('login');
 	}
 
-	if ( ! Auth::user()->hasRoleWithName('Admin'))
+	if ( !Auth::user()->hasRoleWithName('Admin'))
 	{
 		return Redirect::home()->withMessage(Bootstrap::danger('You dont permission to access this page.'));
 	}

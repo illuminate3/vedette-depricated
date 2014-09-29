@@ -30,14 +30,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('email', 'password', 'remember_token');
+	protected $fillable = array(
+		'email', 'password', 'remember_token'
+	);
 
 	/**
 	 * The model presenter.
 	 *
 	 * @var string
 	 */
-	protected $presenter = 'Project\Presenters\Presenter\User';
+	protected $presenter = 'Vedette\helpers\presenters\presenter\User';
 
 	/**
 	 * The role relationship.
@@ -129,10 +131,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public function hasRole($id)
 	{
+//dd($this->roles);
 		foreach ($this->roles as $role)
 		{
 			if ($role->id == $id)
 			{
+//dd($role->id);
 				return true;
 			}
 		}
@@ -150,7 +154,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function hasRoleWithName($name)
 	{
 		$searchRole = Role::where('name', '=', $name)->first();
-
+//dd($searchRole);
 		return $this->hasRole($searchRole->id);
 	}
 

@@ -55,18 +55,23 @@ class SessionsController extends \BaseController {
 			isset($input['remember_me']) ?: false
 		);
 
-		if ($attempt && Auth::User()->hasRoleWithName('Admin'))
-		{
+
+//dd($attempt);
+
+
+		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
 			return Redirect::route('admin.index')
 				->withMessage(Bootstrap::success('You have been logged in.', true));
-		}
-		else
-		{
+		} elseif ($attempt) {
+
+//dd(Auth::User()->id);
 			return Redirect::route('user.show', Auth::User()->id)
 				->withMessage(Bootstrap::success('You have been logged in.', true));
-		}
+		} else {
 
-		return Redirect::back()->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
+//		return Redirect::back()->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
+		return Redirect::route('login')->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
+		}
 	}
 
 	/**

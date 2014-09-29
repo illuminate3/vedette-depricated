@@ -2,7 +2,10 @@
 
 use Vedette\helpers\presenters\Presenter;
 
-class User extends \Presenter {
+class User extends Presenter {
+
+//dd('loaded');
+
 
 	/**
 	 * Present the name

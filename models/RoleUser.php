@@ -19,7 +19,9 @@ class UserRole extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('user_id', 'role_id');
+	protected $fillable = array(
+		'user_id', 'role_id'
+	);
 
 	/**
 	 * The timestamps attributes.

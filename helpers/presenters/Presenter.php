@@ -1,6 +1,5 @@
 <?php namespace Vedette\helpers\presenters;
 
-
 abstract class Presenter {
 
 	/**
@@ -19,6 +18,9 @@ abstract class Presenter {
 	 */
 	public function __construct($entity)
 	{
+
+//dd('loaded');
+
 		$this->entity = $entity;
 	}
 

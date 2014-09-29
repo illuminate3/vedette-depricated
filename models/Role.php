@@ -21,14 +21,16 @@ class Role extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = array('name', 'active');
+	protected $fillable = array(
+		'name', 'active'
+	);
 
 	/**
 	 * The model presenter.
 	 *
 	 * @var string
 	 */
-	protected $presenter = 'Project\Presenters\Presenter\Role';
+	protected $presenter = 'Vedette\helpers\presenters\presenter\Role';
 
 	/**
 	 * The user relationship.

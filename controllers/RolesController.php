@@ -4,6 +4,13 @@ use Vedette\helpers\forms\form\RoleCreate;
 use Vedette\helpers\forms\form\RoleUpdate;
 use Vedette\helpers\forms\exceptions\FormValidationException;
 
+use Vedette\models\Role as Role;
+/*
+use Hash;
+use Redirect;
+use Auth;
+use Bootstrap;
+*/
 use View;
 
 class RolesController extends \BaseController {

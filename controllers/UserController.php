@@ -10,6 +10,7 @@ use Input;
 use Hash;
 use Redirect;
 use Auth;
+use Bootstrap;
 
 class UserController extends \BaseController {
 
