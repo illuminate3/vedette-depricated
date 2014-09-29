@@ -122,7 +122,7 @@ class UserController extends \BaseController {
 		$user->save();
 
 		return Redirect::route('user.show', $user->id)
-			->withMessage(Bootstrap::success( trans('lingos::account.user_success.create'), true));
+			->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true));
 	}
 
 	/**
@@ -139,7 +139,7 @@ class UserController extends \BaseController {
 
 		Auth::logout();
 
-		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::account.user_success.delete'), true));
+		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true));
 	}
 
 }

@@ -80,7 +80,7 @@ class UsersController extends \BaseController {
 		$user->save();
 		$user->roles()->sync($input['roles']);
 
-		return Redirect::route('admin.index')->withMessage(Bootstrap::success( trans('lingos::account.user_success.create'), true));
+		return Redirect::route('admin.index')->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true));
 	}
 
 	/**
@@ -124,7 +124,7 @@ class UsersController extends \BaseController {
 		$user->save();
 		$user->roles()->sync($input['roles']);
 
-		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.user_success.update'), true));
+		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.update'), true));
 	}
 
 	/**
@@ -144,7 +144,7 @@ class UsersController extends \BaseController {
 			Auth::logout();
 		}
 
-		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.user_success.delete'), true));
+		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true));
 	}
 
 }
