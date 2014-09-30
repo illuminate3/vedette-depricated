@@ -31,13 +31,15 @@
 
 <body>
 
-	@include('layouts.navigation')
-
 	<div id="wrap" class="container"><!-- Container -->
-		@include('layouts.content')
-	</div><!-- ./ container -->
 
-	@include('layouts.footer')
+		<!-- Notifications -->
+		{{-- include('layouts.partials.notifications') --}}
+		<!-- ./ notifications -->
+
+		@yield('content')
+
+	</div><!-- ./ container -->
 
 </body>
 

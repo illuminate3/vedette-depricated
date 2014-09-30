@@ -29,9 +29,9 @@ Route::group(array('before' => 'guest'), function()
 		array('only' => array('create', 'store')
 		));
 
-	Route::get('password/reset', array(
-		'as' => 'password.remind',
-		'uses' => 'Vedette\controllers\PasswordController@remind'
+	Route::get('password/forgot', array(
+		'as' => 'password.forgot',
+		'uses' => 'Vedette\controllers\PasswordController@forgot'
 		));
 	Route::post('password/reset', array(
 		'before' => 'csrf',
@@ -58,6 +58,10 @@ Route::group(array('before' => 'auth'), function()
 
 Route::get('login', array(
 	'as' =>'login',
+	'uses' => 'Vedette\controllers\SessionsController@create'
+	));
+Route::get('oauth', array(
+	'as' =>'oauth',
 	'uses' => 'Vedette\controllers\SessionsController@create'
 	));
 Route::get('logout', array(

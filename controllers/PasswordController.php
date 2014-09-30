@@ -5,6 +5,11 @@ use Vedette\helpers\forms\form\PasswordReset;
 use Vedette\helpers\forms\exceptions\FormValidationException;
 
 use View;
+use Input;
+use Redirect;
+use Bootstrap;
+use Config;
+use Password;
 
 class PasswordController extends \BaseController {
 
@@ -39,9 +44,11 @@ class PasswordController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function remind()
+	public function forgot()
 	{
-		return View::make('password.remind');
+		return View::make(
+			Config::get('vedette.vedette_views.forgot')
+		);
 	}
 
 	/**
