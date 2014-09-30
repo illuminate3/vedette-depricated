@@ -87,4 +87,63 @@ class SessionsController extends \BaseController {
 		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::auth.success.logout'), true));
 	}
 
+
+public function handleLoginPage ()
+{
+	// get data from input
+	$code = Input::get('code');
+
+	// get google service
+	$googleService = Artdarek\OAuth\Facade\OAuth::consumer('Google');
+
+	// if code is provided get user data and sign in
+	if (! empty($code)) {
+		// This was a callback request from google, get the token
+		$token = $googleService->requestAccessToken($code);
+
+		// Send a request with it
+		$result = json_decode(
+		$googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
+
+		$userOAuth = new OAuthSentryUser();
+
+		if ( ( isset($result['hd']) ) && ($result['hd'] == 'bryantschools.org') ) {
+
+			if ($userOAuth->checkIfUserExist($result['email'])) {
+
+				// update the profile of the user
+				$currentUser = $userOAuth->updateUserProfile($result);
+				// login the user using entry authentication
+				$userOAuth->loginUser($currentUser->user_id);
+
+			} else {
+
+				// create profile of the user in sentry and add user details
+				// from OAuth
+				$currentUser = $userOAuth->createUserProfile($result);
+				// login the user using entry authentication
+				$userOAuth->loginUser($currentUser->user_id);
+
+			}
+
+//			return Redirect::to('o-auth/dashboard/' . $currentUser->user_id);
+			return Redirect::to('/');
+
+		} else {
+			return Redirect::to('/');
+		}
+
+	} else {
+
+		// get googleService authorization
+		$url = $googleService->getAuthorizationUri();
+		// return to facebook login url
+		return Redirect::to((string) $url);
+
+	}
+} // OAuth
+
+
+
+
 }
