@@ -85,7 +85,9 @@ class PasswordController extends \BaseController {
 	 */
 	public function reset($token)
 	{
-		return View::make('password.reset')->with('token', $token);
+		return View::make(
+			Config::get('vedette.vedette_views.reset')
+		)->with('token', $token);
 	}
 
 	/**

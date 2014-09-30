@@ -23,14 +23,14 @@ Route::group(array('before' => 'guest'), function()
 {
 	Route::get('register', array(
 		'as' =>'register',
-		'uses' => 'Vedette\controllers\UserController@create'
+		'uses' => 'Vedette\controllers\AuthController@create'
 		));
-	Route::resource('user', 'Vedette\controllers\UserController',
+	Route::resource('auth', 'Vedette\controllers\AuthController',
 		array('only' => array('create', 'store')
 		));
 
 	Route::get('password/forgot', array(
-		'as' => 'password.forgot',
+		'as' => 'forgot',
 		'uses' => 'Vedette\controllers\PasswordController@forgot'
 		));
 	Route::post('password/reset', array(
@@ -51,7 +51,7 @@ Route::group(array('before' => 'guest'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
-	Route::resource('user', 'Vedette\controllers\UserController', array(
+	Route::resource('auth', 'Vedette\controllers\AuthController', array(
 		'except' => array('index', 'create', 'store')
 		));
 });

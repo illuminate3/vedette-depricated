@@ -10,6 +10,7 @@ use Input;
 use Auth;
 use Redirect;
 use Bootstrap;
+use Config;
 
 class SessionsController extends \BaseController {
 
@@ -37,7 +38,9 @@ class SessionsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('sessions.create');
+		return View::make(
+			Config::get('vedette.vedette_views.login')
+		);
 	}
 
 	/**
@@ -55,9 +58,7 @@ class SessionsController extends \BaseController {
 			isset($input['remember_me']) ?: false
 		);
 
-
 //dd($attempt);
-
 
 		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
 			return Redirect::route('admin.index')

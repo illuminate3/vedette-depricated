@@ -1,4 +1,4 @@
-@extends(Config::get('vedette.vedette_views.layout-login'))
+@extends(Config::get('vedette.vedette_views.layout_simple'))
 
 @section('title')
 @parent
@@ -8,7 +8,6 @@
 
 @section('styles')
 	<link rel="stylesheet" href="{{ URL::asset('packages/illuminate3/vedette/assets/vendors/backstretch/css/backstretch.css') }}">
-	<link rel="stylesheet" href="{{ URL::asset('packages/illuminate3/vedette/assets/css/login.css') }}">
 @stop
 
 @section('scripts')
@@ -54,7 +53,7 @@ $(document).ready(function() {
 	{{ Bootstrap::linkIcon(
 		'oauth',
 		trans('lingos::button.sign_on'),
-		'fa-google fa-lg',
+		'google fa-lg',
 		[
 			'class' => 'btn btn-success btn-block'
 		]
@@ -80,7 +79,7 @@ $(document).ready(function() {
 		null,
 		null,
 		$errors,
-		'fa-envelope fa-fw',
+		'envelope fa-fw',
 		[
 			'id' => 'email',
 			'placeholder' => trans('lingos::account.email'),
@@ -94,7 +93,7 @@ $(document).ready(function() {
 		'password',
 		null,
 		$errors,
-		'fa-key fa-fw',
+		'key fa-fw',
 		[
 			'id' => 'password',
 			'placeholder' => trans('lingos::auth.password'),
@@ -117,24 +116,27 @@ $(document).ready(function() {
 
 	<hr>
 
-	<div class="text-center">
+	<div class="row">
+		<div class="col-sm-6">
+		{{ Bootstrap::linkIcon(
+			'register',
+			trans('lingos::button.register'),
+			'plus fa-fw',
+			[
+				'class' => 'btn btn-default btn-block'
+			]
+		) }}
+		</div>
+		<div class="col-sm-6">
 	{{ Bootstrap::linkIcon(
-		'register',
-		trans('lingos::button.register'),
-		'fa-plus-circle fa-fw',
-		[
-			'class' => 'btn btn-info'
-		]
-	) }}
-
-	{{ Bootstrap::linkIcon(
-		'password.forgot',
+		'forgot',
 		trans('lingos::button.forgot_password'),
-		'fa-external-link fa-fw',
+		'external-link fa-fw',
 		[
-			'class' => 'btn btn-primary'
+			'class' => 'btn btn-default btn-block'
 		]
 	) }}
+		</div>
 	</div>
 
 	<hr>
@@ -142,7 +144,7 @@ $(document).ready(function() {
 	{{ Bootstrap::linkIcon(
 		'oauth',
 		trans('lingos::button.sign_on'),
-		'fa-google fa-lg',
+		'google fa-lg',
 		[
 			'class' => 'btn btn-default btn-block'
 		]

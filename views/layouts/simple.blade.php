@@ -29,7 +29,7 @@
 	@yield('styles')
 </head>
 
-<body>
+<body class="backcolor">
 
 	<div id="wrap" class="container"><!-- Container -->
 

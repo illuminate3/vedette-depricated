@@ -11,8 +11,9 @@ use Hash;
 use Redirect;
 use Auth;
 use Bootstrap;
+use Config;
 
-class UserController extends \BaseController {
+class AuthController extends \BaseController {
 
 	/**
 	 * Register form validator
@@ -49,7 +50,9 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('users.create');
+		return View::make(
+			Config::get('vedette.vedette_views.register')
+		);
 	}
 
 	/**
