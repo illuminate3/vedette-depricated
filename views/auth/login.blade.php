@@ -51,7 +51,7 @@ $(document).ready(function() {
 	<hr>
 
 	{{ Bootstrap::linkIcon(
-		'oauth',
+		'o-auth/login',
 		trans('lingos::button.sign_on'),
 		'google fa-lg',
 		[
@@ -142,7 +142,7 @@ $(document).ready(function() {
 	<hr>
 
 	{{ Bootstrap::linkIcon(
-		'oauth',
+		'o-auth/login',
 		trans('lingos::button.sign_on'),
 		'google fa-lg',
 		[

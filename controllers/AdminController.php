@@ -2,6 +2,7 @@
 
 use Auth;
 use View;
+use Session;
 
 class AdminController extends \BaseController {
 
@@ -12,6 +13,10 @@ class AdminController extends \BaseController {
 	 */
 	public function index()
 	{
+
+//$data = Session::all();
+//dd($data);
+
 		return View::make('admin.index');
 	}
 

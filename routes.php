@@ -63,9 +63,8 @@ Route::get('login', array(
 
 //Route::get('o-auth/login', 'Vedette\controllers\SessionsController@handleLoginPage');
 
-
 Route::get('o-auth/login', array(
-	'as' =>'oauth',
+	'as' =>'o-auth/login',
 	'uses' => 'Vedette\controllers\SessionsController@handleLoginPage'
 	));
 

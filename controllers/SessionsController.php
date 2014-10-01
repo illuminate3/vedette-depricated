@@ -1,10 +1,9 @@
 <?php namespace Vedette\controllers;
 
-use Vedette\helpers\forms\form\Login as Login;
+use Vedette\helpers\forms\form\Login as LoginForm;
 use Vedette\helpers\forms\exceptions\FormValidationException;
 use Illuminate\Auth\UserInterface;
 
-//use Vedette\models\Session as Session;
 use Vedette\models\OAuthUser as OAuthUser;
 use View;
 use Input;
@@ -14,45 +13,44 @@ use Bootstrap;
 use Config;
 use Artdarek\OAuth\Facade\OAuth as OAuth;
 //use OAuth;
-
+use Session;
 
 class SessionsController extends \BaseController {
 
+
 	/**
-	 * Login form validator
-	 *
-	 * @var Project\Forms\Form\Login
+	 * Member Vars
 	 */
-	protected $loginForm;
 	protected $OAuthUser;
+	protected $loginForm;
 
 	/**
-	 * Construct the session controller with a login form validator
-	 *
-	 * @param Project\Forms\Form\Login $loginForm
+	 * Constructor
 	 */
-/*
-	public function __construct(Login $loginForm, OAuthUser $OAuthUser)
+	public function __construct(OAuthUser $OAuthUser, LoginForm $loginForm)
 	{
-		$this->loginForm = $loginForm;
 		$this->OAuthUser = $OAuthUser;
-	}
-*/
-	public function __construct(Login $loginForm)
-	{
 		$this->loginForm = $loginForm;
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
+	 * Show the login form
 	 */
 	public function create()
 	{
+/*
+if ( Config::get('site.auth_type') == 'google' ) {
+//	return View::make('oauth.login');
+	return Redirect::to('o-auth/login');
+} else {
+	return View::make('sessions.login');
+}
+*/
+//	Session::flush();
 		return View::make(
 			Config::get('vedette.vedette_views.login')
 		);
+
 	}
 
 	/**
@@ -62,6 +60,25 @@ class SessionsController extends \BaseController {
 	 */
 	public function store()
 	{
+
+/*
+		// Form Processing
+		$result = $this->loginForm->save( Input::all() );
+		if( $result['success'] )
+		{
+			Event::fire('user.login', array(
+				'userId' => $result['sessionData']['userId'],
+				'email' => $result['sessionData']['email']
+				));
+			// Success!
+			return Redirect::to('/');
+		} else {
+			Session::flash('error', $result['message']);
+			return Redirect::to('login')
+				->withInput()
+				->withErrors( $this->loginForm->errors() );
+		}
+*/
 		$input = Input::only('email', 'password', 'remember_me');
 		$this->loginForm->validate($input);
 
@@ -85,98 +102,86 @@ class SessionsController extends \BaseController {
 //		return Redirect::back()->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
 		return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
 		}
+
+
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @return Response
-	 */
-	public function destroy()
-	{
-		Auth::logout();
+/**
+ * Remove the specified resource from storage.
+ *
+ * @param  int  $id
+ * @return Response
+ */
+public function destroy()
+{
+/*
+	$this->session->destroy();
+	Event::fire('user.logout');
+	return Redirect::to('/');
+*/
 
-		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::auth.success.logout'), true));
-	}
+//	Sentry::logout();
+//	$this->session->destroy();
+	Auth::logout();
+	Session::flush();
 
+	return Redirect::to('/');
 
-public function handleLoginPage()
+}
+
+public function handleLoginPage ()
 {
 	// get data from input
 	$code = Input::get('code');
-//dd($code);
+
 	// get google service
 	$googleService = OAuth::consumer('Google');
-//dd($googleService);
+
 	// if code is provided get user data and sign in
 	if (! empty($code)) {
 		// This was a callback request from google, get the token
 		$token = $googleService->requestAccessToken($code);
 
 		// Send a request with it
-		$result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
-//dd($result);
+		$result = json_decode(
+		$googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
 
-//		$userOAuth = new OAuthUser();
+		$userOAuth = new OAuthUser();
 
-		if ( Config::get('vedette.vedette_settings.hosted_domain') == True ) {
-			if ( (isset($result['hd']) ) && ($result['hd'] == Config::get('vedette.vedette_settings.hosted_domain')) ) {
-				$this->ProcessOauth($result);
+		if ( ( isset($result['hd']) ) && ($result['hd'] == 'bryantschools.org') ) {
+
+			if ($userOAuth->checkIfUserExist($result['email'])) {
+
+				// update the profile of the user
+				$currentUser = $userOAuth->updateUserProfile($result);
+				// login the user using entry authentication
+				$userOAuth->loginUser($currentUser->user_id);
+
 			} else {
-				return Redirect::to('login')
-					->withMessage(Bootstrap::danger( trans('lingos::auth.error.activate'), true));
+
+				// create profile of the user in sentry and add user details
+				// from OAuth
+				$currentUser = $userOAuth->createUserProfile($result);
+				// login the user using entry authentication
+				$userOAuth->loginUser($currentUser->user_id);
+
 			}
+
+//			return Redirect::to('o-auth/dashboard/' . $currentUser->user_id);
+			return Redirect::to('/');
+
 		} else {
-				$this->ProcessOauth($result);
+			return Redirect::to('/');
 		}
 
 	} else {
 
 		// get googleService authorization
 		$url = $googleService->getAuthorizationUri();
-
 		// return to facebook login url
-		return Redirect::to((string) $url)
-			->withMessage(Bootstrap::danger( trans('lingos::auth.error.activate'), true));
+		return Redirect::to((string) $url);
 
 	}
 } // OAuth
-
-public function ProcessOauth($result)
-{
-
-//dd($result['email']);
-	$userOAuth = new OAuthUser();
-
-	if ( $userOAuth->checkIfUserExist($result['email']) ) {
-
-		// update the profile of the user
-		$currentUser = $userOAuth->updateUserProfile($result);
-//dd($currentUser);
-		// login the user using entry authentication
-		$userOAuth->loginOauthUser($currentUser->user_id);
-
-		return Redirect::to('/')
-			->withMessage(Bootstrap::danger( trans('lingos::auth.success.login'), true));
-
-	} else {
-
-//		$createUser = $userOAuth->createUser($result);
-		// create profile of the user in sentry and add user details
-		// from OAuth
-		$currentUser = $userOAuth->createUserProfile($result);
-
-		// login the user using entry authentication
-		$userOAuth->loginOauthUser($currentUser->user_id);
-
-dd('9');
-		return Redirect::to('/')
-			->withMessage(Bootstrap::danger( trans('lingos::auth.success.register'), true));
-
-	}
-
-}
-
-
 
 }

@@ -3,7 +3,7 @@
 use Vedette\helpers\forms\FormValidator;
 
 class Login extends FormValidator {
-
+//dd('loaded');
 	/**
 	 * Validation rules
 	 *

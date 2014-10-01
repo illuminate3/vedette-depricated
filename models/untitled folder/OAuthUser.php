@@ -1,5 +1,11 @@
 <?php namespace Vedette\models;
+/*
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableInterface;
+use Vedette\helpers\presenters\PresentableTrait;
 
+use Vedette\models\Role as Role;
+*/
 use Eloquent;
 use DB;
 use Hash;
@@ -9,10 +15,19 @@ use Auth;
 use Redirect;
 use Bootstrap;
 use route;
-use Session;
 
 //class OAuthUser extends Eloquent implements UserInterface, RemindableInterface {
 class OAuthUser extends \User {
+
+/**
+ * This class will handle all of the Sentry user functionalities.
+ * The user oauths table which is used to maintain the data for O Auth
+ * is also handled from this class.
+ * @author Amitav Roy
+ *
+ */
+
+//	use PresentableTrait;
 
 	/**
 	* This function will check if the user exist in the Sentry user table.
@@ -23,6 +38,9 @@ class OAuthUser extends \User {
 	*/
 	public function checkIfUserExist ($email)
 	{
+
+//dd($email);
+
 	$user = DB::table('users')->where('email', '=', $email)->first();
 	if ($user)
 	  return $user;
@@ -40,8 +58,21 @@ class OAuthUser extends \User {
 | @param unknown $result
 | @return multitype:unknown number
 */
-	private function userDataFromOAuth ($result)
+	private function userDataFromOAuth($result)
 	{
+/*
+		$userData = array(
+//			'oauth_id' => $result['id'],
+			'oauth_email' => $result['email'],
+			'oauth_name' => $result['name'],
+			'oauth_given_name' => $result['given_name'],
+			'oauth_family_name' => $result['family_name'],
+			'oauth_link' => $result['link'],
+			'oauth_picture' => $result['picture'],
+			'oauth_gender' => $result['gender'],
+			'oauth_updated' => time()
+		);
+*/
 		$userData = array(
 //			'oauth_id' => $result['id'],
 			'email' => $result['email'],
@@ -61,7 +92,7 @@ class OAuthUser extends \User {
 |--------------------------------------------------------------------------
 | Update User Profile
 |--------------------------------------------------------------------------
-| This function will get the prepared OAuth data and update the details table.
+| This function will get the prepared OAuth data and update the oauths table.
 | This function is called every time a user is logging in to udate his profile info.
 |--------------------------------------------------------------------------
 | @param unknown $result
@@ -69,21 +100,41 @@ class OAuthUser extends \User {
 */
 	public function updateUserProfile ($result)
 	{
+
+
 		// get user data from OAuth
 		$userData = $this->userDataFromOAuth($result);
+//dd($userData);
+
 		// updating the table
+//		DB::table('oauths')->where('oauth_email', $result['email'])->update($userData);
+//		DB::table('profiles')->where('email', $result['email'])->update($userData);
+
+try {
+	// Validate, then create if valid
 		DB::table('profiles')->where('email', $result['email'])->update($userData);
+} catch( ValidationException $e ) {
+	// Back to form with errors
+	return Redirect::to('/')
+		->withErrors( $e->getErrors() );
+//		->withInput();
+}
+
+
+
+
 /*
 // Update an entry
-DB::table('details')
+DB::table('oauths')
 	->where('oauth_email', '=', $result['email'])
 	->update($userData);
 */
 
 		// get the row which was updated.
-		$row = DB::table('profiles')->where('email', $result['email'])->first();
-
-		return $row;
+//		$row = DB::table('oauths')->where('oauth_email', $result['email'])->first();
+//		$row = DB::table('profiles')->where('email', $result['email'])->first();
+//dd($row);
+//		return $row;
 	}
 
 /*
@@ -91,69 +142,73 @@ DB::table('details')
 | Create User Profile
 |--------------------------------------------------------------------------
 | This function will create a new user using Sentry
-| Then it will insert a new record in the details and users_groups tables
+| Then it will insert a new record in the oauths and users_groups tables
 | users_groups role will default to '1' which should be the users group
 |--------------------------------------------------------------------------
 | @param unknown $result
 | @return unknown
 */
-public function createUserProfile ($result)
+public function createUserProfile($result)
 {
-	// create the sentry user
-	$sentryUser = $this->createUser($result);
+//dd('loaded');
+
+//dd($createUser);
+/*
+// do not store oauth data ... insert to profiles and users
 	// get the user data from OAuth
 	$userData = $this->userDataFromOAuth($result);
-
 	// set user id
-//	$userData['user_id'] = $sentryUser['id'];
-//dd($sentryUser);
-	$sentryUser = DB::table('users')->where('email', $result['email'])->first();
+	$userData['user_id'] = $createUser['id'];
+	// insert the data
+	$id = DB::table('oauths')->insertGetId($userData);
+*/
+
+//dd($result['email']);
+	// fetch the row which was inserted
+//$userData = new StdClass();
+
+	// create the user
+//	$createUser = $this->createUser($result);
+	// create the sentry user
+	$createUser = $this->createUser($result);
+
+	$createProfile = $this->userDataFromOAuth($result);
+//dd($createProfile);
+
+
+	$userData = DB::table('users')->where('email', $result['email'])->first();
 
 	// Pre Populate the Profile using Oauth information
 	DB::table('profiles')
 		->insert(array(
-			'user_id' => $sentryUser->{'id'},
-			'first_name' => $userData['first_name'],
-			'last_name' => $userData['last_name'],
-			'email' => $userData['email'],
-			'picture' => $userData['picture']
+			'user_id' => $userData->{'id'},
+			'first_name' => $createProfile['first_name'],
+			'last_name' => $createProfile['last_name'],
+			'email' => $createProfile['email'],
+			'picture' => $createProfile['picture']
 		));
 
-	// insert the data
-//	$id = DB::table('profiles')->insertGetId($userData);
 
-	// Assign the user to a group
+//dd($userData);
+
+	// Assign the user a role
 	DB::table('role_user')
 		->insert(array(
 			'role_id' => Config::get('vedette.vedette_db.default_role_id'),
-			'user_id' => $sentryUser->{'id'}
-//			'user_id' => $userData['user_id']
+			'user_id' => $userData->{'id'}
 		));
 
-	// fetch the row which was inserted
-	$row = DB::table('profiles')->where('email', $result['email'])->first();
-
-	return $row;
+//	return $row;
 }
 
-	/**
-	* This private function is creating the Sentry user only.
-	* @param unknown $result
-	* @return unknown
-	*/
-	private function createUser ($result)
-	{
-	// Create the user
-/*
-	$sentryUser = Sentry::createUser(
-		array(
-			'email' => $result['email'],
-			'password' => time() . rand(999, 9999),
-			'activated' => true,
-			'first_name' => $result['given_name'],
-			'last_name' => $result['family_name']
-		));
+/**
+* This private function is creating the Sentry user only.
+* @param unknown $result
+* @return unknown
 */
+private function createUser($result)
+{
+// Create the user
 	$createUser = DB::table('users')
 		->insert(array(
 			'email'				=> $result['email'],
@@ -166,8 +221,8 @@ public function createUserProfile ($result)
 			'updated_at'		=> new DateTime,
 		));
 
-	return $createUser;
-	}
+return $createUser;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -177,22 +232,58 @@ public function createUserProfile ($result)
 |--------------------------------------------------------------------------
 | @param unknown $userId
 */
-	public function loginUser ($userId)
+	public function loginOauthUser ($userId)
 	{
+//dd($userId);
+
+$loginUser = $this->getUserCredentials($userId);
+
+//dd($loginUser->{'email'});
+
+		$attempt = Auth::attempt(
+			array(
+				'email' => $loginUser->{'email'},
+				'password' => $loginUser->{'email'}
+//			isset($input['remember_me']) ?: false
+			));
+
+//dd($attempt);
+
+		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
+
+//dd('1');
+			return Redirect::route('admin.index');
+//				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+dd('2');
+
+		} elseif ($attempt) {
+//dd('3');
+
+//dd(Auth::User()->id);
+			return Redirect::route('home', Auth::User()->id);
+//				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+dd('4');
+
+		} else {
+//dd('5');
+
+//		return Redirect::back()->withMessage(Bootstrap::danger('Invalid credentials.', true))->withInput();
+		return Redirect::route('login');
+//			->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
+dd('6');
+		}
+dd('7');
+
 /*
 		$thisUser = Sentry::findUserById($userId);
 		Sentry::login($thisUser, true);
 		Session::put('checkAuth', 'true');
 		Session::put('authUser', $this->getFullUserDetails($userId));
 */
-$loginUser = $this->getUserCredentials($userId);
-//dd($loginUser);
-		Session::put('checkAuth', True);
-		Session::put('userAuth', $loginUser);
 	}
 
 	/**
-	* This function is accumulating the sentry user and also adding the details table details of a user.
+	* This function is accumulating the sentry user and also adding the oauths table the details of a user.
 	* This can be always called instead of Snetry user to get all user details.
 	* @param unknown $userId
 	* @return unknown
@@ -200,9 +291,15 @@ $loginUser = $this->getUserCredentials($userId);
 
 	public function getUserCredentials($userId)
 	{
+/*
+	$thisUser = User::findUserById($userId);
+	$thisUser['oauths'] = DB::table('oauths')->where('user_id',
+		$userId)->first();
+*/
 		$thisUser = DB::table('users')->where('id', $userId)->first();
 //dd($thisUser);
 	return $thisUser;
 	}
+
 
 }
