@@ -60,16 +60,15 @@ Route::get('login', array(
 	'as' =>'login',
 	'uses' => 'Vedette\controllers\SessionsController@create'
 	));
-/*
-Route::get('oauth', array(
-	'as' =>'oauth',
-	'uses' => 'Vedette\controllers\SessionsController@create'
-	));
-*/
+
+//Route::get('o-auth/login', 'Vedette\controllers\SessionsController@handleLoginPage');
+
+
 Route::get('o-auth/login', array(
 	'as' =>'oauth',
 	'uses' => 'Vedette\controllers\SessionsController@handleLoginPage'
 	));
+
 
 Route::get('logout', array(
 	'as' =>'logout',
