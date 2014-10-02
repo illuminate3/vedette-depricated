@@ -60,12 +60,14 @@ Route::group(array('before' => 'guest'), function()
 		));
 });
 
+/*
 Route::group(array('before' => 'auth'), function()
 {
 	Route::resource('auth', 'Vedette\controllers\AuthController', array(
 		'except' => array('index', 'create', 'store')
 		));
 });
+*/
 
 Route::get('login', array(
 	'as' =>'login',
@@ -99,6 +101,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 		array('except' => array('show')
 		));
 	Route::resource('users', 'Vedette\controllers\UsersController',
-		array('except' => array('show')
+		array(
+			'before' => 'csrf',
+			'except' => array('show')
 		));
 });

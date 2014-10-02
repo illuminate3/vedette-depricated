@@ -158,4 +158,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasRole($searchRole->id);
 	}
 
+
+
+	public function deleteUserProfile($user_id)
+	{
+		$racks = DB::table('profiles')
+			->where('user_id', '=', $user_id)
+			->delete();
+
+//		return $racks;
+	}
+
 }

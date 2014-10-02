@@ -1,51 +1,156 @@
-@extends('layouts.master')
+@extends(Config::get('vedette.vedette_views.layout'))
 
 @section('title')
+@parent
+	{{ Config::get('vedette.vedette_html.separator') }}
+	{{ trans('lingos::account.command.edit') }}
+@stop
 
-Administration | Edit User
+@section('styles')
+@stop
 
+@section('scripts')
+@stop
+
+@section('inline-scripts')
+$(document).ready(function() {
+
+	var text_confirm_message = '{{ trans('lingos::account.ask.delete') }}';
+
+});
 @stop
 
 @section('content')
+<div class="row">
+<h1>
+	@if (Auth::check())
+		<p class="pull-right">
+		{{ Bootstrap::linkIcon(
+			'admin.index',
+			trans('lingos::button.back'),
+			'chevron-left fa-fw',
+			array('class' => 'btn btn-default')
+		) }}
+		</p>
+	@endif
+	<i class="fa fa-edit fa-lg"></i>
+	{{ trans('lingos::account.command.edit') }}
+	<hr>
+</h1>
+</div>
 
-	<div class="row">
 
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="row">
 
-			<h1>Edit User</h1>
+{{ $message = Session::get('message') }}
 
+{{ Form::open(
+	[
+		'route' => array('admin.users.update', $user->id),
+		'role' => 'form',
+		'method' => 'put'
+	]
+) }}
+{{ Form::hidden('user', $user->id) }}
+
+
+	{{ Bootstrap::email(
+		'email',
+		null,
+		$user->email,
+		$errors,
+		'envelope fa-fw',
+		[
+			'id' => 'email',
+			'placeholder' => trans('lingos::account.email'),
+			'required',
+			'autofocus'
+		]
+	) }}
+
+	{{ Bootstrap::password(
+		'password',
+		null,
+		$errors,
+		'unlock fa-fw',
+		[
+			'id' => 'password',
+			'placeholder' => trans('lingos::auth.password'),
+			'required'
+		]
+	) }}
+
+	{{ Bootstrap::password(
+		'password_confirmation',
+		null,
+		$errors,
+		'unlock-alt fa-fw',
+		[
+			'id' => 'password',
+			'placeholder' => trans('lingos::auth.confirm_password'),
+			'required',
+			'autocomplete' => 'off'
+		]
+	) }}
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+					<i class="fa fa-gavel fa-fw"></i>
+				{{ trans('lingos::role.roles') }}
+			</h3>
 		</div>
-
-		<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1">
-
-			{{ Form::open(array('route' => array('admin.users.update', $user->id), 'role' => 'form', 'method' => 'put')) }}
-
-				{{ Form::hidden('user', $user->id) }}
-
-				{{ Bootstrap::text('name', 'Name', $user->name, $errors) }}
-
-				{{ Bootstrap::email('email', 'Email address', $user->email, $errors) }}
-
-				{{ Bootstrap::password('password', 'Password', $errors) }}
-
-				{{ Bootstrap::password('password_confirmation', 'Password confirmation', $errors) }}
-
-				<h5><strong>Roles</strong></h5>
-
-				@foreach (Vedette\models\Role::All() as $role)
-
-					{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id, $user->hasRole($role->id)) }}
-
-				@endforeach
-
-				{{ Bootstrap::linkRoute('admin.users.index', 'Back') }}
-
-				{{ Bootstrap::submit('Save') }}
-
-			{{ Form::close() }}
-
+		<div class="panel-body">
+		@foreach (Vedette\models\Role::All() as $role)
+			{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id, $user->hasRole($role->id)) }}
+		@endforeach
 		</div>
-
 	</div>
 
+	<hr>
+
+	{{ Bootstrap::submit(
+		trans('lingos::button.save'),
+		[
+			'class' => 'btn btn-success btn-block'
+		]
+	) }}
+
+	<div class="row">
+		<div class="col-sm-4">
+		{{ Bootstrap::linkIcon(
+			'login',
+			trans('lingos::button.cancel'),
+			'times fa-fw',
+			[
+				'class' => 'btn btn-default btn-block'
+			]
+		) }}
+		</div>
+		<div class="col-sm-4">
+		{{ Bootstrap::reset(
+			trans('lingos::button.reset'),
+			[
+				'class' => 'btn btn-default btn-block'
+			]
+		) }}
+		</div>
+		<div class="col-sm-4">
+		{{ Bootstrap::linkIcon(
+			'admin.users.destroy',
+			trans('lingos::button.delete'),
+			'trash-o fa-fw',
+			array(
+				'class' => 'btn btn-default btn-block',
+				'data-method' => 'delete',
+				'title' => trans('lingos::button.user.delete')
+			)
+		) }}
+		</div>
+	</div>
+
+{{ Form::close() }}
+
+</div>
 @stop

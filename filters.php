@@ -46,16 +46,17 @@ Route::filter('auth.basic', function()
 
 Route::filter('auth.admin', function()
 {
-	if (Auth::guest())
-	{
+
+	if ( Auth::guest() ) {
 		return Redirect::guest('login');
 	}
+	if ( !Auth::user()->hasRoleWithName('Admin') ) {
 
-	if ( !Auth::user()->hasRoleWithName('Admin'))
-	{
+//dd(Auth::user());
+
 		return Redirect::home()->withMessage(Bootstrap::danger( trans('lingos::permission.error.insufficient') ));
-
 	}
+
 });
 
 /*
@@ -71,7 +72,7 @@ Route::filter('auth.admin', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if ( Auth::check() ) return Redirect::to('/');
 });
 
 /*
@@ -105,10 +106,13 @@ Route::filter('csrf', function()
 
 Route::filter('currentUser', function($route)
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	if ( Auth::guest() ) return Redirect::guest('login');
 
-	if (Auth::user()->id != $route->parameter('user'))
-	{
+	if ( Auth::user()->id != $route->parameter('User') ) {
+
+//dd(Auth::user()->id);
+
 		return Redirect::home()->withMessage(Bootstrap::danger( trans('lingos::sentry.permission_error.insufficient'), true) );
 	}
+
 });

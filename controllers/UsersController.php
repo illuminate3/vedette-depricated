@@ -139,8 +139,13 @@ class UsersController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
+dd('stop!');
 		$user = User::findOrFail($id);
+
+dd($user);
 		$user->delete();
+
+User::deleteUserProfile($user['user_id']);
 
 		if ($id == Auth::user()->id)
 		{
