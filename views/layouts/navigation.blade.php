@@ -7,11 +7,23 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		{{ HTML::linkRoute('home', 'Project name', null, array('class' => 'navbar-brand')) }}
+		{{ HTML::linkRoute(
+			Config::get('vedette.vedette_routes.home'),
+			Config::get('vedette.vedette_html.project_name'),
+			null,
+			array(
+				'class' => 'navbar-brand'
+			)
+		) }}
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li {{ (Request::is('/') ? ' class="active"' : '') }}>{{ HTML::linkRoute('home', 'Home') }}</li>
+			<li {{ (Request::is('/') ? ' class="active"' : '') }}>
+				{{ HTML::linkRoute(
+					'home',
+					trans('lingos::general.home')
+				) }}
+			</li>
 		</ul>
 		<ul class="nav navbar-nav pull-right">
 			@if (Auth::check())

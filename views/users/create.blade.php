@@ -2,7 +2,7 @@
 
 @section('title')
 @parent
-	{{  Config::get('vedette.vedette_config.separator') }}
+	{{ Config::get('vedette.vedette_html.separator') }}
 	{{ trans('lingos::account.command.create') }}
 @stop
 

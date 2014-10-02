@@ -169,28 +169,6 @@ public function createUserProfile ($result)
 	return $createUser;
 	}
 
-/*
-|--------------------------------------------------------------------------
-| Login User
-|--------------------------------------------------------------------------
-| This function will login a user based on the user id provided and set the session data accordingly.
-|--------------------------------------------------------------------------
-| @param unknown $userId
-*/
-	public function loginUser ($userId)
-	{
-/*
-		$thisUser = Sentry::findUserById($userId);
-		Sentry::login($thisUser, true);
-		Session::put('checkAuth', 'true');
-		Session::put('authUser', $this->getFullUserDetails($userId));
-*/
-$loginUser = $this->getUserCredentials($userId);
-//dd($loginUser);
-		Session::put('checkAuth', True);
-		Session::put('userAuth', $loginUser);
-	}
-
 	/**
 	* This function is accumulating the sentry user and also adding the details table details of a user.
 	* This can be always called instead of Snetry user to get all user details.

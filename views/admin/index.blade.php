@@ -1,6 +1,39 @@
-@extends('layouts.master')
+@extends(Config::get('vedette.vedette_views.layout'))
+
+@section('title')
+@parent
+	{{ Config::get('vedette.vedette_html.separator') }}
+	{{ trans('lingos::general.dashboard') }}
+@stop
+
+@section('styles')
+@stop
+
+@section('scripts')
+@stop
+
+@section('inline-scripts')
+$(document).ready(function() {
+
+});
+@stop
+
 @section('content')
 	<div class="row">
+
+
+@if (Auth::check())
+	@if (Auth::user()->hasRoleWithName('Admin'))
+	has role admin
+	@endif
+	@if (Auth::user()->hasRoleWithName('User'))
+	has role User
+	@endif
+@endif
+
+<br>
+
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h1>Administration</h1>
 		</div>

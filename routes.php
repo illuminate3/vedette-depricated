@@ -7,12 +7,23 @@ new helpers\forms\form\Login;
 )};
 */
 
-Route::get('/', 'Vedette\controllers\AdminController@index');
+//Route::get('/', 'Vedette\controllers\AdminController@index');
 
 Route::get('/', array(
 	'as' => 'home',
-	'uses' => 'Vedette\controllers\AdminController@index'
+	'uses' => 'Vedette\controllers\IndexController@index'
 	));
+
+Route::get(Config::get('vedette.vedette_routes.user_home'), array(
+	'as' => 'vedette.user',
+	'uses' => 'Vedette\Controllers\IndexController@index')
+);
+Route::get(Config::get('vedette.vedette_routes.admin_home'), array(
+	'as' => 'vedette.admin',
+	'uses' => 'Vedette\Controllers\AdminController@index')
+);
+
+
 
 Route::get('/404', array(
 	'as' => 'notfound',

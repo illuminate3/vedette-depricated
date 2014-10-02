@@ -146,33 +146,53 @@ public function handleLoginPage ()
 		$result = json_decode(
 		$googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
 
-		$userOAuth = new OAuthUser();
+//		$userOAuth = new OAuthUser();
 
-		if ( ( isset($result['hd']) ) && ($result['hd'] == 'bryantschools.org') ) {
 
-			if ($userOAuth->checkIfUserExist($result['email'])) {
+		if ( Config::get('vedette.vedette_settings.hosted_domain') == True ) {
 
-				// update the profile of the user
-				$currentUser = $userOAuth->updateUserProfile($result);
-				// login the user using entry authentication
-				$userOAuth->loginUser($currentUser->user_id);
+			if ( (isset($result['hd']) ) && ($result['hd'] == Config::get('vedette.vedette_settings.hosted_domain')) ) {
+
+				$this->ProcessOauth($result);
+
+				return Redirect::route('vedette.admin')
+					->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
 
 			} else {
-
-				// create profile of the user in sentry and add user details
-				// from OAuth
-				$currentUser = $userOAuth->createUserProfile($result);
-				// login the user using entry authentication
-				$userOAuth->loginUser($currentUser->user_id);
-
+				return Redirect::to('vedette.user')
+					->withMessage(Bootstrap::danger( trans('lingos::auth.error.activate'), true));
 			}
+
+		} else {
+
+				$this->ProcessOauth($result);
+				return Redirect::route('vedette.user')
+					->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+
+		}
+
+
+
+
+
+/*
+		if ( ( isset($result['hd']) ) && ($result['hd'] == 'bryantschools.org') ) {
+
+public function ProcessOauth($result)
 
 //			return Redirect::to('o-auth/dashboard/' . $currentUser->user_id);
 			return Redirect::to('/');
 
 		} else {
-			return Redirect::to('/');
+
+public function ProcessOauth($result)
+
+			return Redirect::to('login');
 		}
+*/
+
+
+
 
 	} else {
 
@@ -183,5 +203,83 @@ public function handleLoginPage ()
 
 	}
 } // OAuth
+
+public function ProcessOauth($result)
+{
+
+		$userOAuth = new OAuthUser();
+
+	if ($userOAuth->checkIfUserExist($result['email'])) {
+
+		// update the profile of the user
+		$currentUser = $this->OAuthUser->updateUserProfile($result);
+		// login the user using entry authentication
+		$this->loginUser($currentUser->user_id);
+
+	} else {
+
+		// create profile of the user in sentry and add user details
+		// from OAuth
+		$currentUser = $this->OAuthUser->createUserProfile($result);
+		// login the user using entry authentication
+		$this->loginUser($currentUser->user_id);
+
+	}
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Login User
+|--------------------------------------------------------------------------
+| This function will login a user based on the user id provided and set the session data accordingly.
+|--------------------------------------------------------------------------
+| @param unknown $userId
+*/
+	public function loginUser ($userId)
+	{
+//dd($userId);
+/*
+		$thisUser = Sentry::findUserById($userId);
+		Sentry::login($thisUser, true);
+		Session::put('checkAuth', 'true');
+		Session::put('authUser', $this->getFullUserDetails($userId));
+*/
+$loginUser = $this->OAuthUser->getUserCredentials($userId);
+//dd($loginUser);
+
+		$attempt = Auth::attempt(
+			array(
+				'email' => $loginUser->{'email'},
+				'password' => $loginUser->{'email'}
+//			isset($input['remember_me']) ?: false
+			));
+
+		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
+
+//dd('attempt');
+			return Redirect::route('home')
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+		} elseif ($attempt) {
+/*
+dd('bad attempt');
+return Redirect::to('/');
+dd('2');
+*/
+			return Redirect::route('home', Auth::User()->id)
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+
+		} else {
+//dd('fail');
+		return Redirect::route('login')
+			->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
+		}
+
+
+
+		Session::put('checkAuth', True);
+		Session::put('userAuth', $loginUser);
+	}
 
 }
