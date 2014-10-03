@@ -58,7 +58,7 @@ $(document).ready(function() {
 		) }}
 		</p>
 	@endif
-	<i class="fa fa-group fa-lg"></i>
+	<i class="fa fa-gavel fa-lg"></i>
 	{{ trans('lingos::account.users') }}
 	<hr>
 </h1>
@@ -69,56 +69,56 @@ $(document).ready(function() {
 
 <div class="table-responsive">
 <table class="table table-striped table-hover" id="DataTable">
-			<thead>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>{{ trans('lingos::table.email') }}</th>
+			<th>{{ trans('lingos::table.roles') }}</th>
+			<th>{{ trans('lingos::table.actions') }}</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach ($users as $user)
 			<tr>
-				<th>#</th>
-				<th>{{ trans('lingos::table.email') }}</th>
-				<th>{{ trans('lingos::table.roles') }}</th>
-				<th>{{ trans('lingos::table.actions') }}</th>
+				<td>{{ $user->id }}</td>
+				<td>{{ $user->present()->email() }}</td>
+				<td>{{ $user->present()->roles() }}</td>
+				<td width="20%">
+					{{ Form::open(array(
+						'route' => array('admin.users.destroy', $user->id),
+						'role' => 'form',
+						'method' => 'delete',
+						'class' => 'form-inline'
+					)) }}
+
+						{{ Bootstrap::linkRouteIcon(
+							'admin.users.edit',
+							trans('lingos::button.edit'),
+							'edit fa-fw',
+							array($user->id),
+							array(
+								'class' => 'btn btn-success form-group',
+								'title' => trans('lingos::account.command.edit')
+							)
+						) }}
+
+						{{ Bootstrap::linkRouteIcon(
+							'admin.users.destroy',
+							trans('lingos::button.delete'),
+							'trash-o fa-fw',
+							array($user->id),
+							array(
+								'class' => 'btn btn-danger form-group action_confirm',
+								'data-method' => 'delete',
+								'title' => trans('lingos::account.command.delete')
+							)
+						) }}
+
+					{{ Form::close() }}
+				</td>
 			</tr>
-			</thead>
-			<tbody>
-				@foreach ($users as $user)
-					<tr>
-						<td>{{ $user->id }}</td>
-						<td>{{ $user->present()->email() }}</td>
-						<td>{{ $user->present()->roles() }}</td>
-						<td width="20%">
-							{{ Form::open(array(
-								'route' => array('admin.users.destroy', $user->id),
-								'role' => 'form',
-								'method' => 'delete',
-								'class' => 'form-inline'
-							)) }}
-
-								{{ Bootstrap::linkRouteIcon(
-									'admin.users.edit',
-									trans('lingos::button.edit'),
-									'edit fa-fw',
-									array($user->id),
-									array(
-										'class' => 'btn btn-success form-group',
-										'title' => trans('lingos::account.command.edit')
-									)
-								) }}
-
-								{{ Bootstrap::linkRouteIcon(
-									'admin.users.destroy',
-									trans('lingos::button.delete'),
-									'trash-o fa-fw',
-									array($user->id),
-									array(
-										'class' => 'btn btn-danger form-group action_confirm',
-										'data-method' => 'delete',
-										'title' => trans('lingos::account.command.delete')
-									)
-								) }}
-
-							{{ Form::close() }}
-						</td>
-					</tr>
-				@endforeach
-			</tbody>
+		@endforeach
+	</tbody>
 </table>
 </div> <!-- ./responsive -->
 

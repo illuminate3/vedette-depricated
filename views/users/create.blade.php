@@ -165,7 +165,7 @@
 	<div class="row">
 		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
-			'login',
+			'admin.users.index',
 			trans('lingos::button.cancel'),
 			'times fa-fw',
 			[

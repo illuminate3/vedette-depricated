@@ -5,13 +5,11 @@ use Vedette\helpers\forms\form\RoleUpdate;
 use Vedette\helpers\forms\exceptions\FormValidationException;
 
 use Vedette\models\Role as Role;
-/*
-use Hash;
-use Redirect;
-use Auth;
-use Bootstrap;
-*/
 use View;
+use Input;
+use Redirect;
+use Bootstrap;
+use Config;
 
 class RolesController extends \BaseController {
 
@@ -50,7 +48,12 @@ class RolesController extends \BaseController {
 	{
 		$roles = Role::all();
 
-		return View::make('admin.roles.index')->with(compact("roles"));
+//dd($roles);
+//		return View::make('admin.roles.index')->with(compact("roles"));
+
+		return View::make(
+			Config::get('vedette.vedette_views.roles_index')
+			)->with(compact("roles"));
 	}
 
 	/**
@@ -60,7 +63,10 @@ class RolesController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('admin.roles.create');
+//		return View::make('admin.roles.create');
+		return View::make(
+			Config::get('vedette.vedette_views.roles_create')
+			);
 	}
 
 	/**
@@ -92,7 +98,11 @@ class RolesController extends \BaseController {
 	{
 		$role = Role::findOrFail($id);
 
-		return View::make('admin.roles.edit')->with(compact('role'));
+//		return View::make('admin.roles.edit')->with(compact('role'));
+
+		return View::make(
+			Config::get('vedette.vedette_views.roles_edit')
+			)->with(compact('role'));
 	}
 
 	/**
@@ -124,6 +134,7 @@ class RolesController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
+dd('stop!');
 		$role = Role::findOrFail($id);
 		$role->delete();
 

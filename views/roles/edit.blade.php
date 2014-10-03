@@ -1,39 +1,134 @@
-@extends('layouts.master')
+@extends(Config::get('vedette.vedette_views.layout'))
 
 @section('title')
+@parent
+	{{ Config::get('vedette.vedette_html.separator') }}
+	{{ trans('lingos::role.command.edit') }}
+@stop
 
-Administration | Edit Role
+@section('styles')
+@stop
 
+@section('scripts')
+	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
+@stop
+
+@section('inline-scripts')
+	var text_confirm_message = '{{ trans('lingos::role.ask.delete') }}';
 @stop
 
 @section('content')
+<div class="row">
+<h1>
+	@if (Auth::check())
+		<p class="pull-right">
+		{{ Bootstrap::linkIcon(
+			'admin.roles.index',
+			trans('lingos::button.back'),
+			'chevron-left fa-fw',
+			array('class' => 'btn btn-default')
+		) }}
+		</p>
+	@endif
+	<i class="fa fa-edit fa-lg"></i>
+	{{ trans('lingos::role.command.edit') }}
+	<hr>
+</h1>
+</div>
 
-	<div class="row-fluid">
 
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="row">
 
-			<h1>Edit Role</h1>
+{{ $message = Session::get('message') }}
 
+{{ Form::open(
+	[
+		'route' => array('admin.roles.update', $role->id),
+		'role' => 'form',
+		'method' => 'put'
+	]
+) }}
+{{ Form::hidden('role', $role->id) }}
+
+
+	{{ Bootstrap::text(
+		'name',
+		null,
+		$role->name,
+		$errors,
+		'gavel fa-fw',
+		[
+			'id' => 'email',
+			'placeholder' => trans('lingos::general.name'),
+			'required',
+			'autofocus'
+		]
+	) }}
+
+	{{ Bootstrap::text(
+		'level',
+		null,
+		$role->level,
+		$errors,
+		'signal fa-fw',
+		[
+			'id' => 'email',
+			'placeholder' => trans('lingos::role.level'),
+			'required',
+			'autofocus'
+		]
+	) }}
+
+	{{ Bootstrap::checkbox(
+		'active',
+		trans('lingos::general.active'),
+		1,
+		$role->active
+	) }}
+
+	<hr>
+
+	{{ Bootstrap::submit(
+		trans('lingos::button.save'),
+		[
+			'class' => 'btn btn-success btn-block'
+		]
+	) }}
+
+	<div class="row">
+		<div class="col-sm-4">
+		{{ Bootstrap::linkIcon(
+			'admin.roles.index',
+			trans('lingos::button.cancel'),
+			'times fa-fw',
+			[
+				'class' => 'btn btn-default btn-block'
+			]
+		) }}
 		</div>
-
-		<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1">
-
-			{{ Form::open(array('route' => array('admin.roles.update', $role->id), 'role' => 'form', 'method' => 'put')) }}
-
-				{{ Form::hidden('role', $role->id) }}
-
-				{{ Bootstrap::text('name', 'Name', $role->name, $errors) }}
-
-				{{ Bootstrap::checkbox('active', 'Active', 1, $role->active) }}
-
-				{{ Bootstrap::linkRoute('admin.roles.index', 'Back') }}
-
-				{{ Bootstrap::submit('Save') }}
-
-			{{ Form::close() }}
-
+		<div class="col-sm-4">
+		{{ Bootstrap::reset(
+			trans('lingos::button.reset'),
+			[
+				'class' => 'btn btn-default btn-block'
+			]
+		) }}
 		</div>
-
+		<div class="col-sm-4">
+		{{ Bootstrap::linkIcon(
+			'admin.users.destroy',
+			trans('lingos::button.delete'),
+			'trash-o fa-fw',
+			array(
+				'class' => 'btn btn-default btn-block action_confirm',
+				'data-method' => 'delete',
+				'title' => trans('lingos::account.command.delete')
+			)
+		) }}
+		</div>
 	</div>
 
+{{ Form::close() }}
+
+</div>
 @stop
