@@ -72,10 +72,8 @@
 		$errors,
 		'signal fa-fw',
 		[
-			'id' => 'email',
-			'placeholder' => trans('lingos::role.level'),
-			'required',
-			'autofocus'
+			'id' => 'level',
+			'placeholder' => trans('lingos::role.level')
 		]
 	) }}
 

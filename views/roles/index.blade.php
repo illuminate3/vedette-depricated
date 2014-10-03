@@ -83,7 +83,7 @@ $(document).ready(function() {
 			<tr>
 				<td>{{ $role->id }}</td>
 				<td>{{ $role->present()->name() }}</td>
-				<td>{{ $role->level() }}</td>
+				<td>{{ $role->level }}</td>
 				<td>{{ $role->present()->active() }}</td>
 				<td width="20%">
 					{{ Form::open(array(

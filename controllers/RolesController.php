@@ -76,15 +76,22 @@ class RolesController extends \BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('name', 'active');
+		$input = Input::only('name', 'active', 'level');
 		$this->rolesCreateForm->validate($input);
 
 		$role = new Role;
+
 		$role->name = $input['name'];
+		if (empty($input['level'])) {
+			$role->level = NULL;
+		} else {
+			$role->level = $input['level'];
+		}
 		$role->active = (Input::has('active') ? 1 : 0);
+
 		$role->save();
 
-		return Redirect::route('admin.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
 	}
 
 	/**
@@ -114,12 +121,19 @@ class RolesController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('name', 'active');
+		$input = Input::only('name', 'active', 'level');
 		$this->rolesUpdateForm->validate($input);
 
 		$role = Role::findOrFail($id);
+
 		$role->name = $input['name'];
+		if (empty($input['level'])) {
+			$role->level = NULL;
+		} else {
+			$role->level = $input['level'];
+		}
 		$role->active = (Input::has('active') ? 1 : 0);
+
 		$role->save();
 
 		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
