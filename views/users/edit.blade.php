@@ -10,14 +10,11 @@
 @stop
 
 @section('scripts')
+	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 @stop
 
 @section('inline-scripts')
-$(document).ready(function() {
-
 	var text_confirm_message = '{{ trans('lingos::account.ask.delete') }}';
-
-});
 @stop
 
 @section('content')
@@ -142,9 +139,9 @@ $(document).ready(function() {
 			trans('lingos::button.delete'),
 			'trash-o fa-fw',
 			array(
-				'class' => 'btn btn-default btn-block',
+				'class' => 'btn btn-default btn-block action_confirm',
 				'data-method' => 'delete',
-				'title' => trans('lingos::button.user.delete')
+				'title' => trans('lingos::account.command.delete')
 			)
 		) }}
 		</div>

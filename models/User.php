@@ -6,6 +6,7 @@ use Vedette\helpers\presenters\PresentableTrait;
 
 use Vedette\models\Role as Role;
 use Eloquent;
+use DB;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
@@ -158,8 +159,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasRole($searchRole->id);
 	}
 
-
-
 	public function deleteUserProfile($user_id)
 	{
 		$racks = DB::table('profiles')
@@ -167,6 +166,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			->delete();
 
 //		return $racks;
+	}
+
+	public function countUsers()
+	{
+$users = DB::table('users')->remember(10)->count();
+		return $users;
 	}
 
 }

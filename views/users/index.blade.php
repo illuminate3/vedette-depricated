@@ -11,14 +11,16 @@
 @stop
 
 @section('scripts')
+	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script src="{{ asset('packages/illuminate3/vedette/assets/vendors/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
 	<script src="{{ asset('packages/illuminate3/vedette/assets/vendors/Datatables-Bootstrap3/BS3/assets/js/datatables.js') }}"></script>
 @stop
 
 @section('inline-scripts')
-$(document).ready(function() {
 
-	var text_confirm_message = '{{ trans('lingos::account.ask.delete') }}';
+var text_confirm_message = '{{ trans('lingos::account.ask.delete') }}';
+
+$(document).ready(function() {
 
 	$('#DataTable').dataTable({
 		stateSave: true
@@ -70,7 +72,6 @@ $(document).ready(function() {
 			<thead>
 			<tr>
 				<th>#</th>
-				<th>{{ trans('lingos::table.name') }}</th>
 				<th>{{ trans('lingos::table.email') }}</th>
 				<th>{{ trans('lingos::table.roles') }}</th>
 				<th>{{ trans('lingos::table.actions') }}</th>
@@ -80,7 +81,6 @@ $(document).ready(function() {
 				@foreach ($users as $user)
 					<tr>
 						<td>{{ $user->id }}</td>
-						<td>{{ $user->present()->name() }}</td>
 						<td>{{ $user->present()->email() }}</td>
 						<td>{{ $user->present()->roles() }}</td>
 						<td width="20%">
@@ -90,85 +90,31 @@ $(document).ready(function() {
 								'method' => 'delete',
 								'class' => 'form-inline'
 							)) }}
-		<a href="{{ route('admin.users.destroy', array($user->id)) }}"
-		class="btn btn-danger action_confirm"
-		data-method="delete"
-		title="{{ trans('lingos::button.user.delete') }}">
-			<i class="fa fa-trash-o"></i>
-			{{ trans('lingos::button.user.delete') }}
-		</a>
 
-								{{ Bootstrap::linkRoute(
+								{{ Bootstrap::linkRouteIcon(
 									'admin.users.edit',
-									trans('lingos::button.user.edit'),
+									trans('lingos::button.edit'),
+									'edit fa-fw',
 									array($user->id),
-									array('class' => 'btn btn-success')
-								) }}
-
-								{{ Bootstrap::linkRoute(
-									'admin.users.destroy',
-									trans('lingos::button.user.edit'),
-									array($user->id),
-									array('class' => 'btn btn-success')
-								) }}
-
-
-							<a href="{{ route('admin.users.destroy', array($user->id)) }}"
-								class="btn btn-danger"
-								data-method="delete"
-								onclick="{{ trans('lingos::account.command.delete') }}">
-								<i class="fa fa-trash-o"></i>
-								{{ trans('lingos::account.command.delete') }}--11
-							</a>
-
-								{{ Bootstrap::submit(
-									trans('lingos::button.user.delete'),
 									array(
-										'class' => 'btn btn-danger',
-									'onclick' => 'confirm(' . trans('lingos::account.command.delete') . ');'
+										'class' => 'btn btn-success form-group',
+										'title' => trans('lingos::account.command.edit')
 									)
 								) }}
 
-
-<a href="{{ route('admin.users.destroy', $user->id) }}" onclick="if(!confirm('Are you sure to delete this item?')){return false;};" title="Delete this Item">
-<i class="glyphicon glyphicon-trash"></i>
-</a>
-
-
-<a href="..." data-method="delete" data-confirm="Are you sure you want to delete?" rel="nofollow">Delete this entry</a>
-
+								{{ Bootstrap::linkRouteIcon(
+									'admin.users.destroy',
+									trans('lingos::button.delete'),
+									'trash-o fa-fw',
+									array($user->id),
+									array(
+										'class' => 'btn btn-danger form-group action_confirm',
+										'data-method' => 'delete',
+										'title' => trans('lingos::account.command.delete')
+									)
+								) }}
 
 							{{ Form::close() }}
-
-
-<a class="btn btn-small btn-danger" href="#" data-toggle="modal" data-target=".delete-user-modal{{ $user->id }}">Delete</a>
-
-<div class="modal fade delete-user-modal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" >
-<div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h4 class="modal-title">Delete User</h4>
-		</div>
-		<div class="modal-body">
-			<p>Delete the user: <strong>{{ $user->email }}</strong>?</p>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-			&nbsp;
-							{{ Form::open(array(
-								'route' => array('admin.users.destroy', $user->id),
-								'role' => 'form',
-								'method' => 'delete',
-								'class' => 'form-inline'
-							)) }}
-				{{ Form::submit('Delete', array('class' => 'btn btn-primary')) }}
-			{{ Form::close() }}
-		</div>
-	</div>
-</div>
-
-
 						</td>
 					</tr>
 				@endforeach
@@ -181,21 +127,5 @@ $(document).ready(function() {
 @endif
 
 </div>
-<!-- Button trigger modal -->
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
-{{ Bootstrap::titleModal(
-$user->id, 'myModal', 'title', 'admin.users.destroy', 'delete', 'close', 'button'
-) }}
-{{--
-'id' => 'id',
-'label' => 'label',
-'title' => 'title',
-'route' => ''route',
-'method' => 'method',
-'close' => 'close',
-'button' => 'button'
---}}
 
 @stop

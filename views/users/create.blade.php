@@ -23,12 +23,12 @@
 		{{ Bootstrap::linkIcon(
 			'admin.index',
 			trans('lingos::button.back'),
-			'fa-chevron-left fa-fw',
+			'chevron-left fa-fw',
 			array('class' => 'btn btn-default')
 		) }}
 		</p>
 	@endif
-	<i class="fa fa-group fa-lg"></i>
+	<i class="fa fa-user fa-lg"></i>
 	{{ trans('lingos::account.command.create') }}
 	<hr>
 </h1>
@@ -36,13 +36,10 @@
 
 
 <div class="row">
-
-	{{ Form::open(array(
-		'route' => 'admin.users.store',
-		'role' => 'form'
-	)) }}
-
-
+{{ Form::open(array(
+	'route' => 'admin.users.store',
+	'role' => 'form'
+)) }}
 
 	<ul class="nav nav-tabs">
 		<li class="active">
@@ -53,74 +50,139 @@
 		</li>
 		<li>
 			<a href="#password" data-toggle="tab">
+				<i class="fa fa-key fa-fw"></i>
 				{{ trans('lingos::auth.password') }}
 			</a>
 		</li>
 		<li>
 			<a href="#status" data-toggle="tab">
+				<i class="fa fa-heart fa-fw"></i>
 				{{ trans('lingos::general.status') }}
 			</a>
 		</li>
 	</ul>
 
 	<div id="myTabContent" class="tab-content">
-	<div class="tab-pane active in padding-lg" id="info">
+	<div class="tab-pane active" id="info">
 
 		<fieldset>
 			<h2>
 				<legend>
 					<i class="fa fa-user fa-fw"></i>
-					{{ trans('lingos::general.personal_information') }}
+					{{ trans('lingos::general.information') }}
 				</legend>
 			</h2>
 
+			{{ Bootstrap::email(
+				'email',
+				trans('lingos::account.email'),
+				null,
+				$errors,
+				'envelope fa-fw',
+				[
+					'id' => 'email',
+					'placeholder' => trans('lingos::account.email'),
+					'required',
+					'autofocus'
+				]
+			) }}
 
 		</fieldset>
+
+	</div><!-- tab-info -->
+	<div class="tab-pane" id="password">
 
 		<fieldset>
 			<h2>
-				<legend><i class="fa fa-envelope-o fa-fw"></i>{{ trans('lingos::general.email') }}</legend>
+				<legend>
+					<i class="fa fa-key fa-fw"></i>
+					{{ trans('lingos::auth.password') }}
+				</legend>
 			</h2>
+
+			{{ Bootstrap::password(
+				'password',
+				trans('lingos::auth.password'),
+				$errors,
+				'unlock fa-fw',
+				[
+					'id' => 'password',
+					'placeholder' => trans('lingos::auth.password'),
+					'required'
+				]
+			) }}
+
+			{{ Bootstrap::password(
+				'password_confirmation',
+				trans('lingos::auth.confirm_password'),
+				$errors,
+				'unlock-alt fa-fw',
+				[
+					'id' => 'password',
+					'placeholder' => trans('lingos::auth.confirm_password'),
+					'required',
+					'autocomplete' => 'off'
+				]
+			) }}
 
 		</fieldset>
 
-	</div><!-- tab-info -->
-	</div><!-- tab-info -->
+
+	</div><!-- tab-password -->
+	<div class="tab-pane" id="status">
+
+		<fieldset>
+			<h2>
+				<legend>
+					<i class="fa fa-gavel fa-fw"></i>
+					{{ trans('lingos::role.roles') }}
+				</legend>
+			</h2>
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+				@foreach (Vedette\models\Role::All() as $role)
+					{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id, null) }}
+				@endforeach
+				</div>
+			</div>
 
 
-		{{ Bootstrap::email(
-			'email',
-			'Email address',
-			null,
-			$errors,
-			'fa-envelope fa-fw'
+		</fieldset>
+
+	</div><!-- tab-status -->
+	</div><!-- tab-content -->
+
+	<hr>
+
+	{{ Bootstrap::submit(
+		trans('lingos::button.save'),
+		[
+			'class' => 'btn btn-success btn-block'
+		]
+	) }}
+
+	<div class="row">
+		<div class="col-sm-6">
+		{{ Bootstrap::linkIcon(
+			'login',
+			trans('lingos::button.cancel'),
+			'times fa-fw',
+			[
+				'class' => 'btn btn-default btn-block'
+			]
 		) }}
-
-
-		{{ Bootstrap::password(
-			'password',
-			'Password',
-			$errors,
-			'fa-unlock fa-fw'
+		</div>
+		<div class="col-sm-6">
+		{{ Bootstrap::reset(
+			trans('lingos::button.reset'),
+			[
+				'class' => 'btn btn-default btn-block'
+			]
 		) }}
+		</div>
+	</div>
 
-
-		{{ Bootstrap::password(
-			'password_confirmation',
-			'Password confirmation',
-			$errors,
-			'fa-unlock-alt fa-fw'
-		) }}
-
-		<h5><strong>Roles</strong></h5>
-		@foreach (Vedette\models\Role::All() as $role)
-			{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id) }}
-		@endforeach
-
-		{{ Bootstrap::linkRoute('admin.index', 'Back') }}
-		{{ Bootstrap::submit('Save') }}
-
-	{{ Form::close() }}
-
+{{ Form::close() }}
 </div>
 @stop
