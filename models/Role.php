@@ -22,8 +22,11 @@ class Role extends Eloquent {
 	 * @var array
 	 */
 	protected $fillable = array(
-		'name', 'level', 'active'
+		'name', 'active'
 	);
+
+
+// DEFINE Relationships --------------------------------------------------
 
 	/**
 	 * The model presenter.

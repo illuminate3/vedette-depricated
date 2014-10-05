@@ -20,16 +20,14 @@
 @section('content')
 <div class="row">
 <h1>
-	@if (Auth::check())
-		<p class="pull-right">
-		{{ Bootstrap::linkIcon(
-			'admin.roles.index',
-			trans('lingos::button.back'),
-			'chevron-left fa-fw',
-			array('class' => 'btn btn-default')
-		) }}
-		</p>
-	@endif
+	<p class="pull-right">
+	{{ Bootstrap::linkIcon(
+		'admin.roles.index',
+		trans('lingos::button.back'),
+		'chevron-left fa-fw',
+		array('class' => 'btn btn-default')
+	) }}
+	</p>
 	<i class="fa fa-edit fa-lg"></i>
 	{{ trans('lingos::role.command.edit') }}
 	<hr>
@@ -58,7 +56,7 @@
 		$errors,
 		'gavel fa-fw',
 		[
-			'id' => 'email',
+			'id' => 'name',
 			'placeholder' => trans('lingos::general.name'),
 			'required',
 			'autofocus'

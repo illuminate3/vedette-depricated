@@ -79,6 +79,9 @@ class RolesController extends \BaseController {
 		$input = Input::only('name', 'active', 'level');
 		$this->rolesCreateForm->validate($input);
 
+//dd($messages);
+//dd($this->rolesCreateForm->validate($input));
+
 		$role = new Role;
 
 		$role->name = $input['name'];
@@ -89,9 +92,24 @@ class RolesController extends \BaseController {
 		}
 		$role->active = (Input::has('active') ? 1 : 0);
 
-		$role->save();
+//		$role->save();
+//dd($role->save());
+//		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
 
+if ( ! $role->save())
+{
+	// Oops.
+	return Redirect::route('admin.roles.create')
+		->withErrors($post->getErrors())
+		->withInput();
+}
+
+/*
+return Redirect::route('posts.show', $post->id)
+    ->withSuccess("Your post was saved successfully.");
+*/
 		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+
 	}
 
 	/**

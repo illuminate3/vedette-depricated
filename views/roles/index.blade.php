@@ -41,24 +41,24 @@ $(document).ready(function() {
 <div class="row">
 <h1>
 	@if (Auth::check())
-		<p class="pull-right">
-		@if (Auth::user()->hasRoleWithName('Admin'))
-			{{ Bootstrap::linkIcon(
-				'admin.roles.create',
-				trans('lingos::button.role.new'),
-				'plus fa-fw',
-				array('class' => 'btn btn-info')
-			) }}
-		@endif
+	<p class="pull-right">
+	@if (Auth::user()->hasRoleWithName('Admin'))
 		{{ Bootstrap::linkIcon(
-			'admin.index',
-			trans('lingos::button.back'),
-			'chevron-left fa-fw',
-			array('class' => 'btn btn-default')
+			'admin.roles.create',
+			trans('lingos::button.role.new'),
+			'plus fa-fw',
+			array('class' => 'btn btn-info')
 		) }}
-		</p>
 	@endif
-	<i class="fa fa-group fa-lg"></i>
+	@endif
+	{{ Bootstrap::linkIcon(
+		'admin.index',
+		trans('lingos::button.back'),
+		'chevron-left fa-fw',
+		array('class' => 'btn btn-default')
+	) }}
+	</p>
+	<i class="fa fa-gavel fa-lg"></i>
 	{{ trans('lingos::role.roles') }}
 	<hr>
 </h1>
@@ -122,7 +122,7 @@ $(document).ready(function() {
 		@endforeach
 	</tbody>
 </table>
-</div> <!-- ./responsive -->
+</div><!-- ./responsive -->
 
 @else
 	{{ Bootstrap::info( trans('lingos::general.no_records'), true) }}

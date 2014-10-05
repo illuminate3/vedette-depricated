@@ -49,7 +49,8 @@ class OAuthUser extends \User {
 			'first_name' => $result['given_name'],
 			'last_name' => $result['family_name'],
 			'picture' => $result['picture'],
-			'updated_at' => new DateTime
+//			'updated_at' => new DateTime
+			'last_login' => new DateTime
 		);
 
 		return $userData;
@@ -151,6 +152,19 @@ class OAuthUser extends \User {
 		$thisUser = DB::table('users')->where('id', $userId)->first();
 
 		return $thisUser;
+	}
+
+	public function touchLastLogin($email)
+	{
+		$id = DB::table('users')
+			->where('email', '=', $email)
+			->pluck('id');
+
+		$user = User::find($id);
+		$user->last_login = new DateTime;
+
+		$user->update();
+//		return $users;
 	}
 
 }

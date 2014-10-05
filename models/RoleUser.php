@@ -30,6 +30,9 @@ class UserRole extends Eloquent {
 	 */
 	public $timestamps = false;
 
+
+// DEFINE Relationships --------------------------------------------------
+
 	/**
 	 * The user relationship.
 	 *

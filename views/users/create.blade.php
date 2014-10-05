@@ -18,16 +18,14 @@
 @section('content')
 <div class="row">
 <h1>
-	@if (Auth::check())
-		<p class="pull-right">
-		{{ Bootstrap::linkIcon(
-			'admin.index',
-			trans('lingos::button.back'),
-			'chevron-left fa-fw',
-			array('class' => 'btn btn-default')
-		) }}
-		</p>
-	@endif
+	<p class="pull-right">
+	{{ Bootstrap::linkIcon(
+		'admin.index',
+		trans('lingos::button.back'),
+		'chevron-left fa-fw',
+		array('class' => 'btn btn-default')
+	) }}
+	</p>
 	<i class="fa fa-user fa-lg"></i>
 	{{ trans('lingos::account.command.create') }}
 	<hr>

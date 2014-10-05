@@ -87,6 +87,22 @@ class UsersController extends \BaseController {
 	}
 
 	/**
+	 * Display the specified resource.
+	 *
+	 * @param int $id
+	 *
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$user = User::findOrFail($id);
+
+		return View::make(
+			Config::get('vedette.vedette_views.users_show')
+			)->with(compact('user'));
+	}
+
+	/**
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id

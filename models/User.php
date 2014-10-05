@@ -42,6 +42,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $presenter = 'Vedette\helpers\presenters\presenter\User';
 
+
+// DEFINE Relationships --------------------------------------------------
+
 	/**
 	 * The role relationship.
 	 *
@@ -51,6 +54,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->belongsToMany('Vedette\models\Role');
 	}
+
+
+// Functions --------------------------------------------------
 
 	/**
 	 * Setup the Carbon dates.
@@ -161,7 +167,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function deleteUserProfile($user_id)
 	{
-		$racks = DB::table('profiles')
+		$profile = DB::table('profiles')
 			->where('user_id', '=', $user_id)
 			->delete();
 
@@ -170,7 +176,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function countUsers()
 	{
-$users = DB::table('users')->remember(10)->count();
+		$users = DB::table('users')->remember(10)->count();
+
 		return $users;
 	}
 

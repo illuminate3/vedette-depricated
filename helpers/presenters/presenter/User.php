@@ -36,7 +36,7 @@ class User extends Presenter {
 	{
 		$roles = $this->entity->roles;
 		$return = '';
-
+//dd($roles);
 		foreach ($roles as $role)
 		{
 			$return .= $role->present()->name() . ', ';

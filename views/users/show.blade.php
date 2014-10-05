@@ -3,7 +3,7 @@
 @section('title')
 @parent
 	{{ Config::get('vedette.vedette_html.separator') }}
-	{{ trans('lingos::account.command.edit') }}
+	{{ $user->email }}
 @stop
 
 @section('styles')
@@ -28,8 +28,8 @@
 		array('class' => 'btn btn-default')
 	) }}
 	</p>
-	<i class="fa fa-edit fa-lg"></i>
-	{{ trans('lingos::account.command.edit') }}
+	<i class="fa fa-user fa-lg"></i>
+	{{ $user->email }}
 	<hr>
 </h1>
 </div>
@@ -52,12 +52,6 @@
 			<a href="#info" data-toggle="tab">
 				<i class="fa fa-user fa-fw"></i>
 				{{ trans('lingos::general.information') }}
-			</a>
-		</li>
-		<li>
-			<a href="#password" data-toggle="tab">
-				<i class="fa fa-key fa-fw"></i>
-				{{ trans('lingos::auth.password') }}
 			</a>
 		</li>
 		<li>
@@ -85,61 +79,20 @@
 				</legend>
 			</h2>
 
-			{{ Bootstrap::email(
-				'email',
-				null,
-				$user->email,
-				$errors,
-				'envelope fa-fw',
-				[
-					'id' => 'email',
-					'placeholder' => trans('lingos::account.email'),
-					'required',
-					'autofocus'
-				]
-			) }}
+			<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<tbody>
+					<tr>
+						<td>{{ trans('lingos::account.email') }}</td>
+						<td>{{ $user->email }}</td>
+					</tr>
+				</tbody>
+			</table>
+			</div><!-- ./responsive -->
 
 		</fieldset>
 
 	</div><!-- tab-info -->
-	<div class="tab-pane" id="password">
-
-		<fieldset>
-			<h2>
-				<legend>
-					<i class="fa fa-key fa-fw"></i>
-					{{ trans('lingos::auth.password') }}
-				</legend>
-			</h2>
-
-			{{ Bootstrap::password(
-				'password',
-				null,
-				$errors,
-				'unlock fa-fw',
-				[
-					'id' => 'password',
-					'placeholder' => trans('lingos::auth.password'),
-					'required'
-				]
-			) }}
-
-			{{ Bootstrap::password(
-				'password_confirmation',
-				null,
-				$errors,
-				'unlock-alt fa-fw',
-				[
-					'id' => 'password',
-					'placeholder' => trans('lingos::auth.confirm_password'),
-					'required',
-					'autocomplete' => 'off'
-				]
-			) }}
-
-		</fieldset>
-
-	</div><!-- tab-password -->
 	<div class="tab-pane" id="roles">
 
 		<fieldset>
@@ -152,12 +105,9 @@
 
 			<div class="panel panel-default">
 				<div class="panel-body">
-				@foreach (Vedette\models\Role::All() as $role)
-					{{ Bootstrap::checkbox('roles[]', $role->present()->name(), $role->id, $user->hasRole($role->id)) }}
-				@endforeach
+					{{ $user->present()->roles() }}
 				</div>
 			</div>
-
 
 		</fieldset>
 
@@ -206,25 +156,17 @@
 	) }}
 
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
 			'admin.users.index',
-			trans('lingos::button.cancel'),
-			'times fa-fw',
+			trans('lingos::button.back'),
+			'chevron-left fa-fw',
 			[
 				'class' => 'btn btn-default btn-block'
 			]
 		) }}
 		</div>
-		<div class="col-sm-4">
-		{{ Bootstrap::reset(
-			trans('lingos::button.reset'),
-			[
-				'class' => 'btn btn-default btn-block'
-			]
-		) }}
-		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
 			'admin.users.destroy',
 			trans('lingos::button.delete'),

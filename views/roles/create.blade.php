@@ -18,17 +18,15 @@
 @section('content')
 <div class="row">
 <h1>
-	@if (Auth::check())
-		<p class="pull-right">
-		{{ Bootstrap::linkIcon(
-			'admin.roles.index',
-			trans('lingos::button.back'),
-			'chevron-left fa-fw',
-			array('class' => 'btn btn-default')
-		) }}
-		</p>
-	@endif
-	<i class="fa fa-gavel fa-lg"></i>
+	<p class="pull-right">
+	{{ Bootstrap::linkIcon(
+		'admin.roles.index',
+		trans('lingos::button.back'),
+		'chevron-left fa-fw',
+		array('class' => 'btn btn-default')
+	) }}
+	</p>
+	<i class="fa fa-edit fa-lg"></i>
 	{{ trans('lingos::role.command.create') }}
 	<hr>
 </h1>
@@ -36,10 +34,15 @@
 
 
 <div class="row">
-{{ Form::open(array(
-	'route' => 'admin.roles.store',
-	'role' => 'form'
-)) }}
+
+{{ $message = Session::get('message') }}
+
+{{ Form::open(
+	[
+		'route' => array('admin.roles.store'),
+		'role' => 'form'
+	]
+) }}
 
 
 	{{ Bootstrap::text(
@@ -49,7 +52,7 @@
 		$errors,
 		'gavel fa-fw',
 		[
-			'id' => 'email',
+			'id' => 'name',
 			'placeholder' => trans('lingos::general.name'),
 			'required',
 			'autofocus'
@@ -71,8 +74,7 @@
 	{{ Bootstrap::checkbox(
 		'active',
 		trans('lingos::general.active'),
-		1,
-		1
+		null
 	) }}
 
 	<hr>
@@ -106,5 +108,6 @@
 	</div>
 
 {{ Form::close() }}
+
 </div>
 @stop

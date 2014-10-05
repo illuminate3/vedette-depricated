@@ -40,8 +40,8 @@ $(document).ready(function() {
 @section('content')
 <div class="row">
 <h1>
+	<p class="pull-right">
 	@if (Auth::check())
-		<p class="pull-right">
 		@if (Auth::user()->hasRoleWithName('Admin'))
 			{{ Bootstrap::linkIcon(
 				'admin.users.create',
@@ -50,15 +50,15 @@ $(document).ready(function() {
 				array('class' => 'btn btn-info')
 			) }}
 		@endif
-		{{ Bootstrap::linkIcon(
-			'admin.index',
-			trans('lingos::button.back'),
-			'chevron-left fa-fw',
-			array('class' => 'btn btn-default')
-		) }}
-		</p>
 	@endif
-	<i class="fa fa-gavel fa-lg"></i>
+	{{ Bootstrap::linkIcon(
+		'admin.index',
+		trans('lingos::button.back'),
+		'chevron-left fa-fw',
+		array('class' => 'btn btn-default')
+	) }}
+	</p>
+	<i class="fa fa-group fa-lg"></i>
 	{{ trans('lingos::account.users') }}
 	<hr>
 </h1>
@@ -83,13 +83,24 @@ $(document).ready(function() {
 				<td>{{ $user->id }}</td>
 				<td>{{ $user->present()->email() }}</td>
 				<td>{{ $user->present()->roles() }}</td>
-				<td width="20%">
+				<td width="25%">
 					{{ Form::open(array(
 						'route' => array('admin.users.destroy', $user->id),
 						'role' => 'form',
 						'method' => 'delete',
 						'class' => 'form-inline'
 					)) }}
+
+						{{ Bootstrap::linkRouteIcon(
+							'admin.users.show',
+							trans('lingos::button.view'),
+							'chevron-right fa-fw',
+							array($user->id),
+							array(
+								'class' => 'btn btn-primary form-group',
+								'title' => trans('lingos::general.view')
+							)
+						) }}
 
 						{{ Bootstrap::linkRouteIcon(
 							'admin.users.edit',
@@ -120,7 +131,7 @@ $(document).ready(function() {
 		@endforeach
 	</tbody>
 </table>
-</div> <!-- ./responsive -->
+</div><!-- ./responsive -->
 
 @else
 	{{ Bootstrap::info( trans('lingos::general.no_records'), true) }}

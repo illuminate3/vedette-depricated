@@ -102,7 +102,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 		));
 	Route::resource('users', 'Vedette\controllers\UsersController',
 		array(
-			'before' => 'csrf',
-			'except' => array('show')
+			'before' => 'csrf'
+//			'except' => array('show')
 		));
 });
