@@ -13,6 +13,7 @@ use Config;
 
 class RolesController extends \BaseController {
 
+	protected $role;
 	/**
 	 * Roles create form validator
 	 *
@@ -33,10 +34,11 @@ class RolesController extends \BaseController {
 	 * @param RoleCreate $rolesCreateForm
 	 * @param RoleUpdate $rolesUpdateForm
 	 */
-	public function __construct(RoleCreate $rolesCreateForm, RoleUpdate $rolesUpdateForm)
+	public function __construct(RoleCreate $rolesCreateForm, RoleUpdate $rolesUpdateForm, Role $role)
 	{
 		$this->rolesCreateForm = $rolesCreateForm;
 		$this->rolesUpdateForm = $rolesUpdateForm;
+		$this->role = $role;
 	}
 
 	/**
@@ -79,9 +81,6 @@ class RolesController extends \BaseController {
 		$input = Input::only('name', 'active', 'level');
 		$this->rolesCreateForm->validate($input);
 
-//dd($messages);
-//dd($this->rolesCreateForm->validate($input));
-
 		$role = new Role;
 
 		$role->name = $input['name'];
@@ -92,24 +91,9 @@ class RolesController extends \BaseController {
 		}
 		$role->active = (Input::has('active') ? 1 : 0);
 
-//		$role->save();
-//dd($role->save());
-//		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+		$role->save();
 
-if ( ! $role->save())
-{
-	// Oops.
-	return Redirect::route('admin.roles.create')
-		->withErrors($post->getErrors())
-		->withInput();
-}
-
-/*
-return Redirect::route('posts.show', $post->id)
-    ->withSuccess("Your post was saved successfully.");
-*/
 		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
-
 	}
 
 	/**
@@ -141,6 +125,11 @@ return Redirect::route('posts.show', $post->id)
 	{
 		$input = Input::only('name', 'active', 'level');
 		$this->rolesUpdateForm->validate($input);
+$this->role->fill($input);
+
+if ( ! $this->role->isValid() ) {
+	return Redirect::back()->withInput()->withMessage(Bootstrap::danger($this->role->errors), true);
+}
 
 		$role = Role::findOrFail($id);
 

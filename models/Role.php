@@ -1,13 +1,16 @@
 <?php namespace Vedette\models;
 
 use Vedette\helpers\presenters\PresentableTrait;
+use Watson\Validating\ValidatingTrait;
 
-use Vedette\models\User as User;
+//use Vedette\models\User as User;
 use Eloquent;
+use Validator;
 
 class Role extends Eloquent {
 
 	use PresentableTrait;
+	use ValidatingTrait;
 
 	/**
 	 * The database table used by the model.
@@ -15,6 +18,13 @@ class Role extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'roles';
+
+	/**
+	 * The model presenter.
+	 *
+	 * @var string
+	 */
+	protected $presenter = 'Vedette\helpers\presenters\presenter\Role';
 
 	/**
 	 * The attributes allowed to be mass assigned.
@@ -26,14 +36,37 @@ class Role extends Eloquent {
 	);
 
 
-// DEFINE Relationships --------------------------------------------------
+	public static $rules = [
+		'name' => 'required|unique:roles,name'
+	];
 
-	/**
-	 * The model presenter.
-	 *
-	 * @var string
-	 */
-	protected $presenter = 'Vedette\helpers\presenters\presenter\Role';
+public $errors;
+
+	protected $rulesets = [
+		'creating' => [
+			'name' => 'required|unique:roles,name'
+		],
+
+		'updating' => [
+			'name' => 'required'
+		],
+
+		'deleting' => [
+			'user_id'     => 'required|exists:users,id'
+		],
+
+		'saving' => [
+			'title'       => 'required',
+			'description' => 'required'
+		]
+	];
+
+
+	protected $validationMessages = [
+		'name.unique' => "Another Role is using that name already."
+	];
+
+// DEFINE Relationships --------------------------------------------------
 
 	/**
 	 * The user relationship.
@@ -44,4 +77,19 @@ class Role extends Eloquent {
 	{
 		return $this->hasMany('Vedette\models\User');
 	}
+
+public function isValid()
+{
+$validation = Validator::make($this->attributes, static::$rules);
+
+if ( $validation->passes() ) {
+return true;
+}
+
+$this->errors = $validation->errors();
+
+return false;
+}
+
+
 }
