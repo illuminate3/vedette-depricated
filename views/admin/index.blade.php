@@ -58,7 +58,7 @@ $(document).ready(function() {
 	</div>
 </div>
 
-
+{{--
 <div class="row">
 
 
@@ -106,4 +106,6 @@ $(document).ready(function() {
 			</table>
 		</div>
 	</div>
+--}}
+
 @stop

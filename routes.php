@@ -14,6 +14,16 @@ Route::get('/', array(
 	'uses' => 'Vedette\controllers\IndexController@index'
 	));
 
+/*
+Route::group(array('before' => 'guest'), function()
+{
+	Route::get('/', array(
+		'as' => 'home',
+		'uses' => 'Vedette\controllers\IndexController@index'
+		));
+});
+*/
+
 Route::get(Config::get('vedette.vedette_routes.user_home'), array(
 	'as' => 'vedette.user',
 	'uses' => 'Vedette\Controllers\IndexController@index')
@@ -32,6 +42,11 @@ Route::get('/404', array(
 
 Route::group(array('before' => 'guest'), function()
 {
+	Route::get('/', array(
+		'as' =>'login',
+		'uses' => 'Vedette\controllers\SessionsController@create'
+		));
+
 	Route::get('register', array(
 		'as' =>'register',
 		'uses' => 'Vedette\controllers\AuthController@create'
@@ -93,7 +108,7 @@ Route::resource('sessions', 'Vedette\controllers\SessionsController', array(
 
 Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 {
-	Route::get('/', array(
+	Route::get('admin', array(
 		'as' => 'admin.index',
 		'uses' => 'Vedette\controllers\AdminController@index'
 		));
