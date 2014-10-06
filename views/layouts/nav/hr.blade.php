@@ -1,3 +1,13 @@
+<ul class="nav navbar-nav">
+	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'sites')) ? 'class="active"' : '' }} >
+		{{ link_to('sites', 'Sites') }}
+	</li>
+	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'profiles')) ? 'class="active"' : '' }} >
+		{{ link_to('profiles', 'Staff') }}
+	</li>
+</ul>
+
+
 <li class="dropdown">
 	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
 		{{ trans('lingos::general.settings') }}

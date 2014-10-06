@@ -43,7 +43,7 @@
 	[
 		'route' => array('admin.roles.update', $role->id),
 		'role' => 'form',
-		'method' => 'put'
+		'method' => 'PATCH'
 	]
 ) }}
 {{ Form::hidden('role', $role->id) }}

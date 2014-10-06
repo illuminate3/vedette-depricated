@@ -42,7 +42,7 @@
 	[
 		'route' => array('admin.users.update', $user->id),
 		'role' => 'form',
-		'method' => 'put'
+		'method' => 'PATCH'
 	]
 ) }}
 {{ Form::hidden('user', $user->id) }}

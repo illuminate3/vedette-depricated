@@ -18,9 +18,6 @@
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-
-@include(Config::get('vedette.vedette_html.include_nav'))
-
 {{--
 			<li {{ (Request::is('/') ? ' class="active"' : '') }}>
 				{{ HTML::linkRoute(
@@ -29,10 +26,24 @@
 				) }}
 			</li>
 --}}
+
+@include(Config::get('vedette.vedette_html.include_nav'))
+
 		</ul>
 		<ul class="nav navbar-nav pull-right">
 			@if (Auth::check())
 				@if (Auth::user()->hasRoleWithName('Admin'))
+
+{{--
+	<li class="dropdown">
+		<img
+			src="{{ Auth::user()->profile->picture }}"
+			alt="{{ Auth::user()->email }}"
+			class="img-circle show-profile"
+		/>
+	</li>
+--}}
+
 {{--
 					<li {{ (Request::is('admin*') ? ' class="active"' : '') }}>{{ HTML::linkRoute('admin.index', 'Administration') }}</li>
 --}}
@@ -63,6 +74,8 @@
 				</a>
 			</li>
 --}}
+			<li class="divider"></li>
+			<li>{{ HTML::linkRoute('logout', 'Logout') }}</li>
 		</ul>
 	</li>
 
@@ -71,7 +84,6 @@
 {{--
 				<li {{ (Request::is('user*') ? ' class="active"' : '') }}>{{ HTML::linkRoute('user.show', 'Logged in as ' . Auth::user()->email, array(Auth::user()->id)) }}</li>
 --}}
-				<li>{{ HTML::linkRoute('logout', 'Logout') }}</li>
 			@else
 				<li {{ (Request::is('login') ? ' class="active"' : '') }}>{{ HTML::linkRoute('login', 'Login') }}</li>
 				<li {{ (Request::is('register') ? ' class="active"' : '') }}>{{ HTML::linkRoute('register', 'Register') }}</li>
