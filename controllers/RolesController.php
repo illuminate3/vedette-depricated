@@ -1,36 +1,13 @@
 <?php namespace Vedette\controllers;
 
 use Vedette\models\Role as Role;
-use View;
-use Input;
-use Redirect;
+use View, Input, Redirect, Config, Validator;
 use Bootstrap;
-use Config;
-use Validator;
 
 class RolesController extends \BaseController {
 
 	protected $role;
-	/**
-	 * Roles create form validator
-	 *
-	 * @var Project\Forms\Form\RoleCreate
-	 */
-	protected $rolesCreateForm;
 
-	/**
-	 * Roles update form validator
-	 *
-	 * @var Project\Forms\Form\RoleUpdate
-	 */
-	protected $rolesUpdateForm;
-
-	/**
-	 * Construct the session controller with roles form validators
-	 *
-	 * @param RoleCreate $rolesCreateForm
-	 * @param RoleUpdate $rolesUpdateForm
-	 */
 	public function __construct(Role $role)
 	{
 		$this->role = $role;
@@ -129,8 +106,8 @@ class RolesController extends \BaseController {
 
 			$role->save($input);
 
-			return Redirect::route('admin.roles.index', $id)
-				->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+			return Redirect::route('admin.roles.index')
+				->withMessage(Bootstrap::success( trans('lingos::role.success.update'), true));
 
 		}
 

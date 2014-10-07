@@ -7,12 +7,7 @@ use Session;
 
 class AdminController extends \BaseController {
 
-	/**
-	 * Pallet Repository
-	 *
-	 * @var Pallet
-	 */
-	protected $pallet;
+	protected $user;
 
 	public function __construct(User $user)
 	{
@@ -26,12 +21,8 @@ class AdminController extends \BaseController {
 	 */
 	public function index()
 	{
-
-//$data = Session::all();
-//dd($data);
 		$countUsers = $this->user->countUsers();
 
-//		return View::make('admin.index');
 		return View::make('admin.index', compact(
 			'countUsers'
 		));

@@ -17,6 +17,7 @@
 
 @section('content')
 <div class="row">
+
 <h1>
 	<p class="pull-right">
 	{{ Bootstrap::linkIcon(
@@ -38,6 +39,7 @@
 	'route' => 'admin.users.store',
 	'role' => 'form'
 )) }}
+
 
 	<ul class="nav nav-tabs">
 		<li class="active">
@@ -180,6 +182,7 @@
 		) }}
 		</div>
 	</div>
+
 
 {{ Form::close() }}
 </div>

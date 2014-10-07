@@ -67,6 +67,7 @@ $(document).ready(function() {
 <div class="row">
 @if (count($users))
 
+
 <div class="table-responsive">
 <table class="table table-striped table-hover" id="DataTable">
 	<thead>
@@ -133,10 +134,9 @@ $(document).ready(function() {
 </table>
 </div><!-- ./responsive -->
 
+
 @else
 	{{ Bootstrap::info( trans('lingos::general.no_records'), true) }}
 @endif
-
 </div>
-
 @stop

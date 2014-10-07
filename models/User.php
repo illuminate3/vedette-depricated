@@ -27,47 +27,44 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 
 	/**
-	 * The attributes allowed to be mass assigned.
-	 *
-	 * @var array
-	 */
-	protected $fillable = array(
-		'email', 'password', 'remember_token'
-	);
-
-	/**
 	 * The model presenter.
 	 *
 	 * @var string
 	 */
 	protected $presenter = 'Vedette\helpers\presenters\presenter\User';
 
+	public $errors;
+
 
 // DEFINE Rules --------------------------------------------------
 	public static $rules = [
-		'name' => 'required|unique:department,name'
+		'email' => 'required|email|unique:users',
+		'password' => 'required|confirmed|min:6',
+		'password_confirmation' => 'required_with:password'
 	];
 
 	public static $rulesUpdate = [
-		'name' => 'required'
+		'email' => 'required|email',
+		'password' => 'min:6|confirmed',
+		'password_confirmation' => 'required_with:password'
 	];
 
 // DEFINE Fillable --------------------------------------------------
 	protected $fillable = array(
-		'name', 'description'
+		'email', 'password', 'remember_token'
 	);
 
 
 // DEFINE Relationships --------------------------------------------------
 
-	/**
-	 * The role relationship.
-	 *
-	 * @return Role
-	 */
 	public function roles()
 	{
 		return $this->belongsToMany('Vedette\models\Role');
+	}
+
+	public function profile()
+	{
+		return $this->hasMany('Vedette\models\Profile');
 	}
 
 
@@ -153,12 +150,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public function hasRole($id)
 	{
-//dd($this->roles);
 		foreach ($this->roles as $role)
 		{
 			if ($role->id == $id)
 			{
-//dd($role->id);
 				return true;
 			}
 		}
@@ -176,7 +171,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function hasRoleWithName($name)
 	{
 		$searchRole = Role::where('name', '=', $name)->first();
-//dd($searchRole);
 		return $this->hasRole($searchRole->id);
 	}
 
@@ -185,14 +179,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$profile = DB::table('profiles')
 			->where('user_id', '=', $user_id)
 			->delete();
-
-//		return $racks;
 	}
 
 	public function countUsers()
 	{
 		$users = DB::table('users')->remember(10)->count();
-
 		return $users;
 	}
 

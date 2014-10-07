@@ -21,6 +21,15 @@ $(document).ready(function() {
 @section('content')
 <div class="row">
 
+{{-- dd( Profile()->picture ); --}}
+
+{{--
+<img
+	src="{{ Auth::user()->profile->picture }}"
+	alt="{{ Auth::user()->email }}"
+	class="img-circle show-profile"
+/>
+--}}
 
 @if (Auth::check())
 	@if (Auth::user()->hasRoleWithName('Admin'))

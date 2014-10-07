@@ -42,7 +42,7 @@ Route::get('/404', array(
 
 Route::group(array('before' => 'guest'), function()
 {
-	Route::get('/', array(
+	Route::get('login', array(
 		'as' =>'login',
 		'uses' => 'Vedette\controllers\SessionsController@create'
 		));

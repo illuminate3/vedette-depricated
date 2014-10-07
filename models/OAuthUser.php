@@ -1,15 +1,10 @@
 <?php namespace Vedette\models;
 
-use Eloquent;
-use DB;
-use Hash;
-use Config;
-use DateTime;
-use Auth;
-use Redirect;
-use Bootstrap;
+use Eloquent, DB, Hash, Config, Auth, Redirect;
 use route;
 use Session;
+use DateTime;
+use Bootstrap;
 
 //class OAuthUser extends \User implements UserInterface, RemindableInterface {
 class OAuthUser extends \User {
@@ -69,6 +64,9 @@ class OAuthUser extends \User {
 		$userData = $this->userDataFromOAuth($result);
 	// updating profiles
 		DB::table('profiles')->where('email', $result['email'])->update($userData);
+
+		Session::put('userPicture', $userData['picture']);
+
 	// get updated row
 		$row = DB::table('profiles')->where('email', $result['email'])->first();
 
@@ -100,6 +98,8 @@ class OAuthUser extends \User {
 				'email' => $userData['email'],
 				'picture' => $userData['picture']
 			));
+
+		Session::put('userPicture', $userData['picture']);
 
 	// Assign the user to a group
 		DB::table('role_user')

@@ -34,10 +34,8 @@
 </h1>
 </div>
 
+
 <div class="row">
-
-{{ $message = Session::get('message') }}
-
 {{ Form::open(
 	[
 		'route' => array('admin.users.update', $user->id),
@@ -45,7 +43,7 @@
 		'method' => 'PATCH'
 	]
 ) }}
-{{ Form::hidden('user', $user->id) }}
+
 
 	<ul class="nav nav-tabs">
 		<li class="active">
@@ -238,7 +236,7 @@
 		</div>
 	</div>
 
-{{ Form::close() }}
 
+{{ Form::close() }}
 </div>
 @stop

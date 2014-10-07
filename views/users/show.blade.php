@@ -34,18 +34,9 @@
 </h1>
 </div>
 
+
 <div class="row">
 
-{{ $message = Session::get('message') }}
-
-{{ Form::open(
-	[
-		'route' => array('admin.users.update', $user->id),
-		'role' => 'form',
-		'method' => 'put'
-	]
-) }}
-{{ Form::hidden('user', $user->id) }}
 
 	<ul class="nav nav-tabs">
 		<li class="active">
@@ -180,7 +171,6 @@
 		</div>
 	</div>
 
-{{ Form::close() }}
 
 </div>
 @stop

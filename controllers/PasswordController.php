@@ -9,31 +9,13 @@ use Password;
 
 class PasswordController extends \BaseController {
 
-	/**
-	 * Passwird remind form validator
-	 *
-	 * @var Project\Forms\Form\PasswordRemind
-	 */
-	protected $remindForm;
-
-	/**
-	 * Password reset form validator
-	 *
-	 * @var Project\Forms\Form\PasswordReset
-	 */
-	protected $resetForm;
-
-	/**
-	 * Construct the password controller with a password remind and password reset form validator
-	 *
-	 * @param Project\Forms\Form\PasswordRemind $remindForm
-	 * @param Project\Forms\Form\PasswordReset $resetForm
-	 */
+/*
 	public function __construct(PasswordRemind $remindForm, PasswordReset $resetForm)
 	{
 		$this->remindForm = $remindForm;
 		$this->resetForm = $resetForm;
 	}
+*/
 
 	/**
 	 * Display a listing of the resource.

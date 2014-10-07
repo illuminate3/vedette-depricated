@@ -13,26 +13,7 @@ use Config;
 
 class AuthController extends \BaseController {
 
-	/**
-	 * Register form validator
-	 *
-	 * @var Project\Forms\Form\Login
-	 */
-	protected $registerForm;
-
-	/**
-	 * Update profile form validator
-	 *
-	 * @var Project\Forms\Form\UserUpdate
-	 */
-	protected $userUpdateForm;
-
-	/**
-	 * Construct the session controller with a register form validator
-	 *
-	 * @param Register   $registerForm
-	 * @param UserUpdate $userUpdateForm
-	 */
+/*
 	public function __construct(Register $registerForm, UserUpdate $userUpdateForm)
 	{
 		$this->registerForm = $registerForm;
@@ -40,6 +21,7 @@ class AuthController extends \BaseController {
 
 		$this->beforeFilter('currentUser', array('only' => 'show', 'edit', 'update', 'destroy'));
 	}
+*/
 
 	/**
 	 * Show the form for creating a new resource.

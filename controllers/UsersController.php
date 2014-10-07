@@ -1,38 +1,16 @@
 <?php namespace Vedette\controllers;
 
 use Vedette\models\User as User;
-use View;
-use Input;
-use Redirect;
+use View, Input, Redirect, Config, Validator, Hash;
 use Bootstrap;
-use Config;
 
 class UsersController extends \BaseController {
 
-	/**
-	 * Users create form validator
-	 *
-	 * @var Project\Forms\Form\UserCreate
-	 */
-	protected $usersCreateForm;
+	protected $user;
 
-	/**
-	 * Users update form validator
-	 *
-	 * @var Project\Forms\Form\UserUpdate
-	 */
-	protected $usersUpdateForm;
-
-	/**
-	 * Construct the session controller with users form validators
-	 *
-	 * @param UserCreate $usersCreateForm
-	 * @param UserUpdate $usersUpdateForm
-	 */
-	public function __construct(UserCreate $usersCreateForm, UserUpdate $usersUpdateForm)
+	public function __construct(User $user)
 	{
-		$this->usersCreateForm = $usersCreateForm;
-		$this->usersUpdateForm = $usersUpdateForm;
+		$this->user = $user;
 	}
 
 	/**
@@ -68,18 +46,30 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('email', 'password', 'password_confirmation', 'roles');
-		$this->usersCreateForm->validate($input);
+		$input = Input::all();
 
-		if (empty($input['roles'])) $input['roles'] = array();
+		$validation = Validator::make($input, User::$rules);
 
-		$user = new User;
-		$user->email = $input['email'];
-		$user->password = Hash::make($input['password']);
-		$user->save();
-		$user->roles()->sync($input['roles']);
+		if ($validation->passes())
+		{
 
-		return Redirect::route('admin.index')->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true));
+			$user = new User;
+			$user->email = $input['email'];
+			$user->password = Hash::make($input['password']);
+
+			$user->save();
+
+			if ( empty($input['roles']) ) $input['roles'] = array();
+			$user->roles()->sync($input['roles']);
+
+			return Redirect::route('admin.users.index')
+				->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true));
+		}
+
+		return Redirect::route('admin.users.create')
+			->withInput()
+			->withErrors($validation)
+			->withMessage(Bootstrap::danger( trans('lingos::account.error.create'), true));
 	}
 
 	/**
@@ -123,23 +113,36 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('email', 'password', 'password_confirmation', 'roles');
-		$this->usersUpdateForm->validate($input);
+		$input = array_except(Input::all(), '_method');
 
-		if (empty($input['roles'])) $input['roles'] = array();
+		$validation = Validator::make($input, User::$rulesUpdate);
 
-		$user = User::findOrFail($id);
-		$user->email = $input['email'];
-
-		if ( ! empty($input['password']) && $input['password'] == $input['password_confirmation'])
+		if ($validation->passes())
 		{
-			$user->password = Hash::make($input['password']);
+
+			$user = User::findOrFail($id);
+
+			$user->email = $input['email'];
+			if ( ! empty($input['password']) && $input['password'] == $input['password_confirmation'])
+			{
+				$user->password = Hash::make($input['password']);
+			}
+			$user->save();
+
+			if (empty($input['roles'])) $input['roles'] = array();
+			$user->roles()->sync($input['roles']);
+
+			return Redirect::route('admin.users.index')
+				->withMessage(Bootstrap::success( trans('lingos::account.success.update'), true));
+
 		}
 
-		$user->save();
-		$user->roles()->sync($input['roles']);
+		return Redirect::route('admin.users.edit', $id)
+			->withInput()
+			->withErrors($validation)
+			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true));
 
-		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.update'), true));
+
 	}
 
 	/**
