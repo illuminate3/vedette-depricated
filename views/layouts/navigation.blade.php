@@ -34,15 +34,13 @@
 			@if (Auth::check())
 				@if (Auth::user()->hasRoleWithName('Admin'))
 
-{{--
 	<li class="dropdown">
 		<img
-			src="{{ Auth::user()->profile->picture }}"
+			src="{{ asset(Session::get('userPicture')) }}"
 			alt="{{ Auth::user()->email }}"
 			class="img-circle show-profile"
 		/>
 	</li>
---}}
 
 {{--
 					<li {{ (Request::is('admin*') ? ' class="active"' : '') }}>{{ HTML::linkRoute('admin.index', 'Administration') }}</li>

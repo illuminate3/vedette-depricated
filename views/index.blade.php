@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 {{--
 <img
-	src="{{ Auth::user()->profile->picture }}"
+	src="{{ $userPicture->picture }}"
 	alt="{{ Auth::user()->email }}"
 	class="img-circle show-profile"
 />

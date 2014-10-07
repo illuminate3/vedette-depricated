@@ -52,10 +52,9 @@ class SessionsController extends \BaseController {
 			isset($input['remember_me']) ?: false
 		);
 
-//$user = User::with('profile')->first();
-$user = User::find($input['email'])->get();
-//dd($user->profile->picture);
-dd($user);
+		$user = User::with('profile')->first();
+//dd($user['profile'][0]['picture']);
+		Session::put('userPicture', $user['profile'][0]['picture']);
 
 		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
 			$this->OAuthUser->touchLastLogin($input['email']);
