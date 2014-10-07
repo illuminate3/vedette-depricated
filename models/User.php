@@ -43,6 +43,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $presenter = 'Vedette\helpers\presenters\presenter\User';
 
 
+// DEFINE Rules --------------------------------------------------
+	public static $rules = [
+		'name' => 'required|unique:department,name'
+	];
+
+	public static $rulesUpdate = [
+		'name' => 'required'
+	];
+
+// DEFINE Fillable --------------------------------------------------
+	protected $fillable = array(
+		'name', 'description'
+	);
+
+
 // DEFINE Relationships --------------------------------------------------
 
 	/**

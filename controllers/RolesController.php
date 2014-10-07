@@ -1,15 +1,12 @@
 <?php namespace Vedette\controllers;
 
-use Vedette\helpers\forms\form\RoleCreate;
-use Vedette\helpers\forms\form\RoleUpdate;
-use Vedette\helpers\forms\exceptions\FormValidationException;
-
 use Vedette\models\Role as Role;
 use View;
 use Input;
 use Redirect;
 use Bootstrap;
 use Config;
+use Validator;
 
 class RolesController extends \BaseController {
 
@@ -34,10 +31,8 @@ class RolesController extends \BaseController {
 	 * @param RoleCreate $rolesCreateForm
 	 * @param RoleUpdate $rolesUpdateForm
 	 */
-	public function __construct(RoleCreate $rolesCreateForm, RoleUpdate $rolesUpdateForm, Role $role)
+	public function __construct(Role $role)
 	{
-		$this->rolesCreateForm = $rolesCreateForm;
-		$this->rolesUpdateForm = $rolesUpdateForm;
 		$this->role = $role;
 	}
 
@@ -49,10 +44,6 @@ class RolesController extends \BaseController {
 	public function index()
 	{
 		$roles = Role::all();
-
-//dd($roles);
-//		return View::make('admin.roles.index')->with(compact("roles"));
-
 		return View::make(
 			Config::get('vedette.vedette_views.roles_index')
 			)->with(compact("roles"));
@@ -65,7 +56,6 @@ class RolesController extends \BaseController {
 	 */
 	public function create()
 	{
-//		return View::make('admin.roles.create');
 		return View::make(
 			Config::get('vedette.vedette_views.roles_create')
 			);
@@ -78,22 +68,21 @@ class RolesController extends \BaseController {
 	 */
 	public function store()
 	{
-		$input = Input::only('name', 'active', 'level');
-		$this->rolesCreateForm->validate($input);
+		$input = Input::all();
 
-		$role = new Role;
+		$validation = Validator::make($input, Role::$rules);
 
-		$role->name = $input['name'];
-		if (empty($input['level'])) {
-			$role->level = NULL;
-		} else {
-			$role->level = $input['level'];
+		if ($validation->passes())
+		{
+			$this->role->create($input);
+			return Redirect::route('admin.roles.index')
+				->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
 		}
-		$role->active = (Input::has('active') ? 1 : 0);
 
-		$role->save();
-
-		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+		return Redirect::route('admin.roles.create')
+			->withInput()
+			->withErrors($validation)
+			->withMessage(Bootstrap::danger( trans('lingos::role.error.create'), true));
 	}
 
 	/**
@@ -106,8 +95,6 @@ class RolesController extends \BaseController {
 	public function edit($id)
 	{
 		$role = Role::findOrFail($id);
-
-//		return View::make('admin.roles.edit')->with(compact('role'));
 
 		return View::make(
 			Config::get('vedette.vedette_views.roles_edit')
@@ -123,27 +110,34 @@ class RolesController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$input = Input::only('name', 'active', 'level');
-		$this->rolesUpdateForm->validate($input);
-$this->role->fill($input);
+		$input = array_except(Input::all(), '_method');
 
-if ( ! $this->role->isValid() ) {
-	return Redirect::back()->withInput()->withMessage(Bootstrap::danger($this->role->errors), true);
-}
+		$validation = Validator::make($input, Role::$rulesUpdate);
 
-		$role = Role::findOrFail($id);
+		if ($validation->passes())
+		{
+			$role = $this->role->findOrFail($id);
 
-		$role->name = $input['name'];
-		if (empty($input['level'])) {
-			$role->level = NULL;
-		} else {
-			$role->level = $input['level'];
+			$role->name = $input['name'];
+			$role->description = $input['description'];
+			if (empty($input['level'])) {
+				$role->level = NULL;
+			} else {
+				$role->level = $input['level'];
+			}
+			$role->active = (Input::has('active') ? 1 : 0);
+
+			$role->save($input);
+
+			return Redirect::route('admin.roles.index', $id)
+				->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+
 		}
-		$role->active = (Input::has('active') ? 1 : 0);
 
-		$role->save();
-
-		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+		return Redirect::route('admin.roles.edit', $id)
+			->withInput()
+			->withErrors($validation)
+			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true));
 	}
 
 	/**
@@ -159,7 +153,8 @@ dd('stop!');
 		$role = Role::findOrFail($id);
 		$role->delete();
 
-		return Redirect::route('admin.roles.index')->withMessage(Bootstrap::success( trans('lingos::role.success.delete'), true));
+		return Redirect::route('admin.roles.index')
+			->withMessage(Bootstrap::success( trans('lingos::role.success.delete'), true));
 	}
 
 }

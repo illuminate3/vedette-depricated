@@ -36,17 +36,13 @@
 
 
 <div class="row">
-
-{{ $message = Session::get('message') }}
-
 {{ Form::open(
 	[
 		'route' => array('admin.roles.update', $role->id),
-		'role' => 'form',
+		'department' => 'form',
 		'method' => 'PATCH'
 	]
 ) }}
-{{ Form::hidden('role', $role->id) }}
 
 
 	{{ Bootstrap::text(
@@ -60,6 +56,18 @@
 			'placeholder' => trans('lingos::general.name'),
 			'required',
 			'autofocus'
+		]
+	) }}
+
+	{{ Bootstrap::text(
+		'description',
+		null,
+		$role->description,
+		$errors,
+		'info fa-fw',
+		[
+			'id' => 'level',
+			'placeholder' => trans('lingos::general.description')
 		]
 	) }}
 
@@ -125,6 +133,5 @@
 	</div>
 
 {{ Form::close() }}
-
 </div>
 @stop

@@ -1,9 +1,8 @@
 <?php namespace Vedette\controllers;
 
-use Vedette\helpers\forms\form\Login as LoginForm;
-use Vedette\helpers\forms\exceptions\FormValidationException;
 use Illuminate\Auth\UserInterface;
 
+use Artdarek\OAuth\Facade\OAuth as OAuth;
 use Vedette\models\OAuthUser as OAuthUser;
 use View;
 use Input;
@@ -11,7 +10,6 @@ use Auth;
 use Redirect;
 use Bootstrap;
 use Config;
-use Artdarek\OAuth\Facade\OAuth as OAuth;
 use Session;
 
 class SessionsController extends \BaseController {

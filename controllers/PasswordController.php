@@ -1,9 +1,5 @@
 <?php namespace Vedette\controllers;
 
-use Vedette\helpers\forms\form\PasswordRemind;
-use Vedette\helpers\forms\form\PasswordReset;
-use Vedette\helpers\forms\exceptions\FormValidationException;
-
 use View;
 use Input;
 use Redirect;

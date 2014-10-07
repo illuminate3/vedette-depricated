@@ -1,9 +1,5 @@
 <?php namespace Vedette\controllers;
 
-use Vedette\helpers\forms\form\UserCreate;
-use Vedette\helpers\forms\form\UserUpdate;
-use Vedette\helpers\forms\exceptions\FormValidationException;
-
 use Vedette\models\User as User;
 use View;
 use Input;

@@ -34,9 +34,6 @@
 
 
 <div class="row">
-
-{{ $message = Session::get('message') }}
-
 {{ Form::open(
 	[
 		'route' => array('admin.roles.store'),
@@ -56,6 +53,18 @@
 			'placeholder' => trans('lingos::general.name'),
 			'required',
 			'autofocus'
+		]
+	) }}
+
+	{{ Bootstrap::text(
+		'description',
+		trans('lingos::general.description'),
+		null,
+		$errors,
+		'info fa-fw',
+		[
+			'id' => 'level',
+			'placeholder' => trans('lingos::general.description')
 		]
 	) }}
 
@@ -108,6 +117,5 @@
 	</div>
 
 {{ Form::close() }}
-
 </div>
 @stop
