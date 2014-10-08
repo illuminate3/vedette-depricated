@@ -187,4 +187,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $users;
 	}
 
+	public function getUserPicture($user_id)
+	{
+		$profile = DB::table('profiles')
+			->where('user_id', '=', $user_id)
+			->first();
+
+//dd($profile);
+		return $profile;
+	}
+
 }

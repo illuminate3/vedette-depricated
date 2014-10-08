@@ -15,9 +15,10 @@ class SessionsController extends \BaseController {
 	/**
 	 * Constructor
 	 */
-	public function __construct(OAuthUser $OAuthUser)
+	public function __construct(OAuthUser $OAuthUser, User $user)
 	{
 		$this->OAuthUser = $OAuthUser;
+		$this->User = $user;
 	}
 
 	/**
@@ -52,9 +53,9 @@ class SessionsController extends \BaseController {
 			isset($input['remember_me']) ?: false
 		);
 
-		$user = User::with('profile')->first();
-//dd($user['profile'][0]['picture']);
-		Session::put('userPicture', $user['profile'][0]['picture']);
+		$picture =  $this->User->getUserPicture(Auth::User()->id);
+		Session::put('userPicture', $picture->picture);
+//dd($picture);
 
 		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
 			$this->OAuthUser->touchLastLogin($input['email']);
@@ -182,8 +183,8 @@ class SessionsController extends \BaseController {
 
 		Session::put('userPicture', $userData['picture']);
 
-		Session::put('checkAuth', True);
-		Session::put('userAuth', $loginUser);
+//		Session::put('checkAuth', True);
+//		Session::put('userAuth', $loginUser);
 	}
 
 }
