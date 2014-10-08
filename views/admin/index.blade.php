@@ -59,9 +59,10 @@ $(document).ready(function() {
 </div>
 
 
+
 {{--
 <div class="row">
-
+{{ dd(Auth::user()->profile->user_id) }}
 
 @if (Auth::check())
 	@if (Auth::user()->hasRoleWithName('Admin'))

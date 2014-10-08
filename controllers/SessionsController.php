@@ -60,13 +60,13 @@ class SessionsController extends \BaseController {
 		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
 			$this->OAuthUser->touchLastLogin($input['email']);
 			return Redirect::route('vedette.admin')
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
 		} elseif ($attempt) {
 			$this->OAuthUser->touchLastLogin($input['email']);
 			return Redirect::route('vedette.user', Auth::User()->id)
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
 		} else {
-			return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
+			return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
 		}
 /*
 } else {
@@ -109,18 +109,31 @@ class SessionsController extends \BaseController {
 			if ( Config::get('vedette.vedette_settings.hosted_domain') == True ) {
 				if ( (isset($result['hd']) ) && ($result['hd'] == Config::get('vedette.vedette_settings.hosted_domain')) ) {
 					$this->ProcessOauth($result);
-					$this->OAuthUser->touchLastLogin($input['email']);
-					return Redirect::route('vedette.admin')
-						->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+					$this->OAuthUser->touchLastLogin($result['email']);
+
+					if ( Auth::User()->hasRoleWithName('Admin') ) {
+						return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
+							->withMessage( Bootstrap::success( trans('lingos::auth.success.login'), true, true) );
+					} else  {
+						return Redirect::route( Config::get('vedette.vedette_routes.user_home') )
+							->withMessage( Bootstrap::success( trans('lingos::auth.success.login'), true, true) );
+					}
+
 				} else {
 					return Redirect::to('login')
-						->withMessage(Bootstrap::danger( trans('lingos::auth.error.activate'), true));
+						->withMessage(Bootstrap::danger( trans('lingos::auth.error.activate'), true, true));
 				}
 			} else {
-					$this->ProcessOauth($result);
-					$this->OAuthUser->touchLastLogin($input['email']);
-					return Redirect::route('vedette.user')
-						->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+				$this->ProcessOauth($result);
+				$this->OAuthUser->touchLastLogin($input['email']);
+
+				if ( Auth::User()->hasRoleWithName('Admin') ) {
+					return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
+						->withMessage( Bootstrap::success( trans('lingos::auth.success.login'), true, true) );
+				} else  {
+					return Redirect::route( Config::get('vedette.vedette_routes.user_home') )
+						->withMessage( Bootstrap::success( trans('lingos::auth.success.login'), true, true) );
+				}
 			}
 
 		} else {
@@ -172,13 +185,13 @@ class SessionsController extends \BaseController {
 
 		if ( $attempt && Auth::User()->hasRoleWithName('Admin') ) {
 			return Redirect::route('vedette.admin')
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
 		} elseif ( $attempt ) {
 			return Redirect::route('vedette.user', Auth::User()->id)
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true));
+				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
 		} else {
 			return Redirect::route('login')
-				->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
+				->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
 		}
 
 		Session::put('userPicture', $userData['picture']);

@@ -53,13 +53,13 @@ class RolesController extends \BaseController {
 		{
 			$this->role->create($input);
 			return Redirect::route('admin.roles.index')
-				->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true));
+				->withMessage(Bootstrap::success( trans('lingos::role.success.create'), true, true));
 		}
 
 		return Redirect::route('admin.roles.create')
 			->withInput()
 			->withErrors($validation)
-			->withMessage(Bootstrap::danger( trans('lingos::role.error.create'), true));
+			->withMessage(Bootstrap::danger( trans('lingos::role.error.create'), true, true));
 	}
 
 	/**
@@ -107,14 +107,14 @@ class RolesController extends \BaseController {
 			$role->save($input);
 
 			return Redirect::route('admin.roles.index')
-				->withMessage(Bootstrap::success( trans('lingos::role.success.update'), true));
+				->withMessage(Bootstrap::success( trans('lingos::role.success.update'), true, true));
 
 		}
 
 		return Redirect::route('admin.roles.edit', $id)
 			->withInput()
 			->withErrors($validation)
-			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true));
+			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true, true));
 	}
 
 	/**
@@ -131,7 +131,7 @@ dd('stop!');
 		$role->delete();
 
 		return Redirect::route('admin.roles.index')
-			->withMessage(Bootstrap::success( trans('lingos::role.success.delete'), true));
+			->withMessage(Bootstrap::success( trans('lingos::role.success.delete'), true, true));
 	}
 
 }

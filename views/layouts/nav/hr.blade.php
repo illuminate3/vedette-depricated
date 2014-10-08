@@ -7,6 +7,8 @@
 	</li>
 </ul>
 
+@if (Auth::check())
+@if (Auth::user()->hasRoleWithName('Admin'))
 
 <li class="dropdown">
 	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
@@ -15,7 +17,6 @@
 	</a>
 	<ul class="dropdown-menu">
 		<li>
-
 			{{ link_to('admin/departments', 'Departments') }}
 		</li>
 		<li>
@@ -42,3 +43,6 @@
 		</li>
 	</ul>
 </li>
+
+@endif
+@endif

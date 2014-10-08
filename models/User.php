@@ -64,7 +64,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function profile()
 	{
-		return $this->hasMany('Vedette\models\Profile');
+		return $this->hasOne('Vedette\models\Profile');
 	}
 
 
@@ -170,7 +170,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public function hasRoleWithName($name)
 	{
-		$searchRole = Role::where('name', '=', $name)->first();
+		$searchRole = Role::where('name', '=', $name)->remember(10)->first();
 		return $this->hasRole($searchRole->id);
 	}
 

@@ -50,7 +50,7 @@ class AuthController extends \BaseController {
 		$user->password = Hash::make($input['password']);
 		$user->save();
 
-		return Redirect::route('login')->withMessage(Bootstrap::success( trans('lingos::auth.success.account'), true));
+		return Redirect::route('login')->withMessage(Bootstrap::success( trans('lingos::auth.success.account'), true, true));
 	}
 
 	/**
@@ -105,7 +105,7 @@ class AuthController extends \BaseController {
 		$user->save();
 
 		return Redirect::route('user.show', $user->id)
-			->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true));
+			->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true, true));
 	}
 
 	/**
@@ -122,7 +122,7 @@ class AuthController extends \BaseController {
 
 		Auth::logout();
 
-		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true));
+		return Redirect::home()->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true, true));
 	}
 
 }

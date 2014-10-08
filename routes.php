@@ -8,21 +8,22 @@ new helpers\forms\form\Login;
 */
 
 //Route::get('/', 'Vedette\controllers\AdminController@index');
-
+/*
 Route::get('/', array(
 	'as' => 'home',
 	'uses' => 'Vedette\controllers\IndexController@index'
 	));
+*/
 
-/*
-Route::group(array('before' => 'guest'), function()
+
+Route::group(array('before' => 'auth'), function()
 {
 	Route::get('/', array(
 		'as' => 'home',
 		'uses' => 'Vedette\controllers\IndexController@index'
 		));
 });
-*/
+
 
 Route::get(Config::get('vedette.vedette_routes.user_home'), array(
 	'as' => 'vedette.user',

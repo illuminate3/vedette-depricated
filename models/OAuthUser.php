@@ -40,12 +40,12 @@ class OAuthUser extends \User {
 	//			'oauth_gender' => $result['gender'],
 
 		$userData = array(
-			'email' => $result['email'],
-			'first_name' => $result['given_name'],
-			'last_name' => $result['family_name'],
-			'picture' => $result['picture'],
-//			'updated_at' => new DateTime
-			'last_login' => new DateTime
+			'email'			=> $result['email'],
+			'first_name'	=> $result['given_name'],
+			'last_name'		=> $result['family_name'],
+			'picture'		=> $result['picture'],
+//			'updated_at'	=> new DateTime
+//			'last_login'	=> new DateTime
 		);
 
 		return $userData;
@@ -92,11 +92,11 @@ class OAuthUser extends \User {
 	// Pre Populate the Profile using Oauth information
 		DB::table('profiles')
 			->insert(array(
-				'user_id' => $newUser->{'id'},
-				'first_name' => $userData['first_name'],
-				'last_name' => $userData['last_name'],
-				'email' => $userData['email'],
-				'picture' => $userData['picture']
+				'user_id'		=> $newUser->{'id'},
+				'first_name'	=> $userData['first_name'],
+				'last_name'		=> $userData['last_name'],
+				'email'			=> $userData['email'],
+				'picture'		=> $userData['picture']
 			));
 
 		Session::put('userPicture', $userData['picture']);
@@ -134,7 +134,8 @@ class OAuthUser extends \User {
 				'activated'			=> Config::get('vedette.vedette_db.activated'),
 				'verified'			=> Config::get('vedette.vedette_db.verified'),
 				'created_at'		=> new DateTime,
-				'updated_at'		=> new DateTime,
+				'updated_at'		=> new DateTime
+//				'last_login'		=> new DateTime
 		));
 
 	return $createUser;

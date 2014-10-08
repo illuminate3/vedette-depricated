@@ -20,7 +20,7 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
-		$users = User::all();
+		$users = $this->user->all();
 
 		return View::make(
 			Config::get('vedette.vedette_views.users_index')
@@ -63,13 +63,13 @@ class UsersController extends \BaseController {
 			$user->roles()->sync($input['roles']);
 
 			return Redirect::route('admin.users.index')
-				->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true));
+				->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true, true));
 		}
 
 		return Redirect::route('admin.users.create')
 			->withInput()
 			->withErrors($validation)
-			->withMessage(Bootstrap::danger( trans('lingos::account.error.create'), true));
+			->withMessage(Bootstrap::danger( trans('lingos::account.error.create'), true, true));
 	}
 
 	/**
@@ -81,7 +81,8 @@ class UsersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$user = User::findOrFail($id);
+//		$user = $this->user->findOrFail($id);
+		$user = $this->user->with('profile')->findOrFail($id);
 
 		return View::make(
 			Config::get('vedette.vedette_views.users_show')
@@ -97,7 +98,7 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = User::findOrFail($id);
+		$user = $this->user->findOrFail($id);
 
 		return View::make(
 			Config::get('vedette.vedette_views.users_edit')
@@ -133,14 +134,14 @@ class UsersController extends \BaseController {
 			$user->roles()->sync($input['roles']);
 
 			return Redirect::route('admin.users.index')
-				->withMessage(Bootstrap::success( trans('lingos::account.success.update'), true));
+				->withMessage(Bootstrap::success( trans('lingos::account.success.update'), true, true));
 
 		}
 
 		return Redirect::route('admin.users.edit', $id)
 			->withInput()
 			->withErrors($validation)
-			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true));
+			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true, true));
 
 
 	}
@@ -155,7 +156,7 @@ class UsersController extends \BaseController {
 	public function destroy($id)
 	{
 //dd('stop!');
-		$user = User::findOrFail($id);
+		$user = $this->user->findOrFail($id);
 
 //dd($user);
 		$user->delete();
@@ -166,7 +167,7 @@ class UsersController extends \BaseController {
 			Auth::logout();
 		}
 
-		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true));
+		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true, true));
 	}
 
 }

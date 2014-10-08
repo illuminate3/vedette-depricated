@@ -52,6 +52,12 @@
 			</a>
 		</li>
 		<li>
+			<a href="#user_control" data-toggle="tab">
+				<i class="fa fa-sort-amount-asc fa-fw"></i>
+				{{ trans('lingos::auth.user_control') }}
+			</a>
+		</li>
+		<li>
 			<a href="#status" data-toggle="tab">
 				<i class="fa fa-heart fa-fw"></i>
 				{{ trans('lingos::general.status') }}
@@ -103,6 +109,38 @@
 		</fieldset>
 
 	</div><!-- tab-roles -->
+	<div class="tab-pane" id="user_control">
+
+		<fieldset>
+			<h2>
+				<legend>
+					<i class="fa fa-heart fa-fw"></i>
+					{{ trans('lingos::general.activity') }}
+				</legend>
+			</h2>
+
+			<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<tbody>
+					<tr>
+						<td>{{ trans('lingos::account.last_login') }}</td>
+						<td>{{ $user->last_login }}</td>
+					</tr>
+					<tr>
+						<td>{{ trans('lingos::account.created_at') }}</td>
+						<td>{{ $user->created_at }}</td>
+					</tr>
+					<tr>
+						<td>{{ trans('lingos::account.updated_at') }}</td>
+						<td>{{ $user->updated_at }}</td>
+					</tr>
+				</tbody>
+			</table>
+			</div><!-- ./responsive -->
+
+		</fieldset>
+
+	</div><!-- tab-information -->
 	<div class="tab-pane" id="status">
 
 		<fieldset>
