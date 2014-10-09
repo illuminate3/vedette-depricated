@@ -66,7 +66,9 @@
 				<a href="{{ route('profiles.show', Auth::user()->id) }}"><i class="fa fa-gear fa-fw"></i>{{ trans('lingos::account.profile') }}</a>
 			</li>
 			<li class="divider"></li>
-			<li>{{ HTML::linkRoute('logout', 'Logout') }}</li>
+			<li>
+				<a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{{ trans('lingos::auth.log_out') }}</a>
+			</li>
 		</ul>
 	</li>
 
