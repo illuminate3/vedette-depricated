@@ -184,10 +184,10 @@ class SessionsController extends \BaseController {
 			));
 
 		if ( $attempt && Auth::User()->hasRoleWithName('Admin') ) {
-			return Redirect::route('vedette.admin')
+			return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
 				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
 		} elseif ( $attempt ) {
-			return Redirect::route('vedette.user', Auth::User()->id)
+			return Redirect::route( Config::get('vedette.vedette_routes.user_home') , Auth::User()->id)
 				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
 		} else {
 			return Redirect::route('login')

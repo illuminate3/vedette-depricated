@@ -29,7 +29,7 @@
 	) }}
 	</p>
 	<i class="fa fa-edit fa-lg"></i>
-	{{ trans('lingos::account.command.edit') }}
+		{{ $user->email }}
 	<hr>
 </h1>
 </div>
@@ -117,8 +117,7 @@
 				'unlock fa-fw',
 				[
 					'id' => 'password',
-					'placeholder' => trans('lingos::auth.password'),
-					'required'
+					'placeholder' => trans('lingos::auth.password')
 				]
 			) }}
 
@@ -129,9 +128,7 @@
 				'unlock-alt fa-fw',
 				[
 					'id' => 'password',
-					'placeholder' => trans('lingos::auth.confirm_password'),
-					'required',
-					'autocomplete' => 'off'
+					'placeholder' => trans('lingos::auth.confirm_password')
 				]
 			) }}
 
