@@ -118,6 +118,51 @@ class UsersController extends \BaseController {
 
 		$validation = Validator::make($input, User::$rulesUpdate);
 
+/*
+		if( $validation->passes() ) {
+			$user = Sentry::getUserProvider()->findById($id);
+			$user->fill($validation->getData());
+//dd($user);
+			if (Input::has('activated')) {
+				if ($user->isActivated()) {
+				$user->activated = 1;
+				$user->activated_at = $user->last_login;
+				} else {
+					$sentryUser = Sentry::getUserProvider()->findById($id);
+					$activationCode = $sentryUser->getActivationCode();
+//dd($activationCode);
+					$user->attemptActivation($activationCode);
+				}
+			} else {
+				$user->activated = 0;
+				$user->activated_at = null;
+			}
+
+// update throttle
+			$throttle = Sentry::getThrottleProvider()->findByUserId($id);
+
+			if (Input::has('suspended')) {
+// Suspend the user
+				$throttle->suspend();
+			} else {
+// Suspend the user
+				$throttle->unsuspend();
+			}
+
+// update ban
+			if (Input::has('banned')) {
+// Ban the user
+				$throttle->ban();
+			} else {
+// Ban the user
+				$throttle->unBan();
+			}
+
+			$user->save();
+*/
+
+
+
 		if ($validation->passes())
 		{
 

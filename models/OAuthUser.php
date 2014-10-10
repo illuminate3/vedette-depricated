@@ -16,7 +16,7 @@ class OAuthUser extends \User {
 	| @param string $email
 	| @return boolean
 	*/
-	public function checkIfUserExist ($email)
+	public function checkUserExist ($email)
 	{
 		$user = DB::table('users')->where('email', '=', $email)->first();
 		if ($user)
@@ -24,6 +24,58 @@ class OAuthUser extends \User {
 		else
 			return false;
 	}
+
+public function isConfirmed($credentials, $identity_columns = array('username', 'email'))
+{
+	$user = static::$app['confide.repository']->getUserByIdentity($credentials, $identity_columns);
+
+	if (! is_null($user) and $user->confirmed) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Enable throttling.
+ *
+ * @return void
+ */
+public function enable()
+{
+	$this->enabled = true;
+}
+
+/**
+ * Disable throttling.
+ *
+ * @return void
+ */
+public function disable()
+{
+	$this->enabled = false;
+}
+
+/**
+ * Check if throttling is enabled.
+ *
+ * @return bool
+ */
+public function isEnabled()
+{
+	return $this->enabled;
+}
+
+/**
+ * Check if the user is activated.
+ *
+ * @return bool
+ */
+public function isActivated()
+{
+	return (bool) $this->activated;
+}
+
 
 	/*
 	|--------------------------------------------------------------------------

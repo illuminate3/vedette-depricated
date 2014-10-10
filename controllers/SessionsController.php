@@ -150,7 +150,7 @@ class SessionsController extends \BaseController {
 	{
 		$userOAuth = new OAuthUser();
 
-		if ($userOAuth->checkIfUserExist($result['email'])) {
+		if ($userOAuth->checkUserExist($result['email'])) {
 			// update user profile
 			$currentUser = $this->OAuthUser->updateUserProfile($result);
 			// login user
@@ -167,8 +167,6 @@ class SessionsController extends \BaseController {
 	/*
 	|--------------------------------------------------------------------------
 	| Login User
-	|--------------------------------------------------------------------------
-	| This function will login a user based on the user id provided and set the session data accordingly.
 	|--------------------------------------------------------------------------
 	| @param unknown $userId
 	*/
@@ -200,4 +198,107 @@ class SessionsController extends \BaseController {
 //		Session::put('userAuth', $loginUser);
 	}
 
+	/*
+	|--------------------------------------------------------------------------
+	| Login User
+	|--------------------------------------------------------------------------
+	| @param unknown $userId
+	*/
+public function processThrottle()
+{
+
+// dont forget to look at UserController for the parts where you can unban the user!!!
+
+// cleanup oauthuser ... it has user stuff in it. Should make a 3rd section jsut for vedetteServices ....
+
+$request = Request::instance();
+$request->setTrustedProxies(array('127.0.0.1')); // only trust proxy headers coming from the IP addresses on the array (change this to suit your needs)
+$ip = $request->getClientIp();
+// OR!!!
+// https://github.com/fideloper/TrustedProxy
+// http://fideloper.com/laravel-4-trusted-proxies
+// this looks like a better solution!
+
+
+// Check if there was too many login attempts
+if ( Confide::isThrottled( $input ) ) {
+	$err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
+} elseif ( $this->OAuthUser->checkUserExists( $input ) && ! $this->user->isConfirmed( $input ) ) {
+	$err_msg = Lang::get('confide::confide.alerts.not_confirmed');
+} else {
+	$err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
 }
+
+return Redirect::to('user/login')
+	->withInput(Input::except('password'))
+	->with( 'error', $err_msg );
+}
+/**
+ * Check to see if the user is logged in and activated, and hasn't been banned or suspended.
+ *
+ * @return bool
+ */
+public function check()
+{
+	if (is_null($this->user))
+	{
+		// Check session first, follow by cookie
+		if ( ! $userArray = $this->session->get() and ! $userArray = $this->cookie->get())
+		{
+			return false;
+		}
+
+		// Now check our user is an array with two elements,
+		// the username followed by the persist code
+		if ( ! is_array($userArray) or count($userArray) !== 2)
+		{
+			return false;
+		}
+
+		list($id, $persistCode) = $userArray;
+
+		// Let's find our user
+		try
+		{
+			$user = $this->getUserProvider()->findById($id);
+		}
+		catch (UserNotFoundException $e)
+		{
+			return false;
+		}
+
+		// Great! Let's check the session's persist code
+		// against the user. If it fails, somebody has tampered
+		// with the cookie / session data and we're not allowing
+		// a login
+		if ( ! $user->checkPersistCode($persistCode))
+		{
+			return false;
+		}
+
+		// Now we'll set the user property on Sentry
+		$this->user = $user;
+	}
+
+	// Let's check our cached user is indeed activated
+	if ( ! $user = $this->getUser() or ! $user->isActivated())
+	{
+		return false;
+	}
+	// If throttling is enabled we check it's status
+	if( $this->getThrottleProvider()->isEnabled())
+	{
+		// Check the throttle status
+		$throttle = $this->getThrottleProvider()->findByUser( $user );
+
+		if( $throttle->isBanned() or $throttle->isSuspended())
+		{
+			$this->logout();
+			return false;
+		}
+	}
+
+	return true;
+}
+
+} // end SessionController
