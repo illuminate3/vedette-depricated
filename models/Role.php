@@ -48,4 +48,5 @@ class Role extends Eloquent {
 
 // Functions --------------------------------------------------
 
+
 }

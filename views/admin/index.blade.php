@@ -88,8 +88,8 @@ $(document).ready(function() {
 				</thead>
 				<tbody>
 					<tr>
-						<td>{{ Bootstrap::linkRoute('admin.users.create', 'Add') }}</td>
-						<td>{{ Bootstrap::linkRoute('admin.users.index', 'View') }}</td>
+						<td>{{ Bootstrap::linkRoute('users.create', 'Add') }}</td>
+						<td>{{ Bootstrap::linkRoute('users.index', 'View') }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -101,8 +101,8 @@ $(document).ready(function() {
 				</thead>
 				<tbody>
 					<tr>
-						<td>{{ Bootstrap::linkRoute('admin.roles.create', 'Add') }}</td>
-						<td>{{ Bootstrap::linkRoute('admin.roles.index', 'View') }}</td>
+						<td>{{ Bootstrap::linkRoute('roles.create', 'Add') }}</td>
+						<td>{{ Bootstrap::linkRoute('roles.index', 'View') }}</td>
 					</tr>
 				</tbody>
 			</table>

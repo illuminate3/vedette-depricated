@@ -22,7 +22,7 @@
 <h1>
 	<p class="pull-right">
 	{{ Bootstrap::linkIcon(
-		'admin.users.index',
+		'users.index',
 		trans('lingos::button.back'),
 		'chevron-left fa-fw',
 		array('class' => 'btn btn-default')
@@ -187,7 +187,7 @@
 	<div class="row">
 		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
-			'admin.users.index',
+			'users.index',
 			trans('lingos::button.back'),
 			'chevron-left fa-fw',
 			[
@@ -197,7 +197,7 @@
 		</div>
 		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
-			'admin.users.destroy',
+			'users.destroy',
 			trans('lingos::button.delete'),
 			'trash-o fa-fw',
 			array(

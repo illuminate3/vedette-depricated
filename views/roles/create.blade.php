@@ -20,7 +20,7 @@
 <h1>
 	<p class="pull-right">
 	{{ Bootstrap::linkIcon(
-		'admin.roles.index',
+		'roles.index',
 		trans('lingos::button.back'),
 		'chevron-left fa-fw',
 		array('class' => 'btn btn-default')
@@ -36,7 +36,7 @@
 <div class="row">
 {{ Form::open(
 	[
-		'route' => array('admin.roles.store'),
+		'route' => array('roles.store'),
 		'role' => 'form'
 	]
 ) }}
@@ -98,7 +98,7 @@
 	<div class="row">
 		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
-			'admin.roles.index',
+			'roles.index',
 			trans('lingos::button.cancel'),
 			'times fa-fw',
 			[

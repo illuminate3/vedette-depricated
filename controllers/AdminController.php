@@ -5,15 +5,21 @@ use Auth;
 use View;
 use Session;
 
-class AdminController extends \BaseController {
+class AdminController extends BaseController {
 
 	protected $user;
 
 	public function __construct(User $user)
 	{
+		parent::__construct();
 		$this->user = $user;
 	}
-
+/*
+	public function __construct()
+	{
+		parent::__construct();
+	}
+*/
 	/**
 	 * Display an admin index view.
 	 *

@@ -108,11 +108,8 @@ Route::filter('currentUser', function($route)
 {
 	if ( Auth::guest() ) return Redirect::guest('login');
 
-	if ( Auth::user()->id != $route->parameter('User') ) {
-
-//dd(Auth::user()->id);
-
-		return Redirect::home()->withMessage(Bootstrap::danger( trans('lingos::sentry.permission_error.insufficient'), true) );
+	if ( Auth::user()->id != ($route->parameter('User') || $route->parameter('profiles')) ) {
+		return Redirect::home()->withMessage(Bootstrap::danger( trans('lingos::permission.error.insufficient'), true, true ));
 	}
 
 });

@@ -36,7 +36,7 @@
 
 <div class="row">
 {{ Form::open(array(
-	'route' => 'admin.users.store',
+	'route' => 'users.store',
 	'role' => 'form'
 )) }}
 
@@ -165,7 +165,7 @@
 	<div class="row">
 		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
-			'admin.users.index',
+			'users.index',
 			trans('lingos::button.cancel'),
 			'times fa-fw',
 			[

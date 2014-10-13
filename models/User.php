@@ -168,6 +168,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @return boolean
 	 */
+
 	public function hasRoleWithName($name)
 	{
 		$searchRole = Role::where('name', '=', $name)->remember(10)->first();

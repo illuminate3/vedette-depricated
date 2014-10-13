@@ -1,8 +1,9 @@
 <?php namespace Vedette\controllers;
 
 use View;
+//use Route, Log;
 
-class BaseController extends \BaseController {
+class BaseController extends \Controller {
 
 	/**
 	 * Construct the controller.
@@ -12,6 +13,11 @@ class BaseController extends \BaseController {
 	public function __construct()
 	{
 		$this->beforeFilter('csrf', ['on' => ['delete', 'patch', 'post', 'put']]);
+/*
+		$action = explode('@', Route::current()->getAction()['controller'])[1];
+		Log::info($action);
+		View::share('action', $action);
+*/
 	}
 
 	/**

@@ -44,7 +44,7 @@ $(document).ready(function() {
 	<p class="pull-right">
 	@if (Auth::user()->hasRoleWithName('Admin'))
 		{{ Bootstrap::linkIcon(
-			'admin.roles.create',
+			'roles.create',
 			trans('lingos::button.role.new'),
 			'plus fa-fw',
 			array('class' => 'btn btn-info')
@@ -89,14 +89,14 @@ $(document).ready(function() {
 				<td>{{ $role->present()->active() }}</td>
 				<td width="20%">
 					{{ Form::open(array(
-						'route' => array('admin.roles.destroy', $role->id),
+						'route' => array('roles.destroy', $role->id),
 						'role' => 'form',
 						'method' => 'delete',
 						'class' => 'form-inline'
 					)) }}
 
 						{{ Bootstrap::linkRouteIcon(
-							'admin.roles.edit',
+							'roles.edit',
 							trans('lingos::button.edit'),
 							'edit fa-fw',
 							array($role->id),
@@ -107,7 +107,7 @@ $(document).ready(function() {
 						) }}
 
 						{{ Bootstrap::linkRouteIcon(
-							'admin.roles.destroy',
+							'roles.destroy',
 							trans('lingos::button.delete'),
 							'trash-o fa-fw',
 							array($role->id),

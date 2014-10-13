@@ -1,15 +1,16 @@
 <?php namespace Vedette\controllers;
 
 use Vedette\models\User as User;
-use View, Input, Redirect, Config, Validator, Hash;
+use View, Input, Redirect, Config, Validator, Hash, Auth;
 use Bootstrap;
 
-class UsersController extends \BaseController {
+class UsersController extends BaseController {
 
 	protected $user;
 
 	public function __construct(User $user)
 	{
+		parent::__construct();
 		$this->user = $user;
 	}
 
@@ -62,11 +63,11 @@ class UsersController extends \BaseController {
 			if ( empty($input['roles']) ) $input['roles'] = array();
 			$user->roles()->sync($input['roles']);
 
-			return Redirect::route('admin.users.index')
+			return Redirect::route('users.index')
 				->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true, true));
 		}
 
-		return Redirect::route('admin.users.create')
+		return Redirect::route('users.create')
 			->withInput()
 			->withErrors($validation)
 			->withMessage(Bootstrap::danger( trans('lingos::account.error.create'), true, true));
@@ -114,6 +115,12 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
+
+		if ( !Auth::user()->hasRoleWithName('Admin') ) {
+			return Redirect::to('/')
+				->withMessage(Bootstrap::danger( trans('lingos::general.error.forbidden'), true, true));
+		}
+
 		$input = array_except(Input::all(), '_method');
 
 		$validation = Validator::make($input, User::$rulesUpdate);
@@ -178,12 +185,12 @@ class UsersController extends \BaseController {
 			if (empty($input['roles'])) $input['roles'] = array();
 			$user->roles()->sync($input['roles']);
 
-			return Redirect::route('admin.users.index')
+			return Redirect::route('users.index')
 				->withMessage(Bootstrap::success( trans('lingos::account.success.update'), true, true));
 
 		}
 
-		return Redirect::route('admin.users.edit', $id)
+		return Redirect::route('users.edit', $id)
 			->withInput()
 			->withErrors($validation)
 			->withMessage(Bootstrap::danger( trans('lingos::role.error.update'), true, true));
@@ -212,7 +219,7 @@ class UsersController extends \BaseController {
 			Auth::logout();
 		}
 
-		return Redirect::route('admin.users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true, true));
+		return Redirect::route('users.index')->withMessage(Bootstrap::success( trans('lingos::account.success.delete'), true, true));
 	}
 
 }

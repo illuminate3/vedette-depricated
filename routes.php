@@ -1,5 +1,9 @@
 <?php
 
+//dd(Route::currentRouteName());
+
+//Route::when('*', 'csrf', array('delete', 'patch', 'post', 'put'));
+
 /*
 Route::get('/', function()
 {
@@ -24,6 +28,7 @@ Route::group(array('before' => 'auth'), function()
 		));
 });
 
+Route::resource('vedette.admin', 'Vedette\Controllers\AdminController', array('only' => array('index')));
 
 Route::get(Config::get('vedette.vedette_routes.user_home'), array(
 	'as' => 'vedette.user',
@@ -107,7 +112,12 @@ Route::resource('sessions', 'Vedette\controllers\SessionsController', array(
 	'only' => array('create', 'store', 'destroy')
 	));
 
-Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
+Route::group(
+	array(
+//		'prefix' => 'admin',
+		'before' => 'auth.admin'
+		),
+	function()
 {
 	Route::get('admin', array(
 		'as' => 'admin.index',

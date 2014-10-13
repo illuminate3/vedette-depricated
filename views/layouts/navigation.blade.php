@@ -50,10 +50,10 @@
 				</li>
 				<li class="divider"></li>
 				<li>
-					<a href="{{ route('admin.users.index') }}"><i class="fa fa-users fa-fw"></i>{{ trans('lingos::account.users') }}</a>
+					<a href="{{ route('users.index') }}"><i class="fa fa-users fa-fw"></i>{{ trans('lingos::account.users') }}</a>
 				</li>
 				<li>
-					<a href="{{ route('admin.roles.index') }}"><i class="fa fa-gavel fa-fw"></i>{{ trans('lingos::role.roles') }}</a>
+					<a href="{{ route('roles.index') }}"><i class="fa fa-gavel fa-fw"></i>{{ trans('lingos::role.roles') }}</a>
 				</li>
 {{--
 				<li>
