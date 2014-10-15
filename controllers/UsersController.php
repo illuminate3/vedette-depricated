@@ -116,7 +116,7 @@ class UsersController extends BaseController {
 	public function update($id)
 	{
 
-		if ( !Auth::user()->hasRoleWithName('Admin') ) {
+		if ( !Auth::User()->hasRoleWithName('Admin') ) {
 			return Redirect::to('/')
 				->withMessage(Bootstrap::danger( trans('lingos::general.error.forbidden'), true, true));
 		}
