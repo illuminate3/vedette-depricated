@@ -1,6 +1,8 @@
 <footer>
-    <div class="container">
-        <hr />
-        <p class="text-muted">Laravel 4 Starter Site</p>
-    </div>
+	<div class="container">
+		<hr />
+		<p class="text-muted">
+			{{ Config::get('vedette.vedette_html.footer') }}
+		</p>
+	</div>
 </footer>
