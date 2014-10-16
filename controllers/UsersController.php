@@ -3,6 +3,7 @@
 use Vedette\models\User as User;
 use View, Input, Redirect, Config, Validator, Hash, Auth;
 use Bootstrap;
+use Datatable;
 
 class UsersController extends BaseController {
 

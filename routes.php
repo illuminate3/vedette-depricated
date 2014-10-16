@@ -131,4 +131,18 @@ Route::group(
 			'before' => 'csrf'
 //			'except' => array('show')
 		));
+
+
+/*
+|--------------------------------------------------------------------------
+| Chumper Datatables API
+|--------------------------------------------------------------------------
+*/
+/*
+Route::get('users', 'HR\controllers\AdminController@index');
+Route::get('api/users', array(
+	'as' => 'api.users',
+	'uses' => 'HR\controllers\AdminController@getUsersDataTable'
+	));
+*/
 });

@@ -45,4 +45,34 @@ class AdminController extends BaseController {
 		return View::make('errors.404');
 	}
 
+
+public function users() {
+	$table = Datatable::table()
+		->addColumn('email', 'last_login', 'view')
+		->setUrl(route('api.profiles'))
+		->noScript();
+
+//	$this->layout->content = View::make('admin.users', array('table' => $table));
+	$this->layout->content = View::make(
+			'users.index',
+			array(
+				'table' => $table
+			)
+		);
+}
+public function getUsersDataTable(){
+
+	$query = User::select('email', 'active', 'last_login', 'id')->get();
+
+	return Datatable::collection($query)
+		->addColumn('last_login', function($model){
+		return date('M j, Y h:i A', strtotime($model->last_login));
+		})
+		->addColumn('id', function($model){
+			return '<a href="/users/' . $model->id . '">view</a>';
+		})
+		->searchColumns('email', 'last_login')
+		->orderColumns('email', 'last_login')
+		->make();
+}
 }
