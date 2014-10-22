@@ -14,7 +14,6 @@
 
 @section('inline-scripts')
 $(document).ready(function() {
-
 });
 @stop
 
