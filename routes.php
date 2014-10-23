@@ -132,4 +132,16 @@ Route::group(
 //			'except' => array('show')
 		));
 
+
+/*
+|--------------------------------------------------------------------------
+| Chumper Datatables API
+|--------------------------------------------------------------------------
+*/
+Route::get('api/users', array(
+	'as'=>'api.users',
+	'uses'=>'Vedette\controllers\UsersController@getDatatable'
+	));
+
+
 });

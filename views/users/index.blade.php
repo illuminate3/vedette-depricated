@@ -13,7 +13,6 @@
 @section('scripts')
 	<script src="{{ asset('packages/illuminate3/vedette/assets/js/restfulizer.js') }}"></script>
 	<script src="{{ asset('packages/illuminate3/vedette/assets/vendors/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ asset('packages/illuminate3/vedette/assets/vendors/Datatables-Bootstrap3/BS3/assets/js/datatables.js') }}"></script>
 @stop
 
 @section('inline-scripts')
@@ -68,6 +67,26 @@ $(document).ready(function() {
 @if (count($users))
 
 
+<div>
+<br>
+<br>
+{{ Datatable::table()
+	->addColumn('id',trans('lingos::table.email'), trans('lingos::table.roles'), trans('lingos::table.actions'))
+	->setUrl(route('api.users'))
+	->setOptions(array(
+		'dom' =>"T<'clear'>lfrtip",
+		'tabletools' => array(
+			"aSwfPath" => "/assets/Datatables/extensions/TableTools/swf/copy_csv_cls_pdf.swf"
+		)
+	))
+	->render(Config::get('vedette.vedette_views.datatable'))
+}}
+<br>
+<br>
+</div>
+
+
+{{--}}
 <div class="table-responsive">
 <table class="table table-striped table-hover" id="DataTable">
 	<thead>
@@ -133,7 +152,7 @@ $(document).ready(function() {
 	</tbody>
 </table>
 </div><!-- ./responsive -->
-
+--}}
 
 @else
 	{{ Bootstrap::info( trans('lingos::general.no_records'), true) }}
