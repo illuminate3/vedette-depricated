@@ -57,13 +57,13 @@ class UsersController extends BaseController {
 
 			$user = new User;
 			$user->email = $input['email'];
-			$user->password = Hash::make($input['password']);
-
-			$user->save();
 
 			if ( empty($input['roles']) ) $input['roles'] = array();
 			$user->roles()->sync($input['roles']);
 
+			$user->password = Hash::make($input['password']);
+
+			$user->save();
 			return Redirect::route('users.index')
 				->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true, true));
 		}
@@ -292,7 +292,7 @@ class UsersController extends BaseController {
 					. $modal;
 				})
 
-			->searchColumns('email')
+			->searchColumns('email', 'roles')
 			->orderColumns('id','email', 'created_at')
 			->make();
 	}
