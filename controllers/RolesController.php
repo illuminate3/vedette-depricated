@@ -1,7 +1,6 @@
 <?php namespace Vedette\controllers;
-
-use Vedette\models\Role as Role;
 use View, Input, Redirect, Config, Validator;
+use Vedette\models\Role as Role;
 use Bootstrap;
 
 class RolesController extends \BaseController {

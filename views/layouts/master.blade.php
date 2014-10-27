@@ -28,15 +28,15 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 
-<link rel="stylesheet" type="text/css" href="assets/DataTables/media/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/media/css/jquery.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css') }}">
 	@yield('styles')
 
 
 
-<script type="text/javascript" src="assets/DataTables/media/js/jquery.js"></script>
-<script type="text/javascript" src="assets/DataTables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="assets/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="{{ asset('assets/DataTables/media/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js') }}"></script>
 </head>
 
 <body>
