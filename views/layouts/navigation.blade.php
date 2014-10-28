@@ -30,7 +30,8 @@
 
 	<li class="dropdown">
 		<img
-			src="{{ asset(Session::get('userPicture')) }}"
+{{--			src="{{ Request::root() . Session::get('userPicture') }}" --}}
+			src="{{ asset('/uploads/logos/'. Session::get('userPicture')) }}"
 			alt="{{ Auth::user()->email }}"
 			class="img-circle show-profile"
 		/>

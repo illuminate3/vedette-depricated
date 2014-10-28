@@ -83,8 +83,8 @@ class SessionsController extends \BaseController {
 	 */
 	public function destroy()
 	{
-		Auth::logout();
 		Session::flush();
+		Auth::logout();
 
 		return Redirect::to('/');
 	}

@@ -44,7 +44,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
-			<a href="admin/users">
+			<a href="users">
 				<div class="panel-footer">
 					<span class="pull-left">
 						{{ trans('lingos::general.view') }}
