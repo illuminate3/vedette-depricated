@@ -9,6 +9,7 @@ class VedetteServiceProvider extends ServiceProvider {
 	{
 		require_once(__DIR__.'/routes.php');
 		require_once(__DIR__.'/filters.php');
+		require_once(__DIR__.'/helpers/Globals.php');
 
 		View::addLocation(app('path').'/Vedette/views');
 		View::addNamespace('Vedette', app('path').'/Vedette/views/');

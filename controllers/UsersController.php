@@ -1,6 +1,7 @@
 <?php namespace Vedette\controllers;
 
 use Vedette\models\User as User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use View, Input, Redirect, Config, Validator, Hash, Auth, Form;
 use Bootstrap;
 use Datatable;
@@ -57,15 +58,20 @@ class UsersController extends BaseController {
 
 			$user = new User;
 			$user->email = $input['email'];
+			$user->password = Hash::make($input['password']);
+			$user->save();
 
 			if ( empty($input['roles']) ) $input['roles'] = array();
 			$user->roles()->sync($input['roles']);
 
-			$user->password = Hash::make($input['password']);
+if ( Config::get('vedette.vedette_settings.add_profile') == True ) {
+	return Redirect::route(Config::get('vedette.vedette_routes.add_profile'))->with('email', $user->email);
+//		->withMessage(Bootstrap::success(trans('lingos::account.success.create'), true, true));
+} else {
+	return Redirect::route('users.index')
+		->withMessage(Bootstrap::success(trans('lingos::account.success.create'), true, true));
+}
 
-			$user->save();
-			return Redirect::route('users.index')
-				->withMessage(Bootstrap::success( trans('lingos::account.success.create'), true, true));
 		}
 
 		return Redirect::route('users.create')
@@ -84,11 +90,29 @@ class UsersController extends BaseController {
 	public function show($id)
 	{
 //		$user = $this->user->findOrFail($id);
+
+		$user = $this->user->with('profile')->findOrFail($id);
+		return View::make(
+			Config::get('vedette.vedette_views.users_show')
+			)->with(compact('user'));
+
+/*
+try
+{
 		$user = $this->user->with('profile')->findOrFail($id);
 
 		return View::make(
 			Config::get('vedette.vedette_views.users_show')
 			)->with(compact('user'));
+}
+catch (ModelNotFoundException $e)
+{
+	$error = Lang::get('message.error.user');
+	// Redirect to the user index
+	return Redirect::route('users.index')->withInput()->with('error', $error);
+}
+*/
+
 	}
 
 	/**
@@ -213,7 +237,10 @@ class UsersController extends BaseController {
 
 //dd($user);
 		$user->delete();
-		User::deleteUserProfile($user['user_id']);
+
+if ( Config::get('vedette.vedette_settings.add_profile') == True ) {
+	$this->user->deleteUserProfile($user['user_id']);
+}
 
 		if ($id == Auth::user()->id)
 		{

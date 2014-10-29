@@ -82,6 +82,7 @@
 				[
 					'id' => 'email',
 					'placeholder' => trans('lingos::account.email'),
+					'tabindex' => '1',
 					'required',
 					'autofocus'
 				]
@@ -108,6 +109,7 @@
 				[
 					'id' => 'password',
 					'placeholder' => trans('lingos::auth.password'),
+					'tabindex' => '2',
 					'required'
 				]
 			) }}
@@ -120,6 +122,7 @@
 				[
 					'id' => 'password',
 					'placeholder' => trans('lingos::auth.confirm_password'),
+					'tabindex' => '3',
 					'required',
 					'autocomplete' => 'off'
 				]

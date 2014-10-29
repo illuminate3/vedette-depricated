@@ -1,16 +1,20 @@
 <?php
+/*
+App::error(function(Symfony\Component\HttpKernel\Exception\ModelNotFoundException $e) {
+//	return Response::make('Not Found', 404);
+//dd(Route::currentRouteName());
+	return Redirect::route('/')->withInput()->with('error', $error);
+});
+*/
 
 //dd(Route::currentRouteName());
-
 //Route::when('*', 'csrf', array('delete', 'patch', 'post', 'put'));
-
 /*
 Route::get('/', function()
 {
 new helpers\forms\form\Login;
 )};
 */
-
 //Route::get('/', 'Vedette\controllers\AdminController@index');
 /*
 Route::get('/', array(
