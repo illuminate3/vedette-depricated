@@ -149,13 +149,15 @@ class SessionsController extends \BaseController {
 	public function ProcessOauth($result)
 	{
 		$userOAuth = new OAuthUser();
-
+//dd($result);
 		if ($userOAuth->checkUserExist($result['email'])) {
+//dd('true');
 			// update user profile
 			$currentUser = $this->OAuthUser->updateUserProfile($result);
 			// login user
 			$this->loginUser($currentUser->user_id);
 		} else {
+//dd('false');
 			// create profile based on OAuth
 			$currentUser = $this->OAuthUser->createUserProfile($result);
 			// login user
@@ -173,14 +175,14 @@ class SessionsController extends \BaseController {
 	public function loginUser ($userId)
 	{
 		$loginUser = $this->OAuthUser->getUserCredentials($userId);
-
+//dd($loginUser->{'email'});
 		$attempt = Auth::attempt(
 			array(
 				'email' => $loginUser->{'email'},
 				'password' => $loginUser->{'email'}
 	//			isset($input['remember_me']) ?: false
 			));
-
+//dd($attempt);
 		if ( $attempt && Auth::User()->hasRoleWithName('Admin') ) {
 			return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
 				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));

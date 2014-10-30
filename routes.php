@@ -32,15 +32,15 @@ Route::group(array('before' => 'auth'), function()
 		));
 });
 
-Route::resource('vedette.admin', 'Vedette\Controllers\AdminController', array('only' => array('index')));
+Route::resource('vedette.admin', 'Vedette\controllers\AdminController', array('only' => array('index')));
 
 Route::get(Config::get('vedette.vedette_routes.user_home'), array(
 	'as' => 'vedette.user',
-	'uses' => 'Vedette\Controllers\IndexController@index')
+	'uses' => 'Vedette\controllers\IndexController@index')
 );
 Route::get(Config::get('vedette.vedette_routes.admin_home'), array(
 	'as' => 'vedette.admin',
-	'uses' => 'Vedette\Controllers\AdminController@index')
+	'uses' => 'Vedette\controllers\AdminController@index')
 );
 
 

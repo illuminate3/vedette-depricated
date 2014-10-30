@@ -18,11 +18,29 @@ class OAuthUser extends \User {
 	*/
 	public function checkUserExist ($email)
 	{
-		$user = DB::table('users')->where('email', '=', $email)->first();
-		if ($user)
+		$user = DB::table('users')
+			->where('email', '=', $email)
+//			->where('password', '=', $email, 'AND')
+			->first();
+//dd($user);
+		if ( $user->{'password'} != NULL ) {
 			return $user;
-		else
+		} elseif ( $user->{'password'} == NULL ) {
+
+			$this->createUserPassword($user->{'email'});
+			$user = DB::table('users')
+				->where('email', '=', $email)
+				->first();
+
+			if ( $user->{'password'} != NULL ) {
+				return $user;
+			} else {
+//				dd('error');
+			}
+
+		} else {
 			return false;
+		}
 	}
 
 public function isConfirmed($credentials, $identity_columns = array('username', 'email'))
@@ -112,15 +130,17 @@ public function isActivated()
 	*/
 	public function updateUserProfile ($result)
 	{
+//dd($result);
 	// get user data from OAuth
 		$userData = $this->userDataFromOAuth($result);
+//dd($userData['email']);
 	// updating profiles
-		DB::table('profiles')->where('email', $result['email'])->update($userData);
+		DB::table('profiles')->where('email', $userData['email'])->update($userData);
 
 		Session::put('userPicture', $userData['picture']);
 
 	// get updated row
-		$row = DB::table('profiles')->where('email', $result['email'])->first();
+		$row = DB::table('profiles')->where('email', $userData['email'])->first();
 
 		return $row;
 	}
@@ -134,6 +154,7 @@ public function isActivated()
 	*/
 	public function createUserProfile ($result)
 	{
+//dd($result);
 	// create user
 		$createUser = $this->createUser($result);
 	// get user data from OAuth
@@ -180,7 +201,7 @@ public function isActivated()
 		$createUser = DB::table('users')
 			->insert(array(
 				'email'				=> $result['email'],
-	//			'password'			=> Hash::make(md5(microtime().Config::get('app.key'))),
+//				'password'			=> Hash::make(md5(microtime().Config::get('app.key'))),
 				'password'			=> Hash::make($result['email']),
 				'activation_code'	=> md5(microtime().Config::get('app.key')),
 				'activated'			=> Config::get('vedette.vedette_db.activated'),
@@ -191,6 +212,32 @@ public function isActivated()
 		));
 
 	return $createUser;
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| Create User Password
+	|--------------------------------------------------------------------------
+	| @param unknown $result
+	| @return unknown
+	*/
+	private function createUserPassword($userEmail)
+	{
+	// Create the user Password
+		DB::table('users')
+			->where('email', '=', $userEmail)
+			->update(array(
+					'password'			=> Hash::make($userEmail)
+				));
+
+/*
+		$createUserPassword = DB::table('users')
+			->insert(array(
+				'password'			=> Hash::make($userEmail)
+		));
+	return $createUserPassword;
+*/
 	}
 
 	/*
