@@ -23,10 +23,13 @@ class OAuthUser extends \User {
 //			->where('password', '=', $email, 'AND')
 			->first();
 //dd($user);
-		if ( $user->{'password'} != NULL ) {
+//		if ( $user->{'password'} != NULL ) {
+		if ( $user != NULL ) {
 			return $user;
-		} elseif ( $user->{'password'} == NULL ) {
+//		} elseif ( $user->{'password'} == NULL ) {
 
+
+if ( $user->{'password'} == NULL ) {
 			$this->createUserPassword($user->{'email'});
 			$user = DB::table('users')
 				->where('email', '=', $email)
@@ -37,6 +40,8 @@ class OAuthUser extends \User {
 			} else {
 //				dd('error');
 			}
+}
+
 
 		} else {
 			return false;
