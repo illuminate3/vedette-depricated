@@ -19,7 +19,7 @@ class IndexController extends \BaseController {
 	 */
 	public function index()
 	{
-
+/*
 if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$pallet_count = count(Pallet::all());
 		$item_count = count(Item::all());
@@ -40,6 +40,8 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 } else {
 		return View::make('index');
 }
+*/
+		return View::make('index');
 
 	}
 
