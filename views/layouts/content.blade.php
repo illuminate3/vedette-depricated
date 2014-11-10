@@ -1,6 +1,8 @@
 <div class="row-fuild">
 	@if (Session::has('message'))
-		{{ Session::get('message') }}
+		<div class="alert alert-danger">
+			{{ Session::get('message') }}
+		</div>
 	@endif
 </div>
 
