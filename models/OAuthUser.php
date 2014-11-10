@@ -23,9 +23,13 @@ class OAuthUser extends \User {
 //			->where('password', '=', $email, 'AND')
 			->first();
 
-//dd($user);
+//dd($user->{'id'});
 //dd($user->{'password'});
-
+if ( $this->checkUserRoleExist($user->{'id'}) == False) {
+//dd($user);
+	$this->createUserRole($user->{'id'});
+}
+//dd('stop');
 		if ( $user->{'password'} != NULL ) {
 //		if ( $user != NULL ) {
 			return $user;
@@ -47,9 +51,44 @@ class OAuthUser extends \User {
 
 
 		} else {
-			return false;
+//			return false;
 		}
+
+
 	}
+
+	public function checkUserRoleExist($user_id)
+	{
+		$role_user = DB::table('role_user')
+			->where('user_id', '=', $user_id)
+			->first();
+//dd($role_user);
+
+if ($role_user == NULL) {
+return False;
+} else {
+return True;
+}
+//		return $role_user;
+	}
+
+	public function createUserRole($user_id)
+	{
+		$role_user = DB::table('role_user')
+			->insert(array(
+				'role_id' => Config::get('vedette.vedette_db.default_role_id'),
+				'user_id' => $user_id
+			));
+//dd($role_user);
+if ($role_user == NULL) {
+return False;
+} else {
+return True;
+}
+
+//		return $role_user;
+	}
+
 
 public function isConfirmed($credentials, $identity_columns = array('username', 'email'))
 {
