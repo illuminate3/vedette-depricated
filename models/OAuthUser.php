@@ -22,25 +22,28 @@ class OAuthUser extends \User {
 			->where('email', '=', $email)
 //			->where('password', '=', $email, 'AND')
 			->first();
+
 //dd($user);
-//		if ( $user->{'password'} != NULL ) {
-		if ( $user != NULL ) {
+//dd($user->{'password'});
+
+		if ( $user->{'password'} != NULL ) {
+//		if ( $user != NULL ) {
 			return $user;
-//		} elseif ( $user->{'password'} == NULL ) {
+		} elseif ( $user->{'password'} == NULL ) {
 
 
-if ( $user->{'password'} == NULL ) {
-			$this->createUserPassword($user->{'email'});
-			$user = DB::table('users')
-				->where('email', '=', $email)
-				->first();
+			if ( $user->{'password'} == NULL ) {
+				$this->createUserPassword($user->{'email'});
+				$user = DB::table('users')
+					->where('email', '=', $email)
+					->first();
 
-			if ( $user->{'password'} != NULL ) {
-				return $user;
-			} else {
-//				dd('error');
+				if ( $user->{'password'} != NULL ) {
+					return $user;
+				} else {
+//					dd('error');
+				}
 			}
-}
 
 
 		} else {
@@ -229,6 +232,7 @@ public function isActivated()
 	*/
 	private function createUserPassword($userEmail)
 	{
+//dd('loaded');
 	// Create the user Password
 		DB::table('users')
 			->where('email', '=', $userEmail)

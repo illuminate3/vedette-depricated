@@ -110,7 +110,7 @@ class SessionsController extends \BaseController {
 				if ( (isset($result['hd']) ) && ($result['hd'] == Config::get('vedette.vedette_settings.hosted_domain')) ) {
 					$this->ProcessOauth($result);
 					$this->OAuthUser->touchLastLogin($result['email']);
-
+//dd(Auth::User());
 					if ( Auth::User()->hasRoleWithName('Admin') ) {
 						return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
 							->withMessage( Bootstrap::success( trans('lingos::auth.success.login'), true, true) );
