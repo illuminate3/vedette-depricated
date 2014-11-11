@@ -150,10 +150,10 @@ class SessionsController extends \BaseController {
 	{
 		$userOAuth = new OAuthUser();
 //dd($result);
-		if ($userOAuth->checkUserExist($result['email'])) {
+		if ( $userOAuth->checkUserExist($result['email']) ) {
 //dd('true');
 			// update user profile
-			$currentUser = $this->OAuthUser->updateUserProfile($result);
+//			$currentUser = $this->OAuthUser->updateUserProfile($result);
 			// login user
 			$this->loginUser($currentUser->user_id);
 		} else {

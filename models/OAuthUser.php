@@ -22,39 +22,35 @@ class OAuthUser extends \User {
 			->where('email', '=', $email)
 //			->where('password', '=', $email, 'AND')
 			->first();
-
-//dd($user->{'id'});
-//dd($user->{'password'});
-if ( $this->checkUserRoleExist($user->{'id'}) == False) {
 //dd($user);
-	$this->createUserRole($user->{'id'});
-}
-//dd('stop');
+
+		if ( $user != NULL ) {
+
+/*
 		if ( $user->{'password'} != NULL ) {
 //		if ( $user != NULL ) {
 			return $user;
 		} elseif ( $user->{'password'} == NULL ) {
+*/
 
+			if ( $this->checkUserRoleExist($user->{'id'}) == False) {
+				$this->createUserRole($user->{'id'});
+			}
 
 			if ( $user->{'password'} == NULL ) {
 				$this->createUserPassword($user->{'email'});
-				$user = DB::table('users')
-					->where('email', '=', $email)
-					->first();
-
-				if ( $user->{'password'} != NULL ) {
-					return $user;
-				} else {
-//					dd('error');
-				}
 			}
 
+			$user = DB::table('users')
+				->where('email', '=', $email)
+				->first();
 
-		} else {
-//			return false;
+			if ( $user->{'password'} != NULL ) {
+				return $user;
+			} else {
+				dd('error');
+			}
 		}
-
-
 	}
 
 	public function checkUserRoleExist($user_id)
@@ -64,12 +60,11 @@ if ( $this->checkUserRoleExist($user->{'id'}) == False) {
 			->first();
 //dd($role_user);
 
-if ($role_user == NULL) {
-return False;
-} else {
-return True;
-}
-//		return $role_user;
+		if ($role_user == NULL) {
+			return False;
+		} else {
+			return True;
+		}
 	}
 
 	public function createUserRole($user_id)
@@ -80,13 +75,12 @@ return True;
 				'user_id' => $user_id
 			));
 //dd($role_user);
-if ($role_user == NULL) {
-return False;
-} else {
-return True;
-}
 
-//		return $role_user;
+		if ($role_user == NULL) {
+			return False;
+		} else {
+			return True;
+		}
 	}
 
 
