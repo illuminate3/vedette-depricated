@@ -5,8 +5,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Vedette\helpers\presenters\PresentableTrait;
 
 use Vedette\models\Role as Role;
-use Eloquent;
-use DB;
+use Eloquent, DB, Auth, Session;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
@@ -193,14 +192,36 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $users;
 	}
 
-	public function getUserPicture($user_id)
+	public function setUserPicture($user_id)
 	{
 		$profile = DB::table('profiles')
 			->where('user_id', '=', $user_id)
 			->first();
-
 //dd($profile);
-		return $profile;
+
+		if ($profile->picture) {
+			$result = strpos($profile->picture, "://");
+			if ($result == true) {
+//dd('found');
+//				$picture = $profile->picture;
+				Session::put('userPicture', $profile->picture);
+			} else {
+//dd('not found');
+//				$picture = Image::getPaths($profile->picture);
+//				$picture = "asset('/uploads/logos/'". Image::getPaths($profile->picture) . ')';
+
+				if ( Auth::User()->hasRoleWithName('Admin') ) {
+					Session::put('userPicture', '/uploads/uni.png');
+				} else {
+					Session::put('userPicture', '/uploads/usr.png');
+				}
+
+			}
+		} else {
+			return False;
+		}
+
+		return True;
 	}
 
 }

@@ -53,26 +53,29 @@ class SessionsController extends \BaseController {
 			isset($input['remember_me']) ?: false
 		);
 
-		$picture =  $this->User->getUserPicture(Auth::User()->id);
-		Session::put('userPicture', $picture->picture);
+//		$picture =  $this->User->getUserPicture(Auth::User()->id);
+//		Session::put('userPicture', $picture->picture);
 //dd($picture);
 
-		if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
-			$this->OAuthUser->touchLastLogin($input['email']);
-			return Redirect::route('vedette.admin')
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
-		} elseif ($attempt) {
-			$this->OAuthUser->touchLastLogin($input['email']);
-			return Redirect::route('vedette.user', Auth::User()->id)
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
-		} else {
-			return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
+		$userOAuth = new OAuthUser();
+		if ( $userOAuth->checkUserExist($input['email']) ) {
+
+//dd(Auth::User()->id);
+			$picture =  $this->User->setUserPicture(Auth::User()->id);
+//dd($picture);
+
+			if ($attempt && Auth::User()->hasRoleWithName('Admin')) {
+				$this->OAuthUser->touchLastLogin($input['email']);
+				return Redirect::route('vedette.admin')
+					->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
+			} elseif ($attempt) {
+				$this->OAuthUser->touchLastLogin($input['email']);
+				return Redirect::route('vedette.user', Auth::User()->id)
+					->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
+			} else {
+				return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
+			}
 		}
-/*
-} else {
-			return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true))->withInput();
-}
-*/
 	}
 
 	/**
@@ -153,7 +156,7 @@ class SessionsController extends \BaseController {
 		if ( $userOAuth->checkUserExist($result['email']) ) {
 //dd('true');
 			// update user profile
-//			$currentUser = $this->OAuthUser->updateUserProfile($result);
+			$currentUser = $this->OAuthUser->updateUserProfile($result);
 			// login user
 			$this->loginUser($currentUser->user_id);
 		} else {
@@ -174,8 +177,10 @@ class SessionsController extends \BaseController {
 	*/
 	public function loginUser ($userId)
 	{
+//dd($userId);
 		$loginUser = $this->OAuthUser->getUserCredentials($userId);
 //dd($loginUser->{'email'});
+
 		$attempt = Auth::attempt(
 			array(
 				'email' => $loginUser->{'email'},
@@ -183,21 +188,26 @@ class SessionsController extends \BaseController {
 	//			isset($input['remember_me']) ?: false
 			));
 //dd($attempt);
-		if ( $attempt && Auth::User()->hasRoleWithName('Admin') ) {
-			return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
-		} elseif ( $attempt ) {
-			return Redirect::route( Config::get('vedette.vedette_routes.user_home') , Auth::User()->id)
-				->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
-		} else {
-			return Redirect::route('login')
-				->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
-		}
 
-		Session::put('userPicture', $userData['picture']);
+		if ( $attempt != False ) {
+
+			$picture =  $this->User->setUserPicture($userId);
+//dd($picture);
+
+			if ( $attempt && Auth::User()->hasRoleWithName('Admin') ) {
+				return Redirect::route( Config::get('vedette.vedette_routes.admin_home') )
+					->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
+			} elseif ( $attempt ) {
+				return Redirect::route( Config::get('vedette.vedette_routes.user_home') , Auth::User()->id)
+					->withMessage(Bootstrap::success( trans('lingos::auth.success.login'), true, true));
+			} else {
+				return Redirect::route('login')
+					->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
+			}
 
 //		Session::put('checkAuth', True);
 //		Session::put('userAuth', $loginUser);
+		}
 	}
 
 	/*
