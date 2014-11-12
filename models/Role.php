@@ -8,18 +8,18 @@ class Role extends Eloquent {
 	use PresentableTrait;
 
 	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'roles';
-
-	/**
 	 * The model presenter.
 	 *
 	 * @var string
 	 */
 	protected $presenter = 'Vedette\helpers\presenters\presenter\Role';
+
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'roles';
 
 	public $errors;
 

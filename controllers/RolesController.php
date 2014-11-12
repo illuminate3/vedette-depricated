@@ -1,4 +1,5 @@
 <?php namespace Vedette\controllers;
+
 use View, Input, Redirect, Config, Validator;
 use Vedette\models\Role as Role;
 use Bootstrap;
