@@ -29,7 +29,8 @@
 		<ul class="dropdown-menu">
 			<li>
 				<a href="{{ URL::to('bills') }}">Bills</a>
-				<a href="{{ URL::to('orders') }}">Orders</a>
+				<a href="{{ URL::to('orders') }}">Orders Out</a>
+				<a href="{{ URL::to('receives') }}">Orders In</a>
 			</li>
 			<li class="divider"></li>
 			<li>
