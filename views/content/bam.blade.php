@@ -11,11 +11,11 @@
 	</h1>
 	<br>
 	<blockquote>
-		Human Resource Database
+		Bryant Asset Management Database
 		<br>
-		> simple
+		> assets
 		<br>
-		> informative
+		> items
 	</blockquote>
 </div>
 
@@ -28,15 +28,15 @@
 
 <div class="col-md-4">
 	<h2>
-		Sites
+		{{ trans('lingos::general.assets') }}
 	</h2>
 	<p>
-		Schools, Buildings and Centers
+		Computers, Blackboards, Cameras
 	</p>
 	<p>
 		{{ Bootstrap::linkRouteIcon(
-			'sites.index',
-			trans('lingos::hr.sites'),
+			'asset.index',
+			trans('lingos::general.assets'),
 			'chevron-right fa-fw',
 			array(),
 			array(
@@ -49,15 +49,15 @@
 
 <div class="col-md-4">
 	<h2>
-		Staff
+		{{ trans('lingos::general.items') }}
 	</h2>
 	<p>
-		Teachers and Staff
+		Catalog of Items
 	</p>
 	<p>
 		{{ Bootstrap::linkRouteIcon(
-			'profiles.index',
-			trans('lingos::general.staff'),
+			'items.index',
+			trans('lingos::general.items'),
 			'chevron-right fa-fw',
 			array(),
 			array(
@@ -71,15 +71,15 @@
 <div class="col-md-4">
 @if (Auth::check())
 	<h2>
-		Your Profile
+		{{ trans('lingos::general.rooms') }}
 	</h2>
 	<p>
-		Check your information
+		Where things are located
 	</p>
 	<p>
 		{{ Bootstrap::linkRouteIcon(
-			'profiles.show',
-			trans('lingos::hr.profile'),
+			'rooms.index',
+			trans('lingos::general.rooms'),
 			'chevron-right fa-fw',
 			array(Auth::user()->id),
 			array(

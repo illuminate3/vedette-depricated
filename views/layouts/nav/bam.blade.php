@@ -1,26 +1,42 @@
 <ul class="nav navbar-nav">
 
 <li>
-	<a href="{{ route('items.index') }}"><span class="glyphicon glyphicon-wrench"></span> Items</a>
+	<a href="{{ route('items.index') }}">Items</a>
 </li>
 <li>
-	<a href="{{ route('asset.index') }}"><span class="glyphicon glyphicon-wrench"></span> Assets</a>
+	<a href="{{ route('asset.index') }}">Assets</a>
 </li>
 <li>
-	<a href="{{ route('asset_statuses.index') }}"><span class="glyphicon glyphicon-wrench"></span> asset_statuses</a>
-</li>
-<li>
-	<a href="{{ route('tech_statuses.index') }}"><span class="glyphicon glyphicon-wrench"></span> tech_statuses</a>
-</li>
-<li>
-	<a href="{{ route('rooms.index') }}"><span class="glyphicon glyphicon-wrench"></span> Rooms</a>
-</li>
-
-<li>
-	<a href="{{ route('categories.index') }}"><span class="glyphicon glyphicon-wrench"></span> Manage Categories</a>
+	<a href="{{ route('rooms.index') }}">Rooms</a>
 </li>
 
 </ul>
+
+
+@if (Auth::check())
+@if (Auth::user()->hasRoleWithName('Admin'))
+
+<li class="dropdown">
+	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
+		BAM - {{ trans('lingos::general.settings') }}
+		<b class="caret"></b>
+	</a>
+	<ul class="dropdown-menu">
+		<li>
+			{{ link_to('categories', 'Manage Categories') }}
+		</li>
+		<li>
+			{{ link_to('asset_statuses', 'asset_statuses') }}
+		</li>
+		<li>
+			{{ link_to('tech_statuses', 'tech_statuses') }}
+		</li>
+	</ul>
+</li>
+
+@endif
+@endif
+
 
 <li class="dropdown">
 	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
