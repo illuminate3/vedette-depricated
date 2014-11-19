@@ -86,7 +86,6 @@ $(document).ready(function() {
 </div>
 
 
-{{--}}
 <div class="table-responsive">
 <table class="table table-striped table-hover" id="DataTable">
 	<thead>
