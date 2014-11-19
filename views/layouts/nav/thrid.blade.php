@@ -1,7 +1,9 @@
 <ul class="nav navbar-nav">
+{{--
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'customers')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('customers') }}">Customers</a>
 	</li>
+--}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'items')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('items') }}">Items</a>
 	</li>
@@ -28,6 +30,7 @@
 		</a>
 		<ul class="dropdown-menu">
 			<li>
+				<a href="{{ URL::to('customers') }}">Customers</a>
 				<a href="{{ URL::to('bills') }}">Bills</a>
 				<a href="{{ URL::to('orders') }}">Orders Out</a>
 				<a href="{{ URL::to('receives') }}">Orders In</a>
