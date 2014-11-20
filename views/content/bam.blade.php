@@ -92,3 +92,8 @@
 </div>
 
 </div><!-- row -->
+
+
+@if (isset($menu2))
+	{{ HTML::navy($menu2) }}
+@endif

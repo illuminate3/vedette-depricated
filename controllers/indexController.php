@@ -1,23 +1,33 @@
 <?php namespace Vedette\controllers;
-use Auth;
-use View;
-use Session;
 
+use Auth, View, Session, App;
+
+/*
 use Third\models\Pallet as Pallet;
 use Third\models\Item as Item;
 use Third\models\Rack as Rack;
 use Third\models\Pick as Pick;
 use Third\models\Alert as Alert;
+*/
+
+use BAM\models\Category as Category;
+use BAM\models\Item as Item;
 
 
 class IndexController extends \BaseController {
+
+	public function __construct(Category $category, Item $item)
+	{
+		$this->category = $category;
+		$this->item = $item;
+	}
 
 	/**
 	 * Display an admin index view.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($slug = '/')
 	{
 
 if ( $_ENV['APP_TYPE'] == 'Third' ) {
@@ -37,11 +47,23 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 				'pick_count',
 				'alerts'
 			));
+} elseif ( $_ENV['APP_TYPE'] == 'BAM' ) {
+
+$category = $this->category->with('items')->whereSlug($slug)->first();
+//dd($category);
+if ($category === null)
+{
+	App::abort(404, 'Sorry, but requested category doesn\'t exists.');
+}
+//$this->layout->menu2 = $this->category->getMenu2($category);
+
+
+		return View::make('index');
+
 } else {
 		return View::make('index');
 }
 
-		return View::make('index');
 
 	}
 
