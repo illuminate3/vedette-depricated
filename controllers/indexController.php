@@ -2,17 +2,15 @@
 
 use Auth, View, Session, App;
 
-/*
+//
 use Third\models\Pallet as Pallet;
 use Third\models\Item as Item;
 use Third\models\Rack as Rack;
 use Third\models\Pick as Pick;
 use Third\models\Alert as Alert;
-*/
 
+//use BAM\models\Item as Item;
 use BAM\models\Category as Category;
-use BAM\models\Item as Item;
-
 
 class IndexController extends \BaseController {
 
