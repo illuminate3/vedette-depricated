@@ -81,7 +81,8 @@
 			<a href="{{ URL::to('statuses_billing') }}">Billing Statuses</a>
 			<a href="{{ URL::to('statuses_paid') }}">Paid Statuses</a>
 			<a href="{{ URL::to('statuses_sent') }}">Sent Statuses</a>
-			<a href="{{ URL::to('statuses_order') }}">Order Statuses</a>
+			<a href="{{ URL::to('statuses_order') }}">Order Out Statuses</a>
+			<a href="{{ URL::to('statuses_receive') }}">Order In Statuses</a>
 			<a href="{{ URL::to('charge_types') }}">Charge Types</a>
 			<a href="{{ URL::to('statuses_pick') }}">Pick Statuses</a>
 			<a href="{{ URL::to('pallet_types') }}">Pallet Types</a>
