@@ -93,6 +93,8 @@
 
 </div><!-- row -->
 
+@yield('menu')
+
 
 @if (isset($menu2))
 	{{ HTML::navy($menu2) }}

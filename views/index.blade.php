@@ -23,3 +23,17 @@ $(document).ready(function() {
 	@include(Config::get('vedette.vedette_html.ipsum_content'))
 </div>
 @stop
+
+@section('menu')
+    @if (isset($menu))
+    <ul class="nav navbar-nav">
+        @foreach ($menu as $item)
+        <li @if(isset($item['active']) && $item['active'])class="active"@endif>
+            <a href="{{ $item['url'] }}">{{ $item['label'] }}</a>
+        </li>
+        @endforeach
+    </ul>
+    @endif
+
+@stop
+

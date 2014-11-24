@@ -48,15 +48,15 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 				'alerts'
 			));
 } elseif ( $_ENV['APP_TYPE'] == 'BAM' ) {
-
+/*
 $category = $this->category->with('items')->whereSlug($slug)->first();
 //dd($category);
 if ($category === null)
 {
 	App::abort(404, 'Sorry, but requested category doesn\'t exists.');
 }
-//$this->layout->menu2 = $this->category->getMenu2($category);
-
+$this->layout->menu2 = $this->category->getMenu2($category);
+*/
 
 		return View::make('index');
 

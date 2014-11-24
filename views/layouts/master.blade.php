@@ -27,9 +27,14 @@
 -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
-
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/media/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/sb-admin-2.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/plugins/metisMenu/metisMenu.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/style.css') }}">
+
+
 	@yield('styles')
 
 
@@ -45,7 +50,28 @@
 
 	<div id="wrap" class="container"><!-- Container -->
 		@include('layouts.content')
+
+@if (isset($menu2))
+	{{ HTML::navy($menu2) }}
+@endif
+
+
 	</div><!-- ./ container -->
+
+@section('menu')
+	@if (isset($menu))
+	<ul class="nav navbar-nav">
+		@foreach ($menu as $item)
+		<li @if(isset($item['active']) && $item['active'])class="active"@endif>
+			<a href="{{ $item['url'] }}">{{ $item['label'] }}</a>
+		</li>
+		@endforeach
+	</ul>
+	@endif
+@stop
+
+
+
 
 	@include('layouts.footer')
 
@@ -56,5 +82,13 @@
 	<script>
 		@yield('inline-scripts')
 	</script>
+
+<script src="{{ asset('assets/BAM/js/plugins/metisMenu/metisMenu.min.js') }}"></script>
+<script src="{{ asset('assets/BAM/js/sb-admin-2.js') }}"></script>
+<script>
+	$(function () {
+		$('#menu').metisMenu();
+	});
+</script>
 
 </html>

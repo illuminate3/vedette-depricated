@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav">
+<ul class="navbar-nav">
 
 <li>
 	<a href="{{ route('items.index') }}">Items</a>
@@ -11,6 +11,9 @@
 </li>
 
 </ul>
+
+
+@yield('menu')
 
 
 @if (Auth::check())
@@ -37,7 +40,7 @@
 @endif
 @endif
 
-
+{{--
 <li class="dropdown">
 	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
 		HR
@@ -92,3 +95,4 @@
 
 @endif
 @endif
+--}}
