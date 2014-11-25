@@ -5,7 +5,7 @@
 	</li>
 --}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'items')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('items') }}">Items</a>
+		<a href="{{ URL::to('catalogs') }}">Catalog</a>
 	</li>
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'racks')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('racks') }}">Racks</a>
@@ -53,6 +53,7 @@
 	</a>
 	<ul class="dropdown-menu">
 		<li>
+			<a href="{{ URL::to('catalogs') }}">Catalog</a>
 			<a href="{{ URL::to('items') }}">Items</a>
 			<a href="{{ URL::to('customers') }}">Customers</a>
 			<a href="{{ URL::to('customer_profiles') }}">Customer Profiles (for debugging)</a>
@@ -86,6 +87,7 @@
 			<a href="{{ URL::to('charge_types') }}">Charge Types</a>
 			<a href="{{ URL::to('statuses_pick') }}">Pick Statuses</a>
 			<a href="{{ URL::to('pallet_types') }}">Pallet Types</a>
+			<a href="{{ URL::to('locale_types') }}">Locale Types</a>
 		</li>
 	</ul>
 </li>
