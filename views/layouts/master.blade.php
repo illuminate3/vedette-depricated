@@ -30,11 +30,11 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/media/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css') }}">
 
-{{--
+
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/sb-admin-2.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/plugins/metisMenu/metisMenu.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/style.css') }}">
---}}
+
 
 	@yield('styles')
 
@@ -84,7 +84,7 @@
 		@yield('inline-scripts')
 	</script>
 
-{{--
+
 <script src="{{ asset('assets/BAM/js/plugins/metisMenu/metisMenu.min.js') }}"></script>
 <script src="{{ asset('assets/BAM/js/sb-admin-2.js') }}"></script>
 <script>
@@ -92,6 +92,6 @@
 		$('#menu').metisMenu();
 	});
 </script>
---}}
+
 
 </html>
