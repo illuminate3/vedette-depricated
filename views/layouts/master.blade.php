@@ -30,11 +30,11 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/media/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css') }}">
 
-
+@if ( $_ENV['APP_TYPE'] == 'HR' )
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/sb-admin-2.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/plugins/metisMenu/metisMenu.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/style.css') }}">
-
+@endif
 
 	@yield('styles')
 
