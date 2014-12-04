@@ -32,6 +32,18 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
 			<h3 class="panel-title">
+				Catalog
+			</h3>
+			</div>
+			<div class="panel-body">
+				{{$catalog_count}}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+			<h3 class="panel-title">
 				Items
 			</h3>
 			</div>
@@ -40,20 +52,6 @@
 			</div>
 		</div>
 	</div>
-{{--
-	<div class="col-md-2">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-			<h3 class="panel-title">
-				Products
-			</h3>
-			</div>
-			<div class="panel-body">
-				{{$product_count}}
-			</div>
-		</div>
-	</div>
---}}
 	<div class="col-md-2">
 		<div class="panel panel-info">
 			<div class="panel-heading">
