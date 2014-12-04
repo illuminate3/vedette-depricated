@@ -30,6 +30,16 @@
 		</a>
 		<ul class="dropdown-menu">
 			<li>
+				<a href="{{ URL::to('shipments') }}">Shipments</a>
+			</li>
+			<li>
+				<a href="{{ URL::to('rents') }}">Rents</a>
+			</li>
+			<li>
+				<a href="{{ URL::to('produces') }}">Produces</a>
+			</li>
+			<li class="divider"></li>
+			<li>
 				<a href="{{ URL::to('customers') }}">Customers</a>
 			</li>
 			<li>
