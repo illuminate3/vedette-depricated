@@ -40,20 +40,16 @@
 			</li>
 			<li class="divider"></li>
 			<li>
-				<a href="{{ URL::to('customers') }}">Customers</a>
-			</li>
-			<li>
-				<a href="{{ URL::to('vendors') }}">Vendors</a>
-			</li>
-			<li>
 				<a href="{{ URL::to('bills') }}">Bills</a>
 			</li>
 			<li>
 				<a href="{{ URL::to('orders') }}">Orders Out</a>
 			</li>
+{{--
 			<li>
 				<a href="{{ URL::to('receives') }}">Orders In</a>
 			</li>
+--}}
 			<li class="divider"></li>
 			<li>
 				<a href="{{ URL::to('invoices') }}">Invoices</a>
@@ -72,20 +68,20 @@
 	</a>
 	<ul class="dropdown-menu">
 		<li>
-			<a href="{{ URL::to('catalogs') }}">Catalog</a>
-			<a href="{{ URL::to('allergens') }}">Allergens</a>
-			<a href="{{ URL::to('items') }}">Items</a>
 			<a href="{{ URL::to('customers') }}">Customers</a>
-			<a href="{{ URL::to('customer_profiles') }}">Customer Profiles (for debugging)</a>
-			<a href="{{ URL::to('bills') }}">Bills</a>
-			<a href="{{ URL::to('charges') }}">Charges (for debugging)</a>
+		</li>
+		<li>
+			<a href="{{ URL::to('vendors') }}">Vendors</a>
+		</li>
+			<li class="divider"></li>
+		<li>
+			<a href="{{ URL::to('catalogs') }}">Catalog</a>
 			<a href="{{ URL::to('racks') }}">Racks</a>
 			<a href="{{ URL::to('pallets') }}">Pallets</a>
 			<a href="{{ URL::to('picks') }}">Picks</a>
-			<a href="{{ URL::to('orders') }}">Orders</a>
-			<a href="{{ URL::to('invoices') }}">Invoices</a>
-			<a href="{{ URL::to('vendibles') }}">Order Items</a>
-			<a href="{{ URL::to('alerts') }}">Alerts (for debugging)</a>
+{{--
+			<a href="{{ URL::to('items') }}">Items</a>
+--}}
 		</li>
 	</ul>
 </li>
@@ -97,6 +93,7 @@
 	</a>
 	<ul class="dropdown-menu">
 		<li>
+			<a href="{{ URL::to('allergens') }}">Allergens</a>
 			<a href="{{ URL::to('units') }}">Units and Measurement</a>
 			<a href="{{ URL::to('zones') }}">Zones</a>
 			<a href="{{ URL::to('statuses_billing') }}">Billing Statuses</a>
@@ -108,6 +105,20 @@
 			<a href="{{ URL::to('statuses_pick') }}">Pick Statuses</a>
 			<a href="{{ URL::to('pallet_types') }}">Pallet Types</a>
 			<a href="{{ URL::to('locale_types') }}">Locale Types</a>
+		</li>
+	</ul>
+</li>
+<li class="dropdown">
+	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
+		Debug
+		<b class="caret"></b>
+	</a>
+	<ul class="dropdown-menu">
+		<li>
+			<a href="{{ URL::to('vendibles') }}">Order Items</a>
+			<a href="{{ URL::to('customer_profiles') }}">Customer Profiles (for debugging)</a>
+			<a href="{{ URL::to('charges') }}">Charges (for debugging)</a>
+			<a href="{{ URL::to('alerts') }}">Alerts (for debugging)</a>
 		</li>
 	</ul>
 </li>
