@@ -73,6 +73,7 @@
 	<ul class="dropdown-menu">
 		<li>
 			<a href="{{ URL::to('catalogs') }}">Catalog</a>
+			<a href="{{ URL::to('allergens') }}">Allergens</a>
 			<a href="{{ URL::to('items') }}">Items</a>
 			<a href="{{ URL::to('customers') }}">Customers</a>
 			<a href="{{ URL::to('customer_profiles') }}">Customer Profiles (for debugging)</a>
