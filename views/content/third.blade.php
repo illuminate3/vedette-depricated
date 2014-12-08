@@ -48,7 +48,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{$item_count}}
+				{{-- $item_count --}}
 			</div>
 		</div>
 	</div>

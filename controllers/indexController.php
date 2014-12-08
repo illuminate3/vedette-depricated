@@ -31,7 +31,7 @@ class IndexController extends \BaseController {
 
 if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$pallet_count = count(Pallet::all());
-		$item_count = count(Item::all());
+//		$item_count = count(Item::all());
 		$catalog_count = count(Catalog::all());
 		$rack_count = count(Rack::all());
 		$pick_count = count(Pick::all());
@@ -40,7 +40,7 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 
 		return View::make('index', compact(
 				'pallet_count',
-				'item_count',
+//				'item_count',
 				'catalog_count',
 				'rack_count',
 				'pick_count',
