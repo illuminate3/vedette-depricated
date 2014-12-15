@@ -33,7 +33,7 @@
 				<a href="{{ URL::to('receiving') }}">Receiving</a>
 			</li>
 			<li>
-				<a href="{{ URL::to('rents') }}">Storage</a>
+				<a href="{{ URL::to('storage') }}">Storage</a>
 			</li>
 			<li>
 				<a href="{{ URL::to('production') }}">Production</a>

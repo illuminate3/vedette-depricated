@@ -177,13 +177,6 @@
 
 	<hr>
 
-	{{ Bootstrap::submit(
-		trans('lingos::button.save'),
-		[
-			'class' => 'btn btn-success btn-block'
-		]
-	) }}
-
 	<div class="row">
 		<div class="col-sm-6">
 		{{ Bootstrap::linkIcon(
