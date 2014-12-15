@@ -21,6 +21,9 @@
 @stop
 
 @section('inline-scripts')
+
+	var text_confirm_message = '{{ trans('lingos::job_title.ask.delete') }}';
+
 $(document).ready(function(){
 
 	var config = {
