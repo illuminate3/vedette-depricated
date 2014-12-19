@@ -53,11 +53,11 @@
 			<li>
 				<a href="{{ URL::to('receives') }}">Orders In</a>
 			</li>
+--}}
 			<li class="divider"></li>
 			<li>
 				<a href="{{ URL::to('invoices') }}">Invoices</a>
 			</li>
---}}
 		</ul>
 	</li>
 </ul>
