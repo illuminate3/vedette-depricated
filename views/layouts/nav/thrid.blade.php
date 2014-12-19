@@ -6,15 +6,13 @@
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'items')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('catalogs') }}">Catalog</a>
 	</li>
---}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'pallets')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('pallets') }}">Pallets</a>
 	</li>
-{{--
+--}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'picks')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('picks') }}">Picks</a>
 	</li>
---}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'builds')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('builds') }}">Builds</a>
 	</li>
@@ -36,7 +34,7 @@
 				<a href="{{ URL::to('receiving') }}">Receiving</a>
 			</li>
 			<li>
-				<a href="{{ URL::to('receiving') }}">Shipping</a>
+				<a href="{{ URL::to('orders') }}">Shipping</a>
 			</li>
 {{--
 			<li>
