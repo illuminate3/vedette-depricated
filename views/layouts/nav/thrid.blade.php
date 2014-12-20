@@ -11,14 +11,14 @@
 	</li>
 --}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'picks')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('picks') }}">Picks</a>
+		<a href="{{ URL::to('picks') }}">Build Order</a>
 	</li>
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'builds')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('builds') }}">Builds</a>
+		<a href="{{ URL::to('builds') }}">Receiving</a>
 	</li>
 
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'moves')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('moves') }}">Moves</a>
+		<a href="{{ URL::to('moves') }}">Move Pallet</a>
 	</li>
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'scans')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('scans') }}">Scans</a>
@@ -36,10 +36,10 @@
 			<li>
 				<a href="{{ URL::to('orders') }}">Shipping</a>
 			</li>
-{{--
 			<li>
 				<a href="{{ URL::to('storage') }}">Storage</a>
 			</li>
+{{--
 			<li>
 				<a href="{{ URL::to('production') }}">Production</a>
 			</li>
@@ -77,12 +77,15 @@
 		<li>
 			<a href="{{ URL::to('vendors') }}">Vendors</a>
 		</li>
+		<li>
+			<a href="{{ URL::to('trucks') }}">Trucking</a>
+		</li>
 			<li class="divider"></li>
 		<li>
 			<a href="{{ URL::to('catalogs') }}">Catalog</a>
 			<a href="{{ URL::to('racks') }}">Racks</a>
 			<a href="{{ URL::to('pallets') }}">Pallets</a>
-			<a href="{{ URL::to('picks') }}">Picks</a>
+			<a href="{{ URL::to('picks') }}">Build Order</a>
 {{--
 			<a href="{{ URL::to('items') }}">Items</a>
 --}}
