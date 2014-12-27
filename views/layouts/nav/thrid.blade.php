@@ -72,6 +72,12 @@
 	</a>
 	<ul class="dropdown-menu">
 		<li>
+			<a href="{{ URL::to('reports') }}">Reports</a>
+		</li>
+		</li>
+			<li class="divider"></li>
+		<li>
+		<li>
 			<a href="{{ URL::to('customers') }}">Customers</a>
 		</li>
 		<li>
