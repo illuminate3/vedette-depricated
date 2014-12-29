@@ -12,7 +12,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{$rack_count}}
+				{{ $rack_count }}
 			</div>
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{$pallet_count}}
+				{{ $pallet_count }}
 			</div>
 		</div>
 	</div>
@@ -36,7 +36,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{$catalog_count}}
+				{{ $catalog_count }}
 			</div>
 		</div>
 	</div>
@@ -48,7 +48,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{-- $item_count --}}
+				{{ $item_count }}
 			</div>
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{$pick_count}}
+				{{ $pick_count }}
 			</div>
 		</div>
 	</div>

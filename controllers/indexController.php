@@ -4,7 +4,6 @@ use Auth, View, Session, App;
 
 //
 use Third\models\Pallet as Pallet;
-use Third\models\Item as Item;
 use Third\models\Catalog as Catalog;
 use Third\models\Rack as Rack;
 use Third\models\Pick as Pick;
@@ -15,10 +14,10 @@ use BAM\models\Category as Category;
 
 class IndexController extends \BaseController {
 
-	public function __construct(Category $category, Item $item)
+	public function __construct(Category $category, Pallet $pallet)
 	{
 		$this->category = $category;
-		$this->item = $item;
+		$this->pallet = $pallet;
 	}
 
 	/**
@@ -31,7 +30,7 @@ class IndexController extends \BaseController {
 
 if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$pallet_count = count(Pallet::all());
-//		$item_count = count(Item::all());
+		$item_count = count($this->pallet->getItemContentCount());
 		$catalog_count = count(Catalog::all());
 		$rack_count = count(Rack::all());
 		$pick_count = count(Pick::all());
@@ -40,7 +39,7 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 
 		return View::make('index', compact(
 				'pallet_count',
-//				'item_count',
+				'item_count',
 				'catalog_count',
 				'rack_count',
 				'pick_count',

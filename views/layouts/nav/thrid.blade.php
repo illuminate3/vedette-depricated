@@ -36,10 +36,10 @@
 			<li>
 				<a href="{{ URL::to('orders') }}">Shipping</a>
 			</li>
+{{--
 			<li>
 				<a href="{{ URL::to('storage') }}">Storage</a>
 			</li>
-{{--
 			<li>
 				<a href="{{ URL::to('production') }}">Production</a>
 			</li>
