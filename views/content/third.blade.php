@@ -12,7 +12,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{ $rack_count }}
+				<a href="{{ URL::to('racks') }}">{{ $rack_count }}</a>
 			</div>
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{ $pallet_count }}
+				<a href="{{ URL::to('pallets') }}">{{ $pallet_count }}</a>
 			</div>
 		</div>
 	</div>
@@ -36,7 +36,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{ $catalog_count }}
+				<a href="{{ URL::to('catalogs') }}">{{ $catalog_count }}</a>
 			</div>
 		</div>
 	</div>
@@ -48,7 +48,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{ $item_count }}
+				<a href="{{ URL::to('items') }}">{{ $item_count }}</a>
 			</div>
 		</div>
 	</div>
@@ -60,11 +60,39 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				{{ $pick_count }}
+				<a href="{{ URL::to('picks') }}">{{ $pick_count }}</a>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-md-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+			<h3 class="panel-title">
+				Customer
+			</h3>
+			</div>
+			<div class="panel-body">
+				<a href="{{ URL::to('customers') }}">{{ $customer_count }}</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+			<h3 class="panel-title">
+				Customer Items
+			</h3>
+			</div>
+			<div class="panel-body">
+				<a href="{{ URL::to('customer_items') }}">{{-- $customer_item_count --}}</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 @if ($alerts->count())
 <h2>

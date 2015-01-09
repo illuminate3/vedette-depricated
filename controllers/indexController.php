@@ -5,6 +5,7 @@ use Auth, View, Session, App;
 //
 use Third\models\Pallet as Pallet;
 use Third\models\Catalog as Catalog;
+use Third\models\Customer as Customer;
 use Third\models\Rack as Rack;
 use Third\models\Pick as Pick;
 use Third\models\Alert as Alert;
@@ -34,6 +35,8 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$catalog_count = count(Catalog::all());
 		$rack_count = count(Rack::all());
 		$pick_count = count(Pick::all());
+		$customer_count = count(Customer::all());
+//		$customer_item_count = count(Customer::all());
 
 		$alerts = Alert::all();
 
@@ -41,6 +44,8 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 				'pallet_count',
 				'item_count',
 				'catalog_count',
+				'customer_count',
+				'customer_item_count',
 				'rack_count',
 				'pick_count',
 				'alerts'

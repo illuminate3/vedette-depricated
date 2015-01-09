@@ -81,21 +81,35 @@
 			<a href="{{ URL::to('customers') }}">Customers</a>
 		</li>
 		<li>
+			<a href="{{ URL::to('customer_items') }}">Customer Items</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('vendors') }}">Vendors</a>
 		</li>
 		<li>
 			<a href="{{ URL::to('trucks') }}">Trucking</a>
 		</li>
-			<li class="divider"></li>
+	<li class="divider"></li>
 		<li>
 			<a href="{{ URL::to('catalogs') }}">Catalog</a>
-			<a href="{{ URL::to('racks') }}">Racks</a>
-			<a href="{{ URL::to('pallets') }}">Pallets</a>
-			<a href="{{ URL::to('picks') }}">Build Order</a>
-{{--
-			<a href="{{ URL::to('items') }}">Items</a>
---}}
 		</li>
+		<li>
+			<a href="{{ URL::to('items') }}">Stock / Items</a>
+		</li>
+		<li>
+			<a href="{{ URL::to('racks') }}">Racks</a>
+		</li>
+		<li>
+			<a href="{{ URL::to('pallets') }}">Pallets</a>
+		</li>
+		<li>
+			<a href="{{ URL::to('picks') }}">Build Order</a>
+		</li>
+{{--
+		<li>
+			<a href="{{ URL::to('items') }}">Items</a>
+		</li>
+--}}
 	</ul>
 </li>
 
