@@ -6,6 +6,8 @@ use Auth, View, Session, App;
 use Third\models\Pallet as Pallet;
 use Third\models\Catalog as Catalog;
 use Third\models\Customer as Customer;
+use Third\models\Customer_item as Customer_item;
+use Third\models\Item as Item;
 use Third\models\Rack as Rack;
 use Third\models\Pick as Pick;
 use Third\models\Alert as Alert;
@@ -15,11 +17,18 @@ use BAM\models\Category as Category;
 
 class IndexController extends \BaseController {
 
-	public function __construct(Category $category, Pallet $pallet)
-	{
-		$this->category = $category;
-		$this->pallet = $pallet;
-	}
+	public function __construct(
+		Category $category,
+		Customer_item $customer_item,
+		Item $item,
+		Pallet $pallet
+		)
+		{
+			$this->category = $category;
+			$this->customer_item = $customer_item;
+			$this->item = $item;
+			$this->pallet = $pallet;
+		}
 
 	/**
 	 * Display an admin index view.
@@ -31,12 +40,13 @@ class IndexController extends \BaseController {
 
 if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$pallet_count = count(Pallet::all());
-		$item_count = count($this->pallet->getItemContentCount());
+		$item_count = count($this->item->countPalletContents());
 		$catalog_count = count(Catalog::all());
 		$rack_count = count(Rack::all());
 		$pick_count = count(Pick::all());
 		$customer_count = count(Customer::all());
-//		$customer_item_count = count(Customer::all());
+		$customer_item_count = count($this->customer_item->countPalletContents());
+//dd($customer_item_count);
 
 		$alerts = Alert::all();
 

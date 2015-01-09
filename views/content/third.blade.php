@@ -87,7 +87,7 @@
 			</h3>
 			</div>
 			<div class="panel-body">
-				<a href="{{ URL::to('customer_items') }}">{{-- $customer_item_count --}}</a>
+				<a href="{{ URL::to('customer_items') }}">{{{ $customer_item_count }}}</a>
 			</div>
 		</div>
 	</div>
