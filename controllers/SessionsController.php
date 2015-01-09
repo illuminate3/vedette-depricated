@@ -37,7 +37,7 @@ class SessionsController extends \BaseController {
 	public function store()
 	{
 		$input = Input::all();
-
+//dd($input);
 //		$validation = Validator::make($input, Role::$rules);
 //		$validation = Validator::make($input);
 
@@ -52,6 +52,10 @@ class SessionsController extends \BaseController {
 			array('email' => $input['email'], 'password' => $input['password']),
 			isset($input['remember_me']) ?: false
 		);
+
+//dd($attempt);
+		if ($attempt != FALSE ) {
+
 
 //		$picture =  $this->User->getUserPicture(Auth::User()->id);
 //		Session::put('userPicture', $picture->picture);
@@ -75,6 +79,9 @@ class SessionsController extends \BaseController {
 			} else {
 				return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
 			}
+		}
+		} else {
+			return Redirect::route('login')->withMessage(Bootstrap::danger( trans('lingos::auth.error.authorize'), true, true))->withInput();
 		}
 	}
 
