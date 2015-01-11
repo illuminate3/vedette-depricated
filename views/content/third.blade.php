@@ -44,7 +44,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
 			<h3 class="panel-title">
-				Items
+				Global Items
 			</h3>
 			</div>
 			<div class="panel-body">
@@ -52,23 +52,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-			<h3 class="panel-title">
-				Picks
-			</h3>
-			</div>
-			<div class="panel-body">
-				<a href="{{ URL::to('picks') }}">{{ $pick_count }}</a>
-			</div>
-		</div>
-	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-2">
-		<div class="panel panel-info">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 			<h3 class="panel-title">
 				Customers
@@ -80,7 +68,7 @@
 		</div>
 	</div>
 	<div class="col-md-2">
-		<div class="panel panel-info">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 			<h3 class="panel-title">
 				Customer Items
@@ -88,6 +76,21 @@
 			</div>
 			<div class="panel-body">
 				<a href="{{ URL::to('customer_items') }}">{{{ $customer_item_count }}}</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-2">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+			<h3 class="panel-title">
+				Picks
+			</h3>
+			</div>
+			<div class="panel-body">
+				<a href="{{ URL::to('picks') }}">{{ $pick_count }}</a>
 			</div>
 		</div>
 	</div>
