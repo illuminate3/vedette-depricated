@@ -21,12 +21,14 @@ class IndexController extends \BaseController {
 		Category $category,
 		Customer_item $customer_item,
 		Item $item,
+		Pick $pick,
 		Pallet $pallet
 		)
 		{
 			$this->category = $category;
 			$this->customer_item = $customer_item;
 			$this->item = $item;
+			$this->pick = $pick;
 			$this->pallet = $pallet;
 		}
 
@@ -43,7 +45,7 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$item_count = count($this->item->countPalletContents());
 		$catalog_count = count(Catalog::all());
 		$rack_count = count(Rack::all());
-		$pick_count = count(Pick::all());
+		$pick_count = count($this->pick->countOpenPicks());
 		$customer_count = count(Customer::all());
 		$customer_item_count = count($this->customer_item->countPalletContents());
 //dd($customer_item_count);
