@@ -4,6 +4,7 @@ use Vedette\models\User as User;
 use Auth;
 use View;
 use Session;
+use Bootstrap;
 
 class AdminController extends BaseController {
 
