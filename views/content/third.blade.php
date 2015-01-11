@@ -103,11 +103,17 @@
 @foreach ($alerts as $alert)
 	@if ($alert->type = 1)
 		<div class="alert alert-danger">
-			{{{ $alert->message }}} : is out of stock
+			Customer ID: {{{ $alert->customer_id }}}
+<br>
+			Item: [ {{{ $alert->message }}} ]
+			: Out of Stock
 		</div>
 	@else
 		<div class="alert alert-success">
-			{{{ $alert->message }}} : is in stock
+			Customer ID: {{{ $alert->customer_id }}}
+<br>
+			Item: [ {{{ $alert->message }}} ]
+			: IN Stock
 		</div>
 	@endif
 @endforeach
@@ -118,6 +124,7 @@
 		<thead>
 			<tr>
 				<th>Order_id</th>
+				<th>Customer_id</th>
 				<th>Message</th>
 			</tr>
 		</thead>
@@ -126,6 +133,7 @@
 			@foreach ($alerts as $alert)
 				<tr>
 					<td>{{{ $alert->order_id }}}</td>
+					<td>{{{ $alert->customer_id }}}</td>
 					<td>{{{ $alert->message }}}</td>
 					<td>{{ link_to_route('alerts.edit', 'Edit', array($alert->id), array('class' => 'btn btn-info')) }}</td>
 					<td>
