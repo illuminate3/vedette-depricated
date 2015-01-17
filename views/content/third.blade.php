@@ -94,6 +94,18 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-2">
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+			<h3 class="panel-title">
+				Alerts
+			</h3>
+			</div>
+			<div class="panel-body">
+				<a href="{{ URL::to('alerts') }}">{{ $alert_count }}</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 
