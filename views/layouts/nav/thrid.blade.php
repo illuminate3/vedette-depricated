@@ -138,6 +138,9 @@
 			<a href="{{ URL::to('statuses_sent') }}">Sent Statuses</a>
 		</li>
 		<li>
+			<a href="{{ URL::to('statuses_receive') }}">Received Statuses</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('statuses_pick') }}">Pick Statuses</a>
 		</li>
 		<li class="divider"></li>
