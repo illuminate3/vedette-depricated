@@ -116,7 +116,7 @@
 </h2>
 
 @foreach ($alerts as $alert)
-	@if ($alert->type = 1)
+	@if ($alert->type == 1)
 		<div class="alert alert-danger">
 			Customer ID: {{{ $alert->customer_id }}}
 <br>
