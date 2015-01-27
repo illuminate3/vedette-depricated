@@ -52,7 +52,9 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$customer_item_count = count($this->customer_item->countPalletContents());
 //dd($customer_item_count);
 
-		$alerts = Alert::all();
+//		$alerts = Alert::all();
+		$alerts = Alert::with('customer')->get();
+//dd($alerts);
 
 		return View::make('index', compact(
 				'pallet_count',

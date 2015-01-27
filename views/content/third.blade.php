@@ -118,17 +118,31 @@
 @foreach ($alerts as $alert)
 	@if ($alert->type == 1)
 		<div class="alert alert-danger">
-			Customer ID: {{{ $alert->customer_id }}}
-<br>
-			Item: [ {{{ $alert->message }}} ]
-			: Out of Stock
+			<div class="row">
+				<div class="col-md-4">
+						Customer:&nbsp;{{{ $alert->customer->name }}}
+				</div>
+				<div class="col-md-4">
+						Purchase Order #&nbsp;{{{ $alert->purchase_order_no }}}
+				</div>
+				<div class="col-md-4">
+						Item:&nbsp;{{{ $alert->message }}}&nbsp;:&nbsp;Out of Stock
+				</div>
+			</div>
 		</div>
 	@else
 		<div class="alert alert-success">
-			Customer ID: {{{ $alert->customer_id }}}
-<br>
-			Item: [ {{{ $alert->message }}} ]
-			: IN Stock
+			<div class="row">
+				<div class="col-md-4">
+						Customer:&nbsp;{{{ $alert->customer->name }}}
+				</div>
+				<div class="col-md-4">
+						Purchase Order #&nbsp;{{{ $alert->purchase_order_no }}}
+				</div>
+				<div class="col-md-4">
+						Item:&nbsp;{{{ $alert->message }}}&nbsp;:&nbsp;In Stock
+				</div>
+			</div>
 		</div>
 	@endif
 @endforeach
