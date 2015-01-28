@@ -1,22 +1,10 @@
 <ul class="nav navbar-nav">
-{{--
-	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'customers')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('customers') }}">Customers</a>
-	</li>
-	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'items')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('catalogs') }}">Catalog</a>
-	</li>
-	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'pallets')) ? 'class="active"' : '' }} >
-		<a href="{{ URL::to('pallets') }}">Pallets</a>
-	</li>
---}}
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'picks')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('picks') }}">Build Order</a>
 	</li>
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'builds')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('builds') }}">Receiving</a>
 	</li>
-
 	<li {{ (strstr(Route::getCurrentRoute()->getPath(),'moves')) ? 'class="active"' : '' }} >
 		<a href="{{ URL::to('moves') }}">Move Pallet</a>
 	</li>
@@ -36,26 +24,11 @@
 			<li>
 				<a href="{{ URL::to('orders') }}">Shipping</a>
 			</li>
-			<li class="divider"></li>
+		<li class="divider"></li>
 			<li>
 				<a href="{{ URL::to('bills') }}">Billing</a>
 			</li>
-{{--
-			<li>
-				<a href="{{ URL::to('storage') }}">Storage</a>
-			</li>
-			<li>
-				<a href="{{ URL::to('production') }}">Production</a>
-			</li>
-			<li class="divider"></li>
-			<li>
-				<a href="{{ URL::to('orders') }}">Orders</a>
-			</li>
-			<li>
-				<a href="{{ URL::to('receives') }}">Orders In</a>
-			</li>
---}}
-			<li class="divider"></li>
+		<li class="divider"></li>
 			<li>
 				<a href="{{ URL::to('invoices') }}">Invoices</a>
 			</li>
@@ -75,11 +48,6 @@
 		<li>
 			<a href="{{ URL::to('customers') }}">Customers</a>
 		</li>
-{{--
-		<li>
-			<a href="{{ URL::to('vendors') }}">Vendors</a>
-		</li>
---}}
 		<li>
 			<a href="{{ URL::to('trucks') }}">Trucking</a>
 		</li>
@@ -104,14 +72,6 @@
 		<li>
 			<a href="{{ URL::to('pallets') }}">Pallets</a>
 		</li>
-{{--
-		<li>
-			<a href="{{ URL::to('picks') }}">Build Order</a>
-		</li>
-		<li>
-			<a href="{{ URL::to('items') }}">Items</a>
-		</li>
---}}
 	</ul>
 </li>
 
@@ -150,33 +110,9 @@
 		<li>
 			<a href="{{ URL::to('locale_types') }}">Locale Types</a>
 		</li>
-{{--
-		<li>
-			<a href="{{ URL::to('pallet_types') }}">Pallet Types</a>
-		</li>
-			<a href="{{ URL::to('units') }}">Units and Measurement</a>
-			<a href="{{ URL::to('statuses_order') }}">Order Out Statuses</a>
-			<a href="{{ URL::to('statuses_receive') }}">Order In Statuses</a>
---}}
 		</li>
 	</ul>
 </li>
-{{--
-<li class="dropdown">
-	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
-		Debug
-		<b class="caret"></b>
-	</a>
-	<ul class="dropdown-menu">
-		<li>
-			<a href="{{ URL::to('vendibles') }}">Order Items</a>
-			<a href="{{ URL::to('customer_profiles') }}">Customer Profiles (for debugging)</a>
-			<a href="{{ URL::to('charges') }}">Charges (for debugging)</a>
-			<a href="{{ URL::to('alerts') }}">Alerts (for debugging)</a>
-		</li>
-	</ul>
-</li>
---}}
 
 @endif
 @endif
