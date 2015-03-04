@@ -36,6 +36,10 @@
 			<li>
 				<a href="{{ URL::to('orders') }}">Shipping</a>
 			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="{{ URL::to('bills') }}">Billing</a>
+			</li>
 {{--
 			<li>
 				<a href="{{ URL::to('storage') }}">Storage</a>
@@ -44,9 +48,6 @@
 				<a href="{{ URL::to('production') }}">Production</a>
 			</li>
 			<li class="divider"></li>
-			<li>
-				<a href="{{ URL::to('bills') }}">Billing</a>
-			</li>
 			<li>
 				<a href="{{ URL::to('orders') }}">Orders</a>
 			</li>
@@ -67,34 +68,35 @@
 
 <li class="dropdown">
 	<a class="dropdown-toggle {{ (Request::is('admin*') ? ' active' : '') }}" data-toggle="dropdown" href="#">
-		Warehouse
+		Office
 		<b class="caret"></b>
 	</a>
 	<ul class="dropdown-menu">
 		<li>
-			<a href="{{ URL::to('reports') }}">Reports</a>
-		</li>
-		</li>
-			<li class="divider"></li>
-		<li>
-		<li>
 			<a href="{{ URL::to('customers') }}">Customers</a>
 		</li>
-		<li>
-			<a href="{{ URL::to('customer_items') }}">Customer Items</a>
-		</li>
+{{--
 		<li>
 			<a href="{{ URL::to('vendors') }}">Vendors</a>
 		</li>
+--}}
 		<li>
 			<a href="{{ URL::to('trucks') }}">Trucking</a>
 		</li>
 	<li class="divider"></li>
 		<li>
-			<a href="{{ URL::to('catalogs') }}">Catalog</a>
+			<a href="{{ URL::to('items') }}">Global Items</a>
 		</li>
 		<li>
-			<a href="{{ URL::to('items') }}">Stock / Items</a>
+			<a href="{{ URL::to('customer_items') }}">Customer Items</a>
+		</li>
+	<li class="divider"></li>
+		<li>
+			<a href="{{ URL::to('reports') }}">Reports</a>
+		</li>
+	<li class="divider"></li>
+		<li>
+			<a href="{{ URL::to('catalogs') }}">Catalog</a>
 		</li>
 		<li>
 			<a href="{{ URL::to('racks') }}">Racks</a>
@@ -102,10 +104,10 @@
 		<li>
 			<a href="{{ URL::to('pallets') }}">Pallets</a>
 		</li>
+{{--
 		<li>
 			<a href="{{ URL::to('picks') }}">Build Order</a>
 		</li>
-{{--
 		<li>
 			<a href="{{ URL::to('items') }}">Items</a>
 		</li>
@@ -121,16 +123,38 @@
 	<ul class="dropdown-menu">
 		<li>
 			<a href="{{ URL::to('allergens') }}">Allergens</a>
-			<a href="{{ URL::to('units') }}">Units and Measurement</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('zones') }}">Zones</a>
+		</li>
+		<li class="divider"></li>
+		<li>
 			<a href="{{ URL::to('statuses_billing') }}">Billing Statuses</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('statuses_paid') }}">Paid Statuses</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('statuses_sent') }}">Sent Statuses</a>
-			<a href="{{ URL::to('charge_types') }}">Charge Types</a>
+		</li>
+		<li>
+			<a href="{{ URL::to('statuses_receive') }}">Received Statuses</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('statuses_pick') }}">Pick Statuses</a>
-			<a href="{{ URL::to('pallet_types') }}">Pallet Types</a>
+		</li>
+		<li class="divider"></li>
+		<li>
+			<a href="{{ URL::to('charge_types') }}">Charge Types</a>
+		</li>
+		<li>
 			<a href="{{ URL::to('locale_types') }}">Locale Types</a>
+		</li>
 {{--
+		<li>
+			<a href="{{ URL::to('pallet_types') }}">Pallet Types</a>
+		</li>
+			<a href="{{ URL::to('units') }}">Units and Measurement</a>
 			<a href="{{ URL::to('statuses_order') }}">Order Out Statuses</a>
 			<a href="{{ URL::to('statuses_receive') }}">Order In Statuses</a>
 --}}

@@ -1,6 +1,7 @@
 <?php namespace Vedette\controllers;
 
 use Auth, View, Session, App;
+use Bootstrap;
 
 //
 use Third\models\Pallet as Pallet;
@@ -21,12 +22,14 @@ class IndexController extends \BaseController {
 		Category $category,
 		Customer_item $customer_item,
 		Item $item,
+		Pick $pick,
 		Pallet $pallet
 		)
 		{
 			$this->category = $category;
 			$this->customer_item = $customer_item;
 			$this->item = $item;
+			$this->pick = $pick;
 			$this->pallet = $pallet;
 		}
 
@@ -43,12 +46,15 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 		$item_count = count($this->item->countPalletContents());
 		$catalog_count = count(Catalog::all());
 		$rack_count = count(Rack::all());
-		$pick_count = count(Pick::all());
+		$pick_count = count($this->pick->countOpenPicks());
 		$customer_count = count(Customer::all());
+		$alert_count =  count(Alert::all());
 		$customer_item_count = count($this->customer_item->countPalletContents());
 //dd($customer_item_count);
 
-		$alerts = Alert::all();
+//		$alerts = Alert::all();
+		$alerts = Alert::with('customer')->get();
+//dd($alerts);
 
 		return View::make('index', compact(
 				'pallet_count',
@@ -58,6 +64,7 @@ if ( $_ENV['APP_TYPE'] == 'Third' ) {
 				'customer_item_count',
 				'rack_count',
 				'pick_count',
+				'alert_count',
 				'alerts'
 			));
 } elseif ( $_ENV['APP_TYPE'] == 'BAM' ) {

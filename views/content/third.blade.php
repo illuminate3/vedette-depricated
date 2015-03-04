@@ -44,7 +44,7 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
 			<h3 class="panel-title">
-				Items
+				Global Items
 			</h3>
 			</div>
 			<div class="panel-body">
@@ -52,8 +52,38 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="row">
 	<div class="col-md-2">
-		<div class="panel panel-info">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+			<h3 class="panel-title">
+				Customers
+			</h3>
+			</div>
+			<div class="panel-body">
+				<a href="{{ URL::to('customers') }}">{{ $customer_count }}</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+			<h3 class="panel-title">
+				Customer Items
+			</h3>
+			</div>
+			<div class="panel-body">
+				<a href="{{ URL::to('customer_items') }}">{{{ $customer_item_count }}}</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-2">
+		<div class="panel panel-success">
 			<div class="panel-heading">
 			<h3 class="panel-title">
 				Picks
@@ -64,30 +94,15 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="row">
 	<div class="col-md-2">
-		<div class="panel panel-info">
+		<div class="panel panel-danger">
 			<div class="panel-heading">
 			<h3 class="panel-title">
-				Customer
+				Alerts
 			</h3>
 			</div>
 			<div class="panel-body">
-				<a href="{{ URL::to('customers') }}">{{ $customer_count }}</a>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-			<h3 class="panel-title">
-				Customer Items
-			</h3>
-			</div>
-			<div class="panel-body">
-				<a href="{{ URL::to('customer_items') }}">{{{ $customer_item_count }}}</a>
+				<a href="{{ URL::to('alerts') }}">{{ $alert_count }}</a>
 			</div>
 		</div>
 	</div>
@@ -101,13 +116,33 @@
 </h2>
 
 @foreach ($alerts as $alert)
-	@if ($alert->type = 1)
+	@if ($alert->type == 1)
 		<div class="alert alert-danger">
-			{{{ $alert->message }}} : is out of stock
+			<div class="row">
+				<div class="col-md-4">
+						Customer:&nbsp;{{{ $alert->customer->name }}}
+				</div>
+				<div class="col-md-4">
+						Purchase Order #&nbsp;{{{ $alert->purchase_order_no }}}
+				</div>
+				<div class="col-md-4">
+						Item:&nbsp;{{{ $alert->message }}}&nbsp;:&nbsp;Out of Stock
+				</div>
+			</div>
 		</div>
 	@else
 		<div class="alert alert-success">
-			{{{ $alert->message }}} : is in stock
+			<div class="row">
+				<div class="col-md-4">
+						Customer:&nbsp;{{{ $alert->customer->name }}}
+				</div>
+				<div class="col-md-4">
+						Purchase Order #&nbsp;{{{ $alert->purchase_order_no }}}
+				</div>
+				<div class="col-md-4">
+						Item:&nbsp;{{{ $alert->message }}}&nbsp;:&nbsp;In Stock
+				</div>
+			</div>
 		</div>
 	@endif
 @endforeach
@@ -118,6 +153,7 @@
 		<thead>
 			<tr>
 				<th>Order_id</th>
+				<th>Customer_id</th>
 				<th>Message</th>
 			</tr>
 		</thead>
@@ -126,6 +162,7 @@
 			@foreach ($alerts as $alert)
 				<tr>
 					<td>{{{ $alert->order_id }}}</td>
+					<td>{{{ $alert->customer_id }}}</td>
 					<td>{{{ $alert->message }}}</td>
 					<td>{{ link_to_route('alerts.edit', 'Edit', array($alert->id), array('class' => 'btn btn-info')) }}</td>
 					<td>
