@@ -25,24 +25,19 @@
 <!--
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/media/css/jquery.dataTables.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css') }}">
 -->
 
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/media/css/jquery.dataTables.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/DataTables/extensions/TableTools/css/dataTables.tableTools.min.css') }}">
-
-@if ( $_ENV['APP_TYPE'] == 'HR' )
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/sb-admin-2.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/plugins/metisMenu/metisMenu.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/BAM/css/style.css') }}">
-@endif
 
 	@yield('styles')
 
-
-
 <script type="text/javascript" src="{{ asset('assets/DataTables/media/js/jquery.js') }}"></script>
+
+<!--
 <script type="text/javascript" src="{{ asset('assets/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js') }}"></script>
+-->
 </head>
 
 <body>
@@ -83,15 +78,6 @@
 	<script>
 		@yield('inline-scripts')
 	</script>
-
-
-<script src="{{ asset('assets/BAM/js/plugins/metisMenu/metisMenu.min.js') }}"></script>
-<script src="{{ asset('assets/BAM/js/sb-admin-2.js') }}"></script>
-<script>
-	$(function () {
-		$('#menu').metisMenu();
-	});
-</script>
 
 
 </html>

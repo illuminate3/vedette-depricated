@@ -24,6 +24,7 @@
 			<li>
 				<a href="{{ URL::to('orders') }}">Shipping</a>
 			</li>
+{{--
 		<li class="divider"></li>
 			<li>
 				<a href="{{ URL::to('bills') }}">Billing</a>
@@ -32,6 +33,7 @@
 			<li>
 				<a href="{{ URL::to('invoices') }}">Invoices</a>
 			</li>
+--}}
 		</ul>
 	</li>
 </ul>
@@ -62,6 +64,9 @@
 		<li>
 			<a href="{{ URL::to('reports') }}">Reports</a>
 		</li>
+		<li>
+			<a href="{{ URL::to('inventory') }}">Inventory Reports</a>
+		</li>
 	<li class="divider"></li>
 		<li>
 			<a href="{{ URL::to('catalogs') }}">Catalog</a>
@@ -86,6 +91,9 @@
 		</li>
 		<li>
 			<a href="{{ URL::to('zones') }}">Zones</a>
+		</li>
+		<li>
+			<a href="{{ URL::to('units') }}">Units</a>
 		</li>
 		<li class="divider"></li>
 		<li>
