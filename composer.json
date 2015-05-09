@@ -1,0 +1,31 @@
+{
+    "name": "illuminate3/vedette",
+    "type": "library",
+    "description": "User Management Skeleton based on several packages.",
+    "keywords": ["laravel", "admin", "backend", "sentry", "cartalyst"],
+    "homepage": "https://github.com/Illuminate3/vedette",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Illuminate3",
+            "email": "carsten.sapporo@gmail.com",
+            "homepage": "https://github.com/illuminate3/vedette",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "cartalyst/sentry": "2.0.*",
+        "anahkiasen/former": "dev-master",
+        "illuminate3/lingos": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Illuminate3\\Vedette": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
